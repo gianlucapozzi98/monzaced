@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
 import node from '@astrojs/node';
+import vercel from '@astrojs/vercel';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import keystatic from '@keystatic/astro';
@@ -23,12 +24,22 @@ const convenzioni = /** @type {{pubblicata?: boolean}} */ (
 
 const fontFile = (/** @type {string} */ name) => `@fontsource-variable/${name}`;
 
+// Su Vercel (variabile VERCEL impostata in build) si usa l'adapter Vercel: pagine statiche + funzioni.
+// Altrove l'adapter Node, avviato da server.mjs.
+const suVercel = !!process.env.VERCEL;
+// Domini di Vercel (anteprime e dominio *.vercel.app del progetto), per il controllo anti-CSRF
+const dominiVercel = [process.env.VERCEL_URL, process.env.VERCEL_BRANCH_URL, process.env.VERCEL_PROJECT_PRODUCTION_URL]
+  .filter(Boolean)
+  .map((h) => ({ hostname: String(h), protocol: 'https' }));
+
 export default defineConfig({
   site: SITE,
   output: 'static',
   trailingSlash: 'never',
   build: { format: 'preserve', inlineStylesheets: 'always' }, // CSS in linea: nessuna richiesta che blocca il primo disegno
-  adapter: node({ mode: 'standalone', bodySizeLimit: 20 * 1024 * 1024 }),
+  adapter: suVercel
+    ? vercel({ maxDuration: 60 }) // il controllo antivirus dei file può richiedere qualche secondo
+    : node({ mode: 'standalone', bodySizeLimit: 20 * 1024 * 1024 }),
   integrations: [
     ...(cmsEnabled ? [react(), keystatic()] : []),
     sitemap({
@@ -50,6 +61,7 @@ export default defineConfig({
       { hostname: `www.${new URL(SITE).hostname.replace(/^www\./, '')}`, protocol: 'https' },
       { hostname: 'localhost' },
       { hostname: '127.0.0.1' },
+      ...dominiVercel,
     ],
     // CSP con hash per script e stili. Con il pannello attivo in produzione (GitHub) si disattiva,
     // perché l'interfaccia del pannello usa stili inline: resta la CSP di base impostata da server.mjs.

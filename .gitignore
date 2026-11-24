@@ -10,3 +10,4 @@ dist/
 
 # Volantino ISEE di terzi scaricato dal vecchio sito (non va pubblicato)
 /elenco-documenti-isee-monza-ced.pdf
+.vercel/

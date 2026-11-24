@@ -52,6 +52,7 @@ function archivioPronto(c: Config): string | null {
     const s = c.s3;
     return s.endpoint && s.regione && s.bucket && s.chiave && s.segreto ? null : 'archivio S3 incompleto';
   }
+  if (c.archivio === 'locale' && process.env.VERCEL) return 'archivio locale non disponibile su Vercel (disco di sola lettura): usare S3';
   if (c.archivio === 'locale') {
     try {
       return Buffer.from(c.locale.chiave, 'base64').length === 32 ? null : 'chiave di cifratura locale non valida';
@@ -63,7 +64,7 @@ function archivioPronto(c: Config): string | null {
 }
 function notifichePronte(c: Config): string | null {
   if (c.notifiche === 'smtp') return c.smtp.host && c.notificaA && c.notificaDa ? null : 'SMTP incompleto';
-  if (c.notifiche === 'prova-file') return c.prova ? null : 'notifiche di prova non ammesse fuori dalla modalità di prova';
+  if (c.notifiche === 'prova-file') return c.prova && !process.env.VERCEL ? null : 'notifiche di prova non ammesse qui';
   return 'notifiche non configurate';
 }
 

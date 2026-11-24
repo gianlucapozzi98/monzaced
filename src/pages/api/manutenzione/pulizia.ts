@@ -12,14 +12,21 @@ export const prerender = false;
  *  - caricamenti mai completati da più di 24 ore (file in quarantena);
  *  - richieste dei moduli oltre la scadenza;
  *  - registro più vecchio di REGISTRO_GIORNI (predefinito 365).
- * Si chiama con l'intestazione x-manutenzione: <MANUTENZIONE_TOKEN>. server.mjs la esegue ogni 6 ore.
+ * Si chiama con l'intestazione x-manutenzione: <MANUTENZIONE_TOKEN> (server.mjs, ogni 6 ore)
+ * oppure, su Vercel, dal Cron giornaliero di vercel.json con Authorization: Bearer <CRON_SECRET>.
  */
+const uguali = (a: string, b: string) => a.length >= 24 && a.length === b.length && timingSafeEqual(Buffer.from(a), Buffer.from(b));
+function autorizzato(request: Request): boolean {
+  // server.mjs: intestazione x-manutenzione · Vercel Cron: Authorization: Bearer <CRON_SECRET>
+  if (uguali(process.env.MANUTENZIONE_TOKEN ?? '', request.headers.get('x-manutenzione') ?? '')) return true;
+  const bearer = (request.headers.get('authorization') ?? '').replace(/^Bearer\s+/i, '');
+  return uguali(process.env.CRON_SECRET ?? '', bearer);
+}
+
+export const GET: APIRoute = (ctx) => POST(ctx);
+
 export const POST: APIRoute = async ({ request }) => {
-  const atteso = process.env.MANUTENZIONE_TOKEN ?? '';
-  const dato = request.headers.get('x-manutenzione') ?? '';
-  if (atteso.length < 24 || dato.length !== atteso.length || !timingSafeEqual(Buffer.from(dato), Buffer.from(atteso))) {
-    return json({ errore: 'non-autorizzato' }, 401);
-  }
+  if (!autorizzato(request)) return json({ errore: 'non-autorizzato' }, 401);
   const ora = Date.now();
   const esito = { pratiche: 0, incompiute: 0, richieste: 0, registro: 0 };
   for (const p of await elencoPratiche()) {

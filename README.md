@@ -138,6 +138,13 @@ Le notifiche di prova finiscono in `.data/posta-di-prova/`, i file cifrati in `.
 
 ## 5. Messa in produzione
 
+### 5.0 Pubblicazione su Vercel
+Il progetto si pubblica anche su Vercel collegando il repository GitHub: in build Vercel imposta `VERCEL=1` e il sito usa l'**adapter Vercel** (pagine statiche + funzioni per le API). Senza adapter Vercel servirebbe la cartella `dist/` come sito statico e la radice darebbe **404**.
+- `vercel.json`: funzioni nella regione **fra1 (Francoforte, UE)**, intestazioni di sicurezza, `noindex` su tutti i domini `*.vercel.app` (le anteprime non finiscono su Google), pulizia automatica giornaliera (Cron alle 3:00).
+- Variabili da impostare su Vercel (Project → Settings → Environment Variables), come in `.env.example`: `SITE_URL`, `SEGRETO_APP`, `ARCHIVIO_DRIVER=s3` e `S3_*`, `ANTIVIRUS_DRIVER=clamd` con `CLAMD_HOST`/`CLAMD_PORT`, `NOTIFICHE_DRIVER=smtp` e `SMTP_*`, `NOTIFICA_DA`, `NOTIFICA_A`, `UTENTI_STUDIO`, `CONSERVAZIONE_GIORNI`, `PUBLIC_MOSTRA_SEGNAPOSTO=false`, e **`CRON_SECRET`** (almeno 24 caratteri) per la pulizia.
+- Su Vercel l'**archivio locale non funziona** (disco di sola lettura): serve S3. **ClamAV non gira su Vercel**: serve un servizio clamd raggiungibile in rete (per esempio un piccolo server in UE). Finché manca, il caricamento resta in modalità sicura.
+- I limiti anti-abuso sono in memoria e valgono per singola istanza: su Vercel sono più deboli.
+
 ### 5.1 Variabili
 Copiare `.env.example` in `.env` e compilare. **Senza** archivio, antivirus, notifiche, `SEGRETO_APP`, `UTENTI_STUDIO` e `CONSERVAZIONE_GIORNI` il caricamento resta in **modalità sicura** (messaggio onesto con telefono e indirizzo; nessun file accettato). L'area riservata elenca cosa manca.
 

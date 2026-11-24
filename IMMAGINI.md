@@ -1,6 +1,6 @@
 # Catalogo immagini
 
-Tutte le foto sono **di stock**: da Unsplash (filtro "licenza gratuita", non Unsplash+) e una da Pexels, scaricate il 24-25/11/2026. La [Licenza Unsplash](https://unsplash.com/license) e la [Licenza Pexels](https://www.pexels.com/it-it/license/) consentono l'uso commerciale senza autorizzazione; l'attribuzione non è obbligatoria ma la diamo comunque nella pagina **/crediti**, raggiungibile da un solo link nel footer.
+Tutte le foto sono **di stock**: da Unsplash (filtro "licenza gratuita", non Unsplash+) e due da Pexels, scaricate il 24-25/11/2026. La [Licenza Unsplash](https://unsplash.com/license) e la [Licenza Pexels](https://www.pexels.com/it-it/license/) consentono l'uso commerciale senza autorizzazione; l'attribuzione non è obbligatoria ma la diamo comunque nella pagina **/crediti**, raggiungibile da un solo link nel footer.
 
 Regole rispettate:
 - nessuna didascalia "Immagine illustrativa";
@@ -10,13 +10,13 @@ Regole rispettate:
 
 | File (`src/assets/img/`) | Cosa si vede | Dove è usata | Autore | Pagina della foto |
 |---|---|---|---|---|
-| `hero-coppia-giovane.jpg` | Giovane coppia che legge dei documenti al tavolo della cucina (parete blu) | **Prima foto** della sequenza dell'hero, immagine Open Graph | Vitaly Gariev | https://unsplash.com/photos/mTtTJE6SU78 |
+| `hero-coppia-giovane.jpg` | Giovane coppia che legge con calma dei documenti al tavolo di casa | **Prima foto** della sequenza dell'hero (sul computer inquadrata un po' più a destra, perché entrino entrambi i volti), immagine Open Graph | Ron Lach (**Pexels**) | https://www.pexels.com/it-it/foto/9869635/ |
 | `hero-coppia-50.jpg` | Coppia sui cinquant'anni, sorridente, al portatile sul divano (sullo sfondo un camino in TV con un festone) | Seconda foto della sequenza dell'hero | Anthony Shkraba (**Pexels**) | https://www.pexels.com/it-it/foto/5810702/ |
 | `hero-documenti-casa.jpg` | Coppia di anziani sul divano che controlla documenti | Terza foto della sequenza dell'hero | Vitaly Gariev | https://unsplash.com/photos/DQdilc0v6u8 |
 | `dettaglio-firma.jpg` | Mani che firmano un documento | Cerchio nell'hero, "Esperienza e serietà", testata Successioni | Gabrielle Henderson | https://unsplash.com/photos/HJckKnwCXxQ |
 | `famiglia.jpg` | Famiglia sorridente sul divano | Testata dei servizi Famiglia e ISEE | Vitaly Gariev | https://unsplash.com/photos/SwaEMQAzP_8 |
 | `casa-chiavi.jpg` | Mano con le chiavi di casa davanti a una porta | Testata IMU e Locazioni | Jakub Żerdzicki | https://unsplash.com/photos/bqUZEAeWuok |
-| `dichiarazioni.jpg` | Donna che legge un documento in cucina (stessa modella della prima foto dell'hero) | Testata 730, /servizi, /carica-documenti, "Aggiornati alle normative" | Vitaly Gariev | https://unsplash.com/photos/RNUNbvIXUbg |
+| `dichiarazioni.jpg` | Donna che legge un documento in cucina | Testata 730, /servizi, /carica-documenti, "Aggiornati alle normative" | Vitaly Gariev | https://unsplash.com/photos/RNUNbvIXUbg |
 | `lavoro.jpg` | Giovane donna al portatile alla scrivania | Testata servizi Lavoro | Vitaly Gariev | https://unsplash.com/photos/x1YcazlZ7N8 |
 | `pensioni.jpg` | Coppia di pensionati sorridente | Testata servizi Pensioni, "La tua tranquillità" | Vitaly Gariev | https://unsplash.com/photos/iV9F0sHl7OU |
 | `imprese.jpg` | Giovane titolare nel suo locale | Testata servizi Imprese | Vitaly Gariev | https://unsplash.com/photos/QGg-vsPYbu8 |

@@ -12,6 +12,9 @@ const parole = segmenti.flatMap((seg) => seg.testo.split(/\s+/).filter(Boolean).
 // Foto dell'apertura, dal pannello: persone di età diverse, la prima si vede subito.
 const foto = (home.fotoApertura?.filter(Boolean).length ? home.fotoApertura.filter(Boolean) : ['hero-coppia-giovane', 'hero-coppia-50', 'hero-documenti-casa']);
 const [prima, ...altre] = foto;
+// Sul computer l'arco è stretto: per alcune foto si sposta il punto di interesse perché entrino entrambi i volti
+const FUOCO_DESTRA = new Set(['hero-coppia-giovane']);
+const fuoco = (nome: string) => (FUOCO_DESTRA.has(nome) ? 'destra' : undefined);
 const pic = { widths: [480, 720, 1080, 1440, 1920, 2400], sizes: '(min-width: 1024px) 100vw, calc(100vw - 32px)', formats: ['avif', 'webp'] as ('avif' | 'webp')[] };
 ---
 <section class="hero" data-hero aria-labelledby="hero-titolo">
@@ -35,15 +38,15 @@ const pic = { widths: [480, 720, 1080, 1440, 1920, 2400], sizes: '(min-width: 10
     </div>
 
     <div class="hero__foto" data-porta>
-      <div class="hero__diapo" role="group" aria-roledescription="sequenza di foto" aria-label="Foto" data-diapo>
-        <div class="hero__slide attiva" data-slide>
+      <div class="hero__diapo" data-diapo>
+        <div class="hero__slide attiva" data-slide data-fuoco={fuoco(prima)}>
           <Picture src={img(prima)} alt={alt(prima)} {...pic} loading="eager" fetchpriority="high" decoding="async" class="hero__img" />
         </div>
         {altre.length > 0 && (
           // Le altre foto si caricano dopo la pagina, per non rallentare il primo disegno
           <template data-altre-slide>
             {altre.map((nome) => (
-              <div class="hero__slide" data-slide aria-hidden="true">
+              <div class="hero__slide" data-slide data-fuoco={fuoco(nome)} aria-hidden="true">
                 <Picture src={img(nome)} alt={alt(nome)} {...pic} loading="lazy" decoding="async" class="hero__img" />
               </div>
             ))}
@@ -52,17 +55,6 @@ const pic = { widths: [480, 720, 1080, 1440, 1920, 2400], sizes: '(min-width: 10
       </div>
       <div class="hero__velo" data-hero-velo aria-hidden="true"></div>
       <p class="hero__frase" data-hero-frase>{home.fraseApertura}</p>
-      {foto.length > 1 && (
-        <div class="hero__controlli" data-hero-controlli>
-          {foto.map((nome, n) => (
-            <button type="button" class="hero__punto" data-vai={n} aria-label={`Foto ${n + 1} di ${foto.length}`} aria-pressed={n === 0 ? 'true' : 'false'}><span aria-hidden="true"></span></button>
-          ))}
-          <button type="button" class="hero__pausa" data-pausa-foto aria-pressed="false">
-            <span class="hero__ico-pausa"><Icon name="pausa" size={18} /></span><span class="hero__ico-play"><Icon name="play" size={18} /></span>
-            <span class="sr-only">Metti in pausa le foto</span>
-          </button>
-        </div>
-      )}
     </div>
 
     <div class="hero__cerchio" data-hero-cerchio>
@@ -85,48 +77,30 @@ const pic = { widths: [480, 720, 1080, 1440, 1920, 2400], sizes: '(min-width: 10
 
 <script>
   /**
-   * Sequenza di foto dell'apertura: dissolvenza ogni 6 s, ferma fuori schermo, a pagina nascosta,
-   * con il pulsante Pausa e con "riduci movimento" (lì cambia solo con i pallini).
+   * Sequenza di foto dell'apertura: dissolvenza ogni 6 s, senza comandi visibili (scelta del cliente).
+   * Si ferma fuori schermo e a pagina nascosta; con "riduci movimento" resta sulla prima foto.
    */
   const diapo = document.querySelector<HTMLElement>('[data-diapo]');
-  const comandi = document.querySelector<HTMLElement>('[data-hero-controlli]');
-  if (diapo && comandi) {
-    const ridotto = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const tpl = diapo.querySelector<HTMLTemplateElement>('[data-altre-slide]');
-    const punti = [...comandi.querySelectorAll<HTMLButtonElement>('[data-vai]')];
-    const pausa = comandi.querySelector<HTMLButtonElement>('[data-pausa-foto]')!;
-    let caricate = false, attuale = 0, timer: number | undefined, fermaUtente = ridotto, visibile = true;
+  const tpl = diapo?.querySelector<HTMLTemplateElement>('[data-altre-slide]');
+  if (diapo && tpl && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let caricate = false, attuale = 0, timer: number | undefined, visibile = true;
     const carica = () => {
-      if (caricate || !tpl) return;
+      if (caricate) return;
       caricate = true;
       diapo.appendChild(tpl.content.cloneNode(true));
     };
-    const slides = () => [...diapo.querySelectorAll<HTMLElement>('[data-slide]')];
     const mostra = (n: number) => {
-      carica();
-      const tutte = slides();
-      if (!tutte[n]) return;
-      attuale = n;
-      tutte.forEach((el, i) => { el.classList.toggle('attiva', i === n); el.setAttribute('aria-hidden', i === n ? 'false' : 'true'); });
-      punti.forEach((b, i) => b.setAttribute('aria-pressed', String(i === n)));
+      const tutte = [...diapo.querySelectorAll<HTMLElement>('[data-slide]')];
+      attuale = n % tutte.length;
+      tutte.forEach((el, i) => { el.classList.toggle('attiva', i === attuale); el.setAttribute('aria-hidden', i === attuale ? 'false' : 'true'); });
     };
-    const ferma = () => { clearInterval(timer); timer = undefined; };
     const avvia = () => {
-      ferma();
-      if (fermaUtente || !visibile || document.hidden) return;
-      timer = window.setInterval(() => mostra((attuale + 1) % punti.length), 6000);
+      clearInterval(timer); timer = undefined;
+      if (!visibile || document.hidden) return;
+      timer = window.setInterval(() => mostra(attuale + 1), 6000);
     };
-    punti.forEach((b, i) => b.addEventListener('click', () => { mostra(i); avvia(); }));
-    pausa.addEventListener('click', () => {
-      fermaUtente = !fermaUtente;
-      pausa.setAttribute('aria-pressed', String(fermaUtente));
-      pausa.querySelector('.sr-only')!.textContent = fermaUtente ? 'Riprendi le foto' : 'Metti in pausa le foto';
-      comandi.classList.toggle('in-pausa', fermaUtente);
-      avvia();
-    });
-    if (ridotto) { pausa.setAttribute('aria-pressed', 'true'); pausa.querySelector('.sr-only')!.textContent = 'Riprendi le foto'; comandi.classList.add('in-pausa'); }
-    new IntersectionObserver(([e]) => { visibile = e.isIntersecting; avvia(); }).observe(diapo);
-    document.addEventListener('visibilitychange', avvia);
+    new IntersectionObserver(([e]) => { visibile = e.isIntersecting; if (caricate) avvia(); }).observe(diapo);
+    document.addEventListener('visibilitychange', () => { if (caricate) avvia(); });
     const dopoCaricamento = () => setTimeout(() => { carica(); avvia(); }, 1200);
     if (document.readyState === 'complete') dopoCaricamento(); else addEventListener('load', dopoCaricamento, { once: true });
   }
@@ -229,19 +203,6 @@ const pic = { widths: [480, 720, 1080, 1440, 1920, 2400], sizes: '(min-width: 10
   .hero__diapo :global(.hero__slide picture) { display: block; width: 100%; height: 100%; transform: scale(1.06); transition: transform 7000ms linear; }
   .hero__diapo :global(.hero__slide.attiva picture) { transform: scale(1); }
   .hero__foto :global(picture), .hero__foto :global(img) { width: 100%; height: 100%; }
-  .hero__controlli {
-    position: absolute; z-index: 3; left: calc(var(--l0) + 24px); bottom: calc(var(--b0) + 18px);
-    display: flex; align-items: center; gap: 2px; padding: 4px 4px 4px 10px; border-radius: 999px;
-    background: rgb(14 26 43 / 0.62); backdrop-filter: blur(8px);
-  }
-  .hero__punto { width: 30px; height: 36px; display: grid; place-items: center; border: 0; background: none; cursor: pointer; padding: 0; }
-  .hero__punto span { width: 10px; height: 10px; border-radius: 999px; background: rgb(255 255 255 / 0.6); transition: width var(--d-comp) var(--ease-out), background var(--d-comp) var(--ease-out); }
-  .hero__punto[aria-pressed='true'] span { width: 26px; background: var(--blu-chiaro); }
-  .hero__pausa { width: 36px; height: 36px; margin-left: 4px; border-radius: 50%; border: 0; background: var(--bianco); color: var(--inchiostro); display: grid; place-items: center; cursor: pointer; }
-  .hero__ico-play { display: none; }
-  :global(.hero__controlli.in-pausa) .hero__ico-play { display: inline; }
-  :global(.hero__controlli.in-pausa) .hero__ico-pausa { display: none; }
-  .hero__controlli :focus-visible { outline-color: var(--blu-chiaro); }
   .hero__foto :global(img) {
     object-fit: cover; object-position: 50% 40%;
     transform: translateX(calc((1 - var(--q)) * 25vw)) scale(calc(1.04 + (1 - var(--q)) * 0.06));
@@ -253,7 +214,7 @@ const pic = { widths: [480, 720, 1080, 1440, 1920, 2400], sizes: '(min-width: 10
   }
   .hero__frase {
     position: absolute; z-index: 2; margin: 0;
-    left: calc(var(--l0) + 36px); right: calc(var(--r0) + 36px); bottom: calc(var(--b0) + 78px);
+    left: calc(var(--l0) + 36px); right: calc(var(--r0) + 36px); bottom: calc(var(--b0) + 36px);
     color: var(--bianco); font-family: var(--f-titoli); font-weight: 800; letter-spacing: -0.02em;
     font-size: clamp(1.5rem, 1rem + 1.2vw, 2.2rem); line-height: 1.12; text-wrap: balance;
   }
@@ -309,6 +270,7 @@ const pic = { widths: [480, 720, 1080, 1440, 1920, 2400], sizes: '(min-width: 10
 
   @media (min-width: 1024px) {
     .hero__testo { padding-right: 50vw; }
+    .hero__diapo :global(.hero__slide[data-fuoco='destra'] img) { object-position: 60% 40%; }
     .hero__testo.contenitore { width: auto; margin: 0; padding-left: var(--gutter); }
   }
 
@@ -322,8 +284,7 @@ const pic = { widths: [480, 720, 1080, 1440, 1920, 2400], sizes: '(min-width: 10
     }
     @supports (corner-shape: round) { .hero__foto { border-radius: 50% 50% 28px 28px / 36% 36% 28px 28px; } }
     .hero__foto :global(img) { transform: none; }
-    .hero__frase { left: 24px; right: 24px; bottom: 70px; font-size: clamp(1.35rem, 1.1rem + 1.4vw, 1.9rem); }
-    .hero__controlli { left: 16px; bottom: 14px; }
+    .hero__frase { left: 24px; right: 24px; bottom: 28px; font-size: clamp(1.35rem, 1.1rem + 1.4vw, 1.9rem); }
     .hero__cerchio { left: auto; right: calc(var(--gutter) + 8px); bottom: auto; top: calc(100% - min(62svh, 560px) - 70px); width: 120px; }
     .hero__filo, .hero__invito { display: none; }
     :global(.js-motion) .hero__foto { animation: none; }

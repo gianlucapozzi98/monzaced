@@ -115,7 +115,6 @@ function porta() {
     const cerchio = hero.querySelector<HTMLElement>('[data-hero-cerchio]');
     const filo = hero.querySelector<SVGElement>('[data-hero-filo]');
     const invito = hero.querySelector<HTMLElement>('[data-hero-invito]');
-    const comandiFoto = hero.querySelector<HTMLElement>('[data-hero-controlli]');
     hero.classList.add('hero--animata');
     ScrollTrigger.refresh();
     gsap.set(frase, { opacity: 0, y: 40 });
@@ -128,7 +127,7 @@ function porta() {
     // Valori iniziali espliciti: all'avvio l'ingresso CSS è ancora in corso e i valori calcolati non sono quelli di riposo
     tl.fromTo(foto, { '--p': 0 }, { '--p': 1, duration: 1 }, 0)
       .fromTo(testo, { y: 0, opacity: 1 }, { y: -90, opacity: 0, duration: 0.55, immediateRender: false }, 0)
-      .fromTo([cerchio, filo, invito, comandiFoto].filter(Boolean), { opacity: 1 }, { opacity: 0, duration: 0.3, immediateRender: false }, 0)
+      .fromTo([cerchio, filo, invito].filter(Boolean), { opacity: 1 }, { opacity: 0, duration: 0.3, immediateRender: false }, 0)
       .fromTo(velo, { opacity: 0 }, { opacity: 1, duration: 0.5, immediateRender: false }, 0.45)
       .fromTo(frase, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.45, immediateRender: false }, 0.55);
     return () => { hero.classList.remove('hero--animata'); };

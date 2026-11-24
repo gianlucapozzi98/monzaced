@@ -131,7 +131,7 @@ export const impostazioni: Impostazioni = {
 
 export const home = single('home') as {
   seoTitolo: string; seoDescrizione: string; occhiello: string; titolo: string; sottotitolo: string;
-  fraseApertura: string; domanda: string; domandaSotto: string; fascia: string[];
+  fotoApertura?: string[]; fraseApertura: string; domanda: string; domandaSotto: string; fascia: string[];
   valoriTitolo: string; valori: { titolo: string; testo: string }[];
   passiTitolo: string; passi: { titolo: string; testo: string }[];
   caricaTitolo: string; caricaTesto: string; chiSiamoTitolo: string; chiSiamoTesto: string;

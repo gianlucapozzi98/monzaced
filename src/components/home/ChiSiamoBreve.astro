@@ -1,0 +1,33 @@
+---
+import { Picture } from 'astro:assets';
+import { home, impostazioni as s } from '@/lib/content';
+import { blocchi } from '@/lib/testo';
+import { img, alt } from '@/lib/immagini';
+import Icon from '../Icon.astro';
+---
+<section class="chi sezione" aria-labelledby="chi-titolo">
+  <div class="contenitore chi__griglia">
+    <div class="chi__foto" data-rivela="arco">
+      <div data-parallasse="0.18">
+        <Picture src={img('monza-villa-reale')} alt={alt('monza-villa-reale')} widths={[420, 640, 900, 1200]} sizes="(min-width: 900px) 42vw, 90vw" formats={['avif', 'webp']} />
+      </div>
+    </div>
+    <div class="chi__testo">
+      <p class="occhiello">Chi siamo</p>
+      <h2 id="chi-titolo" data-rivela>{home.chiSiamoTitolo}</h2>
+      <div class="testo-ricco" data-rivela data-ritardo="0.1" set:html={blocchi(home.chiSiamoTesto)} />
+      <p class="chi__dove"><Icon name="mappa" /> Siamo a Monza, in {s.indirizzo}.</p>
+      <a class="btn btn--secondario" href="/chi-siamo">Scopri lo studio <Icon name="freccia" /></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .chi__griglia { display: grid; grid-template-columns: 5fr 6fr; gap: clamp(32px, 6vw, 96px); align-items: center; }
+  .chi__foto { aspect-ratio: 4 / 5; border-radius: 999px 999px 32px 32px; overflow: hidden; background: var(--cielo); }
+  .chi__foto > div { height: 120%; margin-top: -10%; }
+  .chi__foto :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .chi__dove { display: flex; gap: 10px; align-items: center; font-weight: 700; margin: 8px 0 28px; }
+  .chi__dove :global(svg) { color: var(--blu-scuro); }
+  @media (max-width: 860px) { .chi__griglia { grid-template-columns: minmax(0, 1fr); } .chi__foto { aspect-ratio: 1; max-width: 520px; } }
+</style>

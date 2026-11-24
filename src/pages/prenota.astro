@@ -1,0 +1,23 @@
+---
+import Base from '@/layouts/Base.astro';
+import TestataPagina from '@/components/TestataPagina.astro';
+import ModuloRichiesta from '@/components/ModuloRichiesta.astro';
+import Icon from '@/components/Icon.astro';
+import { contatti as c, impostazioni as s } from '@/lib/content';
+---
+<Base modifica="singleton/contatti" titolo="Prenota una consulenza | Monza CED" descrizione="Prenota una consulenza con Monza CED: lascia nome, telefono e servizio, lo studio ti richiama per fissare l'appuntamento. Oppure chiama lo 039 326628.">
+  <TestataPagina titolo={c.prenotaTitolo} occhiello="Consulenza" briciole={[{ nome: 'Home', url: '/' }, { nome: 'Prenota una consulenza' }]} immagine="consulenza-telefono">
+    <p class="sottotesto">{c.prenotaTesto}</p>
+    <p class="prenota-tel"><Icon name="telefono" /> Preferisci chiamare? <a href={`tel:${s.telefonoLink}`}><strong>{s.telefono}</strong></a>{s.orari[0] && <> · {s.orari[0].giorni.toLowerCase()}, {s.orari[0].ore}</>}</p>
+  </TestataPagina>
+  <div class="contenitore-stretto sezione">
+    <div class="prenota-box"><ModuloRichiesta tipo="prenota" id="modulo-prenota" /></div>
+    <p class="prenota-dopo">Hai già i documenti? Puoi <a href={s.ctaCarica.link}>caricarli online</a> in modo protetto, prima dell'appuntamento.</p>
+  </div>
+</Base>
+<style>
+  .prenota-tel { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: 1.2rem; }
+  .prenota-tel :global(svg) { color: var(--blu-scuro); }
+  .prenota-box { background: var(--bianco); border-radius: 48px 48px 32px 32px; padding: clamp(24px, 4vw, 52px); box-shadow: var(--ombra); }
+  .prenota-dopo { margin-top: 28px; font-size: 1.2rem; }
+</style>

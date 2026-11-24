@@ -1,0 +1,80 @@
+---
+import Base from '@/layouts/Base.astro';
+import TestataPagina from '@/components/TestataPagina.astro';
+import Icon from '@/components/Icon.astro';
+import Segnaposto from '@/components/Segnaposto.astro';
+import { chiSiamo as c, impostazioni as s } from '@/lib/content';
+import { blocchi } from '@/lib/testo';
+import { schemaStudio, schemaBriciole } from '@/lib/schema';
+const team = c.team.filter((t) => t.consenso && t.nome);
+---
+<Base titolo={c.seoTitolo} descrizione={c.seoDescrizione} modifica="singleton/chiSiamo" jsonld={[schemaStudio(Astro.site), schemaBriciole([{ nome: 'Home', url: '/' }, { nome: 'Chi siamo', url: '/chi-siamo' }], Astro.site)]}>
+  <TestataPagina titolo={c.titolo} occhiello="Monza CED" immagine="monza-villa-reale" briciole={[{ nome: 'Home', url: '/' }, { nome: 'Chi siamo' }]}>
+    <p class="sottotesto chi-sotto">{c.sottotitolo}</p>
+  </TestataPagina>
+
+  <section class="contenitore sezione chi-azienda" aria-labelledby="azienda-t">
+    <div class="chi-azienda__griglia">
+      <h2 id="azienda-t" data-rivela>L'azienda</h2>
+      <div class="testo-ricco chi-azienda__testo" set:html={blocchi(c.testo)} />
+    </div>
+  </section>
+
+  <section class="contenitore valori-chi" aria-labelledby="valori-t">
+    <h2 id="valori-t" class="sr-only">I nostri valori</h2>
+    <ul>
+      {c.valori.map((v, i) => (
+        <li data-rivela data-ritardo={String(i * 0.08)}>
+          <span class="valori-chi__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <h3>{v.titolo}</h3>
+          <p>{v.testo}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="contenitore sezione" aria-labelledby="persone-t">
+    <h2 id="persone-t">Le persone dello studio</h2>
+    {team.length > 0 ? (
+      <ul class="persone">{team.map((t) => <li><strong>{t.nome}</strong><span>{t.ruolo}</span></li>)}</ul>
+    ) : (
+      <>
+        <p class="sottotesto">Ti accoglie in studio, in {s.indirizzo} a {s.citta}, un team di professionisti. Vieni a conoscerci di persona.</p>
+        <Segnaposto titolo="Segnaposto: persone e foto" voci={['Nomi, ruoli e foto vere del team (solo con consenso scritto). Nessuna foto di stock va usata per le persone dello studio.']} />
+      </>
+    )}
+  </section>
+
+  <section class="contenitore colf" aria-labelledby="colf-t">
+    <div class="colf__box">
+      <h2 id="colf-t">{c.colfTitolo}</h2>
+      <p>{c.colfTesto}</p>
+      <a class="btn btn--chiaro" href="/servizi/assistenza-familiare-colf-badanti-babysitter">Scopri il servizio <Icon name="freccia" /></a>
+    </div>
+  </section>
+
+  <section class="contenitore sezione" aria-labelledby="servizi-t">
+    <h2 id="servizi-t">I nostri servizi</h2>
+    <div class="testo-ricco" set:html={blocchi(c.servizi)} />
+    <div class="azioni mt-m">
+      <a class="btn" href="/servizi">Vai ai servizi <Icon name="freccia" /></a>
+      <a class="btn btn--secondario" href={s.ctaPrenota.link}>{s.ctaPrenota.testo}</a>
+    </div>
+  </section>
+</Base>
+<style>
+  .chi-sotto { font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.75rem); color: var(--inchiostro); font-family: var(--f-titoli); font-weight: 700; font-style: italic; }
+  .chi-azienda__griglia { display: grid; grid-template-columns: 4fr 7fr; gap: clamp(24px, 5vw, 80px); }
+  .chi-azienda__testo { font-size: 1.25rem; }
+  .valori-chi ul { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .valori-chi li { margin: 0; padding: 30px 26px; background: var(--bianco); border-radius: 999px 999px 28px 28px; padding-top: 56px; }
+  .valori-chi__n { display: block; font-family: var(--f-titoli); font-weight: 800; color: var(--blu); font-size: 1.1rem; margin-bottom: 10px; }
+  .valori-chi p { color: var(--grigio); font-size: 1.125rem; }
+  .persone { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .persone li { margin: 0; padding: 24px; border-radius: 28px; background: var(--bianco); display: grid; }
+  .colf__box { background: var(--inchiostro); color: #fff; border-radius: clamp(40px, 6vw, 90px); padding: clamp(32px, 6vw, 80px); }
+  .colf__box h2 { max-width: 20ch; }
+  .colf__box p { color: #c9d7ee; max-width: 56ch; font-size: 1.25rem; }
+  @media (max-width: 960px) { .chi-azienda__griglia { grid-template-columns: minmax(0, 1fr); } .valori-chi ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .valori-chi ul { grid-template-columns: minmax(0, 1fr); } }
+</style>

@@ -1,0 +1,40 @@
+---
+import Base from '@/layouts/Base.astro';
+import TestataPagina from '@/components/TestataPagina.astro';
+import ModuloRichiesta from '@/components/ModuloRichiesta.astro';
+import Mappa from '@/components/Mappa.astro';
+import Icon from '@/components/Icon.astro';
+import { contatti as c, impostazioni as s } from '@/lib/content';
+import { schemaStudio } from '@/lib/schema';
+---
+<Base modifica="singleton/contatti" titolo="Contatti | Monza CED, Via Solferino 11 Monza" descrizione="Contatta Monza CED: telefono 039 326628, ingresso@monzaced.it, Via Solferino 11 a Monza. Lun–ven 9:30–13:00 e 14:00–18:00. Scrivici dal modulo." jsonld={schemaStudio(Astro.site)}>
+  <TestataPagina titolo={c.titolo} occhiello="Monza CED" briciole={[{ nome: 'Home', url: '/' }, { nome: 'Contatti' }]} immagine="consulenza-telefono">
+    <p class="sottotesto">{c.testo}</p>
+  </TestataPagina>
+  <div class="contenitore sezione contatti">
+    <div class="contatti__dati">
+      <h2>Dove e quando</h2>
+      <ul class="contatti__lista">
+        <li><Icon name="telefono" /><span><strong>Telefono</strong><a href={`tel:${s.telefonoLink}`}>{s.telefono}</a></span></li>
+        <li><Icon name="posta" /><span><strong>Email</strong><a href={`mailto:${s.email}`}>{s.email}</a></span></li>
+        <li><Icon name="mappa" /><span><strong>Indirizzo</strong>{s.indirizzo}, {s.cap} {s.citta} ({s.provincia})</span></li>
+        {s.orari.map((o) => <li><Icon name="orologio" /><span><strong>{o.giorni}</strong>{o.ore}</span></li>)}
+      </ul>
+      <Mappa />
+    </div>
+    <div class="contatti__modulo">
+      <h2>Scrivici</h2>
+      <p>Per fissare un appuntamento puoi anche usare <a href="/prenota">Prenota una consulenza</a>. Non inviare documenti per email: usa <a href={s.ctaCarica.link}>Carica i documenti</a>.</p>
+      <ModuloRichiesta tipo="contatto" id="modulo-contatti" />
+    </div>
+  </div>
+</Base>
+<style>
+  .contatti { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(28px, 5vw, 80px); }
+  .contatti__lista { list-style: none; padding: 0; display: grid; gap: 18px; margin-bottom: 32px; }
+  .contatti__lista li { display: flex; gap: 16px; margin: 0; }
+  .contatti__lista li > :global(svg) { flex: none; width: 48px; height: 48px; padding: 11px; border-radius: 50%; background: var(--cielo); color: var(--blu-scuro); }
+  .contatti__lista span { display: grid; }
+  .contatti__modulo { background: var(--bianco); border-radius: 48px 48px 32px 32px; padding: clamp(24px, 4vw, 48px); align-self: start; }
+  @media (max-width: 960px) { .contatti { grid-template-columns: minmax(0, 1fr); } }
+</style>

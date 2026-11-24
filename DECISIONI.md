@@ -1,0 +1,61 @@
+# DECISIONI
+
+Registro delle scelte fatte durante il lavoro (24/11/2026), con il motivo. Le scelte che dipendono dal cliente sono segnate **[da confermare]**.
+
+## Concept e direzione artistica
+1. **Concept scelto: "Il filo"** (vedi CONCEPT.md): una linea blu continua che accompagna dal titolo dell'hero alle pillole, ai passi e alla chiusura; le foto stanno in **archi** che si aprono. Scartati "La porta" (da solo troppo di tendenza) e "Il respiro" (movimento continuo inadatto a un pubblico anziano, orbite illeggibili su mobile).
+2. **Hero a tutto schermo senza video**: la foto parte in un arco e, scorrendo, l'arco si apre fino a tutto schermo con la frase del cliente "La nostra priorità è farti sentire tranquillo". Niente video per peso e LCP su 4G (e non esistono video veri dello studio).
+3. **Palette dal logo reale** (`monza-ced.svg`): "MONZA" bianco + "CED" corsivo blu `#2E81FF`. Il verde proposto nel brief non ha riscontro nel logo ed è stato scartato. Blu del logo per linee e forme; blu scuro `#1757CC` per pulsanti e link (contrasto 6,4:1 su bianco); inchiostro `#0E1A2B` per testo e sezioni scure; avorio `#F7F5F0` come fondo. Un colore tenue per ciascuna delle 6 aree, sempre con testo scuro.
+4. **Carattere dal logo**: il logo è un sans geometrico pesante con "CED" in corsivo, coerente con **Montserrat** (già usato dal sito). Titoli in Montserrat ExtraBold con le parole chiave **in corsivo blu**, come "CED". Testo in **Atkinson Hyperlegible Next** (progettato per l'ipovisione). Entrambi self-hosted (solo latino), con fallback a metrica calibrata generato da Astro.
+5. **Logo mai ridisegnato**: poiché "MONZA" è bianco, il logo vive solo su fondi scuri (navigazione a pillola scura, caricamento, footer). La favicon usa i tracciati originali della M e della C.
+6. **Una sola grammatica di movimento**: curve `cubic-bezier(.22,1,.36,1)` e `(.65,0,.35,1)`, durate 180/420/900 ms. Solo `transform`, `opacity`, `clip-path`, `stroke-dashoffset`.
+7a. **Filo dell'hero calcolato sulle posizioni reali** (revisione del 24/11/2026): nella prima versione la linea attraversava il sottotitolo ("lavoratori, pensionati…"). Ora uno script la ridisegna a ogni dimensione: passa sopra l'occhiello e scende nello spazio tra testo e arco, dietro il cerchio; verificato da 1024×768 a 2560×1440 con almeno 20 px di distanza da ogni scritta. La "porta" che si apre allo scroll si attiva solo se il contenuto dell'hero entra nello schermo (su schermi bassi resta l'hero statico).
+7. **Hero "sticky" invece del pin di ScrollTrigger**: il pin sposta gli elementi nel DOM e faceva ripartire le animazioni d'ingresso; con `position: sticky` non succede.
+
+## Contenuti
+8. **Testi migrati da tutte le 18 pagine** del sito attuale (il brief diceva che molte non avevano testo: in realtà tutte lo hanno). Riscritti per chiarezza **senza cambiare i fatti**; attenuate solo le promesse ("simulazioni precise", "massimo dei benefici", "garantendoti un percorso senza intoppi").
+9. **Orari presi da /contatti** del sito attuale (lun–ven 9:30–13:00 e 14:00–18:00): nel brief risultavano "non indicati". **[da confermare]**
+10. **SPID rimosso ovunque**, compresa la pagina "Estratto contributivo" che parlava di "credenziali SPID" e offriva aiuto per "creare le credenziali" (cioè lo stesso servizio eliminato). Ora si parla di "credenziali digitali" senza offrire il servizio. **[da confermare se lo studio aiuta ancora con l'accesso al portale INPS]**
+11. **Elenco documenti 730** ricavato dall'immagine collegata al vecchio sito ("Documentazione 2023 per 730/2024"), **senza importi e limiti** legati a quell'anno. **[da aggiornare]**
+12. **PDF elenco ISEE non riportato**: è una scansione di un volantino di terzi (logo CAAF Confesercenti) con dati 2022. Usata solo la lista presente nel testo della pagina. Non citiamo CAAF né accreditazioni. **[da chiarire il rapporto con CAAF Confesercenti]**
+13. **Fatti probabilmente superati, lasciati come nel sito ma segnalati** in "Da completare" (visibile solo in anteprima) e nel README: requisito NASpI dei "30 giorni", indennità del congedo parentale al 30%, ANF per nuclei con figli (sostituito dall'Assegno Unico), "consulenza legale" nelle dimissioni, percorso dell'assegno sociale.
+14. **Situazioni delle pillole** (Famiglia, Casa, Lavoro, Pensione, Impresa e Partita IVA) **diverse dai 6 gruppi**: un servizio sta in un solo gruppo ma in più situazioni (es. il 730 serve a famiglie, lavoratori e pensionati). Assegnazioni modificabili dal pannello. **[da confermare]**
+15. **Nessuna fascia di cifre**: la prima versione mostrava "18 servizi · 6 aree · 2 modi per iniziare" (le uniche cifre vere disponibili). Tolta su richiesta del cliente (24/11/2026): erano cifre deboli, di riempimento. Si potrà reintrodurre solo con dati veri e significativi forniti dallo studio (es. anno di fondazione). Nessun anno, numero di clienti o pratiche inventato.
+16. **"Convenzioni e offerte" spenta**: la pagina del vecchio sito è "non pubblicata". La nostra si genera solo se nel pannello è "pubblicata" e contiene almeno un'offerta con condizioni.
+17. **Persone dello studio**: nessun nome, nessuna foto. La sezione mostra solo chi ha la spunta "consenso scritto" nel pannello.
+18. **FAQ della home** con risposte basate su fatti del sito. La risposta "Posso inviare i documenti online in sicurezza?" descrive il sistema realizzato: è vera solo quando il caricamento è configurato in produzione.
+19. **Segnaposto**: con `PUBLIC_MOSTRA_SEGNAPOSTO=true` (anteprima) i contenuti mancanti compaiono in riquadri tratteggiati arancioni; in produzione (`false`) spariscono. **REA e PEC** restano sempre visibili come "da completare" nel footer, perché obbligatori.
+20. **Coordinate della mappa** ricavate da OpenStreetMap (Nominatim) per "Via Solferino 11, Monza": 45.57818, 9.26831. **[da verificare]**
+
+## Pannello dei testi
+21. **Keystatic** invece di TinaCMS: funziona con file locali (nessun database), ha l'interfaccia **in italiano** (`locale: 'it-IT'`: "Salva", "Pannello di controllo"), campi con etichette e aiuti in italiano, e un **modello unico per i servizi**. TinaCMS richiede componenti React nelle pagine per l'editing in pagina (più JavaScript) e un backend Tina Cloud o un database.
+22. **"Modifica diretta"**: su ogni pagina, quando il pannello è attivo, compare il pulsante "✎ Modifica questa pagina" che apre la scheda giusta del pannello. Il pulsante non esiste nel sito pubblicato senza pannello.
+23. **Formato dei testi lunghi semplice**: riga vuota = paragrafo, "- " = elenco, `**grassetto**`, `[testo](link)`. Niente HTML: impossibile rompere la pagina.
+24. **Pannello in produzione solo in modalità GitHub** (`PUBLIC_KEYSTATIC_STORAGE=github`): ogni salvataggio diventa un commit e il sito si ripubblica da solo. In produzione senza GitHub il pannello non viene pubblicato (scriverebbe sul server).
+
+## Caricamento documenti e moduli
+25. **Flusso**: il browser chiede al server l'avvio (validazione, limiti, gettone anti-robot) → riceve **URL firmati a 15 minuti** → carica i file → il server verifica arrivo, dimensione, **tipo reale (numeri magici)**, **antivirus**, sposta da "quarantena" a "documenti" → solo allora **conferma con codice pratica** (`MC-AAMMGG-XXXXX`). I file rifiutati vengono cancellati subito; se nessun file è accettato, non resta nulla.
+26. **Due archivi intercambiabili**: S3-compatibile privato in UE con cifratura lato server obbligatoria sull'upload (consigliato), oppure cartella locale cifrata **AES-256-GCM** (usata nei test). Nessun link pubblico: lo studio scarica dall'area riservata (URL temporaneo da 2 minuti su S3, o flusso decifrato dal server).
+27. **Antivirus ClamAV** via protocollo `clamd INSTREAM`, implementato senza librerie e verificato con un finto server ClamAV nei test. Se l'antivirus non risponde, il file **non** viene accettato.
+28. **Modalità sicura automatica**: se manca archivio, antivirus, notifiche, segreto, utenti dello studio o **periodo di conservazione**, il blocco mostra "Il caricamento online non è ancora attivo" con telefono e indirizzo. Antivirus e notifiche "di prova" funzionano solo con `MODALITA_PROVA=1`.
+29. **Notifiche senza dati sensibili**: l'email allo studio contiene codice, servizio, numero di file e il link all'area riservata. Per le richieste di consulenza contiene i recapiti (servono per richiamare), mai documenti.
+30. **Consenso esplicito ai dati sanitari** (art. 9 GDPR) richiesto per **ogni** caricamento: anche il 730 contiene spese mediche. I servizi più esposti mostrano una nota in più.
+31. **Area riservata**: password con scrypt, verifica in due passaggi (TOTP) facoltativa, cookie di sessione firmato HttpOnly/SameSite=Strict di 8 ore, blocco dopo 5 tentativi in 15 minuti, **registro** di accessi, viste e scaricamenti, eliminazione con conferma del codice.
+32. **Conservazione definita**: `CONSERVAZIONE_GIORNI` è obbligatorio (senza, niente caricamento). `server.mjs` cancella ogni 6 ore pratiche scadute, caricamenti incompiuti dopo 24 ore, richieste scadute e registro oltre `REGISTRO_GIORNI`. **[valori da decidere con lo studio e il consulente privacy]**
+33. **Limiti anti-abuso** in memoria (adatti a un solo processo): 6 avvii di caricamento e 5 richieste ogni 10 minuti per IP, configurabili. Con più istanze serve Redis.
+34. **Moduli di prenotazione e contatto**: invio reale con salvataggio cifrato e notifica; la conferma con codice compare solo se il server risponde positivamente. Calendario non integrato: non risulta un gestionale.
+
+## Sicurezza e conformità
+35. **CSP con hash** generata da Astro per ogni pagina (niente `unsafe-inline` effettivo per gli script) + intestazioni di sicurezza in `server.mjs` (X-Frame-Options, nosniff, Referrer-Policy, Permissions-Policy, HSTS opzionale). Per farlo sono stati eliminati tutti gli attributi `style` dal markup.
+36. **Anti-CSRF**: controllo d'origine di Astro attivo con `allowedDomains` (senza questo elenco Astro respinge anche i moduli legittimi).
+37. **Cookie banner** secondo il Garante 2021: Accetta / Rifiuta (anche con la X) / Personalizza, scelta valida 6 mesi, "Preferenze cookie" nel footer. Unico contenuto di terzi: la mappa OpenStreetMap, caricata solo dopo il consenso o con un clic esplicito. **Nessuno strumento di statistica** installato.
+38. **robots.txt**: esclusi `/area-studio`, `/api/` e `/keystatic`. La pagina pubblica `/carica-documenti` resta indicizzabile (non contiene documenti: i file stanno in un archivio privato senza URL pubblici).
+39. **Sitemap** generata automaticamente, senza la pagina SPID, senza aree riservate, con "Convenzioni" solo se pubblicata.
+40. **Dati strutturati** `ProfessionalService` + `LocalBusiness` con soli dati reali, nessuna valutazione; `FAQPage` e `Service` sulle pagine.
+
+## Tecnica
+41. **Astro 7 + adapter Node** (standalone, avvolto da `server.mjs`), pagine statiche e API server-side. Formato di build "preserve" per mantenere gli URL esatti del vecchio sito (`/servizi/imu`, senza barra finale).
+42. **CSS in linea** in ogni pagina e **compressione brotli/gzip** nel server: nessuna richiesta bloccante al primo disegno.
+43. **JavaScript**: GSAP (+ ScrollTrigger, Flip) e Lenis caricati come moduli, mai bloccanti. Lenis disattivato con "riduci movimento" e lasciato nativo sul touch.
+44. **Caricamento iniziale solo CSS** (sparisce da solo anche se il JavaScript non arriva), una volta per sessione, mai con "riduci movimento"; rete di sicurezza: se gli script non partono entro 3,5 s, tutto il contenuto viene mostrato.
+45. **Node installato localmente** in `~/.local/node` (v24 LTS, checksum verificato su nodejs.org) perché sul computer non c'era Node.

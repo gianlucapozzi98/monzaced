@@ -1,0 +1,14 @@
+---
+/** Riquadro evidente per i contenuti mancanti. Visibile solo in anteprima (PUBLIC_MOSTRA_SEGNAPOSTO non "false"). */
+import { MOSTRA_SEGNAPOSTO } from '@/lib/content';
+interface Props { voci: string[]; titolo?: string; classe?: string }
+const { voci, titolo = 'Da completare', classe = '' } = Astro.props;
+---
+{MOSTRA_SEGNAPOSTO && voci.length > 0 && (
+  <div class={classe}>
+    <aside class="segnaposto" aria-label={`Promemoria interno: ${titolo}`}>
+      <strong>{titolo}</strong>
+      <ul>{voci.map((v) => <li>{v}</li>)}</ul>
+    </aside>
+  </div>
+)}

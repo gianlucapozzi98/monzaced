@@ -1,0 +1,51 @@
+titolo: Contabilità
+titoloPagina: Contabilità di società, ditte e professionisti
+riassunto: Tenuta della contabilità, bilanci, dichiarazioni e scelta del regime contabile per la tua attività.
+gruppo: imprese
+situazioni:
+  - impresa
+icona: grafico
+immagine: imprese
+ordine: 16
+seo:
+  titolo: Contabilità per società e professionisti a Monza | Monza CED
+  descrizione: "Tenuta della contabilità, bilanci e dichiarazioni per società, ditte e professionisti a Monza. Prenota una consulenza con Monza CED."
+introduzione: |-
+  Una contabilità ordinata è fondamentale per la crescita di qualsiasi attività. Offriamo consulenza completa e un servizio professionale di tenuta della contabilità per società, ditte individuali e professionisti.
+perChi:
+  - Società
+  - Ditte individuali
+  - Professionisti
+perChiNota: ""
+cosaFacciamo:
+  - Registrazione delle operazioni contabili quotidiane.
+  - Elaborazione dei bilanci periodici e di esercizio.
+  - Gestione delle scritture contabili obbligatorie.
+  - Gestione delle dichiarazioni fiscali e calcolo delle imposte.
+  - Consulenza sulla corretta deduzione delle spese e sulla posizione fiscale.
+  - Supporto nella scelta del regime contabile più adatto.
+passaggi: []
+documenti: []
+documentiNota: ""
+approfondimenti:
+  - titolo: I regimi contabili
+    testo: |-
+      La scelta del regime contabile orienta tutta la gestione amministrativa e fiscale dell'attività. I principali:
+
+      - **Regime ordinario:** adatto alle società di capitali, richiede una contabilità completa con bilancio annuale.
+      - **Regime semplificato:** pensato per piccole imprese e professionisti, alleggerisce alcuni obblighi contabili.
+      - **Regime forfettario:** vantaggi fiscali e semplificazioni per piccoli imprenditori e professionisti con determinati requisiti di reddito.
+faq: []
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=contabilita-societa-ditte-professionisti
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: false
+aggiornatoIl: 2026-11-24
+daCompletare:
+  - Elenco documenti per avviare la tenuta della contabilità.
+fonte: Testi migrati da monzaced.it/servizi/contabilita-societa-ditte-professionisti il 24/11/2026.

@@ -1,0 +1,83 @@
+titolo: Modello ISEE
+titoloPagina: "Modello ISEE: l'Indicatore della Situazione Economica Equivalente"
+riassunto: Ti aiutiamo a ottenere l'ISEE più adatto alla tua famiglia, dalla raccolta dei documenti alla compilazione.
+gruppo: dichiarazioni
+situazioni:
+  - famiglia
+  - pensione
+icona: indicatore
+immagine: famiglia
+ordine: 2
+seo:
+  titolo: Modello ISEE a Monza | Monza CED
+  descrizione: "ISEE a Monza: ti aiutiamo con la compilazione e con i documenti per il nucleo familiare. Prenota una consulenza o carica i documenti online."
+introduzione: |-
+  L'ISEE è lo strumento che misura la situazione economica di un nucleo familiare. Ti spieghiamo in modo chiaro che cos'è, chi può richiederlo e come ottenerlo con il nostro aiuto.
+perChi:
+  - Famiglie e singole persone che vogliono accedere ad agevolazioni economiche o fiscali
+  - Chi deve richiedere benefici previsti dalla normativa vigente
+  - Enti come istituti di assistenza e strutture socio-sanitarie
+perChiNota: ""
+cosaFacciamo:
+  - Ti guidiamo nella compilazione del modulo.
+  - Ti aiutiamo a raccogliere i documenti necessari.
+  - Ti aiutiamo a scegliere il tipo di ISEE più adatto alla tua situazione: ogni tipologia ha requisiti e procedure specifiche.
+passaggi:
+  - titolo: Capire chi fa parte del nucleo
+    testo: Definiamo insieme il nucleo familiare ai fini ISEE.
+  - titolo: Raccogliere i documenti
+    testo: Redditi, patrimonio e altri documenti sulla situazione economica della famiglia.
+  - titolo: Compilare e presentare il modulo
+    testo: Compiliamo il modulo e lo presentiamo con la documentazione richiesta.
+documenti:
+  - voce: Documenti d'identità di tutti i componenti del nucleo familiare
+    nota: ""
+  - voce: Dichiarazione dei redditi
+    nota: ""
+  - voce: Estratti conto bancari
+    nota: ""
+  - voce: Certificati relativi a eventuali agevolazioni fiscali
+    nota: ""
+  - voce: Altri documenti richiesti in base alla tua situazione particolare
+    nota: Te li indichiamo in consulenza
+documentiNota: ""
+approfondimenti:
+  - titolo: A cosa serve l'ISEE
+    testo: |-
+      L'attestazione è valida per un anno e serve a stabilire l'accesso, per ogni componente del nucleo familiare, a prestazioni agevolate come:
+
+      - assegno di maternità o per nuclei familiari numerosi
+      - iscrizione all'asilo nido e ad altri servizi educativi per l'infanzia
+      - mense scolastiche
+      - prestazioni scolastiche (trasporto alunni, borse di studio e altre)
+      - agevolazioni per le tasse universitarie
+      - servizi socio-assistenziali domiciliari
+      - servizi socio-assistenziali diurni e residenziali
+      - agevolazioni per servizi di pubblica utilità (telefono, luce, gas, trasporti pubblici)
+      - agevolazioni sui tributi locali
+  - titolo: Chi fa parte del nucleo familiare
+    testo: |-
+      Ai fini ISEE il nucleo familiare comprende le persone legate da parentela, affinità o convivenza che hanno la stessa residenza: per esempio coniugi, figli, genitori, fratelli e altre situazioni familiari particolari. Capire chi ne fa parte è il primo passo per calcolare correttamente l'ISEE.
+  - titolo: Come si ottiene la certificazione
+    testo: |-
+      Bisogna compilare l'apposito modulo e presentare la documentazione richiesta presso gli enti competenti: tra gli altri, la dichiarazione dei redditi, la documentazione sul patrimonio e gli altri documenti sulla situazione economica del nucleo.
+faq:
+  - domanda: Per quanto tempo vale l'ISEE?
+    risposta: L'attestazione ISEE è valida per un anno.
+  - domanda: Esiste un solo tipo di ISEE?
+    risposta: |-
+      No: ogni tipologia ha requisiti e procedure specifiche. Ti aiutiamo a scegliere quella più adatta.
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=modello-isee
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: true
+aggiornatoIl: 2026-11-24
+daCompletare:
+  - Fornire l'elenco documenti ISEE aggiornato (il PDF del vecchio sito riporta dati 2022 e un logo CAAF di terzi).
+  - Confermare la frase sulla validità ("valida per un anno").
+fonte: Testi migrati da monzaced.it/servizi/modello-isee il 24/11/2026. Il PDF "elenco-documenti-isee" non è stato riportato perché datato.

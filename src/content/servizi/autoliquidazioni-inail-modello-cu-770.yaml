@@ -1,0 +1,49 @@
+titolo: Autoliquidazioni, INAIL, CU e 770
+titoloPagina: Autoliquidazione INAIL, Modello CU (ex CUD) e Modello 770
+riassunto: Calcolo del premio INAIL, certificazioni uniche per i dipendenti e invio del Modello 770.
+gruppo: imprese
+situazioni:
+  - impresa
+icona: scudo
+immagine: imprese
+ordine: 18
+seo:
+  titolo: Autoliquidazione INAIL, CU e 770 a Monza | Monza CED
+  descrizione: "Autoliquidazione INAIL, Certificazione Unica e Modello 770 per aziende a Monza. Prenota una consulenza con Monza CED o carica i documenti."
+introduzione: |-
+  Ti seguiamo nell'autoliquidazione INAIL, nel Modello CU (ex CUD) e nel Modello 770, con attenzione alla conformità e alle scadenze.
+perChi:
+  - Aziende e datori di lavoro
+  - Sostituti d'imposta
+perChiNota: ""
+cosaFacciamo:
+  - Calcolo del premio INAIL, compresi eventuali sconti e agevolazioni, e indicazioni sul pagamento in un'unica soluzione o a rate.
+  - Preparazione e consegna delle Certificazioni Uniche per conto dei datori di lavoro.
+  - Preparazione e invio telematico del Modello 770, comprese ritenute, crediti e compensazioni.
+passaggi: []
+documenti: []
+documentiNota: ""
+approfondimenti:
+  - titolo: Autoliquidazione INAIL
+    testo: |-
+      Ogni azienda deve dichiarare ogni anno le retribuzioni imponibili per determinare il premio assicurativo INAIL.
+  - titolo: Modello CU (Certificazione Unica)
+    testo: |-
+      È un documento fondamentale per i lavoratori dipendenti: attesta le retribuzioni percepite, le ritenute fiscali e i contributi previdenziali versati.
+  - titolo: Modello 770
+    testo: |-
+      Riassume i dati fiscali, previdenziali e assicurativi gestiti dai sostituti d'imposta.
+faq: []
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=autoliquidazioni-inail-modello-cu-770
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: false
+aggiornatoIl: 2026-11-24
+daCompletare:
+  - Elenco documenti per autoliquidazione, CU e 770.
+fonte: Testi migrati da monzaced.it/servizi/autoliquidazioni-inail-modello-cu-770 il 24/11/2026.

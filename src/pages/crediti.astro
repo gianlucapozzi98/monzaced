@@ -1,0 +1,30 @@
+---
+import Base from '@/layouts/Base.astro';
+import TestataPagina from '@/components/TestataPagina.astro';
+import { getImmagini } from '@/lib/content';
+const foto = getImmagini();
+---
+<Base modifica="collection/immagini" titolo="Crediti fotografici | Monza CED" descrizione="Autori e licenze delle fotografie usate sul sito di Monza CED. Le foto di stock non ritraggono persone dello studio né suoi clienti.">
+  <TestataPagina titolo="Crediti" occhiello="Fotografie e licenze" briciole={[{ nome: 'Home', url: '/' }, { nome: 'Crediti' }]}>
+    <p class="sottotesto">Le fotografie del sito provengono da archivi con licenza per uso commerciale. <strong>Le foto di stock non ritraggono le persone dello studio né i suoi clienti</strong>: servono solo a illustrare le situazioni di cui ci occupiamo. Ritocco limitato a nitidezza, esposizione e rumore.</p>
+  </TestataPagina>
+  <div class="contenitore sezione">
+    <ul class="crediti">
+      {foto.map((f) => (
+        <li>
+          <p class="crediti__desc">{f.descrizione}</p>
+          <p>Foto di <strong>{f.autore}</strong> su <a href={f.urlFonte} rel="noopener" target="_blank">{f.fonte}<span class="sr-only"> (si apre in una nuova scheda)</span></a></p>
+          <p class="crediti__lic">{f.urlLicenza ? <a href={f.urlLicenza} rel="noopener" target="_blank">{f.licenza}<span class="sr-only"> (si apre in una nuova scheda)</span></a> : f.licenza}{f.tipo === 'stock' && ' · foto di stock'}</p>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-l">Logo e marchio: Monza CED Srl. Icone e grafica: realizzate per questo sito.</p>
+  </div>
+</Base>
+<style>
+  .crediti { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .crediti li { margin: 0; padding: 24px; border-radius: 28px; background: var(--bianco); }
+  .crediti p { margin: 0 0 6px; }
+  .crediti__desc { font-family: var(--f-titoli); font-weight: 700; font-size: 1.15rem; }
+  .crediti__lic { font-size: 1.0625rem; color: var(--grigio); }
+</style>

@@ -1,0 +1,53 @@
+titolo: Reversibilità e ratei
+titoloPagina: Pensione di reversibilità e ratei
+riassunto: Domanda di pensione di reversibilità e richiesta dei ratei di pensione maturati e non riscossi.
+gruppo: pensioni
+situazioni:
+  - pensione
+  - famiglia
+icona: fiore
+immagine: pensioni
+ordine: 12
+seo:
+  titolo: Pensione di reversibilità a Monza | Monza CED
+  descrizione: "Pensione di reversibilità e ratei non riscossi a Monza: domanda all'INPS e documenti. Prenota una consulenza con Monza CED o carica i documenti."
+introduzione: |-
+  La pensione di reversibilità e i ratei non riscossi sono un sostegno economico importante per i familiari superstiti. Ti guidiamo in ogni fase.
+perChi:
+  - Familiari superstiti di un lavoratore o di un pensionato deceduto con contributi sufficienti
+  - Coniuge e figli
+  - In alcuni casi altri familiari a carico, come genitori o fratelli, se rispettano i requisiti di legge
+perChiNota: ""
+cosaFacciamo:
+  - Consulenza sulla pensione di reversibilità e sui ratei non riscossi.
+  - Preparazione e presentazione della domanda tramite il modello precompilato sul sito dell'INPS.
+  - Supporto nella raccolta dei documenti.
+  - Consulenza per la richiesta dei ratei di pensione maturati e non riscossi.
+passaggi: []
+documenti:
+  - voce: Certificato di morte del defunto
+    nota: ""
+  - voce: Documentazione del legame di parentela o del matrimonio
+    nota: ""
+  - voce: Documentazione della situazione contributiva del defunto
+    nota: ""
+  - voce: IBAN per l'accredito della pensione
+    nota: ""
+documentiNota: ""
+approfondimenti:
+  - titolo: I ratei non riscossi
+    testo: |-
+      Quando un pensionato muore può capitare che la pensione sia stata pagata ma non interamente riscossa. Ti aiutiamo a richiedere i ratei maturati e non riscossi che ti spettano.
+faq: []
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=pensione-reversibilita-ratei
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: false
+aggiornatoIl: 2026-11-24
+daCompletare: []
+fonte: Testi migrati da monzaced.it/servizi/pensione-reversibilita-ratei il 24/11/2026.

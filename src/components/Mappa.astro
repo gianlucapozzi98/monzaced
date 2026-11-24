@@ -1,0 +1,49 @@
+---
+/** Mappa di OpenStreetMap: si carica solo dopo il consenso ai contenuti esterni (o con un clic esplicito). */
+import Icon from './Icon.astro';
+import { impostazioni as s } from '@/lib/content';
+const lat = Number(s.mappaLat), lon = Number(s.mappaLon);
+const ok = Number.isFinite(lat) && Number.isFinite(lon) && s.mappaLat !== '';
+const d = 0.004;
+const src = ok ? `https://www.openstreetmap.org/export/embed.html?bbox=${lon - d}%2C${lat - d / 2}%2C${lon + d}%2C${lat + d / 2}&layer=mapnik&marker=${lat}%2C${lon}` : '';
+const link = ok ? `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=18/${lat}/${lon}` : `https://www.openstreetmap.org/search?query=${encodeURIComponent(`${s.indirizzo}, ${s.cap} ${s.citta}`)}`;
+---
+<div class="mappa" data-mappa data-src={src}>
+  <div class="mappa__segnaposto" data-mappa-segnaposto>
+    <Icon name="mappa" size={40} />
+    <p><strong>{s.indirizzo}</strong><br />{s.cap} {s.citta} ({s.provincia})</p>
+    {src && <p class="mappa__nota">La mappa è fornita da OpenStreetMap e si carica solo con il tuo consenso.</p>}
+    <div class="azioni">
+      {src && <button type="button" class="btn btn--piccolo" data-mappa-carica>Mostra la mappa</button>}
+      <a class="btn btn--piccolo btn--secondario" href={link} rel="noopener" target="_blank">Apri in OpenStreetMap<span class="sr-only"> (si apre in una nuova scheda)</span></a>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { leggiConsenso, salvaConsenso } from '@/scripts/consenso';
+  document.querySelectorAll<HTMLElement>('[data-mappa]').forEach((m) => {
+    const src = m.dataset.src;
+    if (!src) return;
+    const carica = () => {
+      if (m.querySelector('iframe')) return;
+      const f = document.createElement('iframe');
+      f.src = src; f.title = 'Mappa: dove si trova lo studio'; f.loading = 'lazy';
+      f.referrerPolicy = 'no-referrer';
+      m.appendChild(f);
+      m.classList.add('mappa--caricata');
+    };
+    if (leggiConsenso()?.esterni) carica();
+    window.addEventListener('consenso-cambiato', (e) => { if ((e as CustomEvent).detail?.esterni) carica(); });
+    m.querySelector('[data-mappa-carica]')?.addEventListener('click', () => { salvaConsenso({ esterni: true }); carica(); });
+  });
+</script>
+
+<style>
+  .mappa { position: relative; min-height: 340px; border-radius: 999px 999px 32px 32px; overflow: hidden; background: var(--cielo); }
+  .mappa__segnaposto { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; text-align: center; padding: 90px 28px 28px; gap: 4px; }
+  .mappa__segnaposto :global(svg) { color: var(--blu-scuro); }
+  .mappa__nota { font-size: 1.0625rem; color: var(--grigio); max-width: 36ch; }
+  .mappa :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  :global(.mappa--caricata) .mappa__segnaposto { visibility: hidden; }
+</style>

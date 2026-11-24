@@ -1,0 +1,48 @@
+titolo: Estratto contributivo
+titoloPagina: "Estratto contributivo: consultazione e richieste"
+riassunto: Ti aiutiamo a consultare e leggere l'estratto conto contributivo INPS e a correggere eventuali anomalie.
+gruppo: pensioni
+situazioni:
+  - pensione
+  - lavoro
+icona: lente
+immagine: pensioni
+ordine: 14
+seo:
+  titolo: Estratto conto contributivo INPS a Monza | Monza CED
+  descrizione: "Consultazione e lettura dell'estratto conto contributivo INPS a Monza, con verifica di periodi mancanti. Prenota una consulenza con Monza CED."
+introduzione: |-
+  L'estratto contributivo, rilasciato dall'INPS, mostra i contributi versati negli anni. Ti aiutiamo a consultarlo, a richiederlo e a capirlo.
+perChi:
+  - Lavoratori che vogliono conoscere la propria situazione contributiva
+  - Chi sta pianificando la pensione
+  - Chi sospetta periodi contributivi mancanti o errati
+perChiNota: ""
+cosaFacciamo:
+  - Ti supportiamo nella consultazione del tuo estratto conto contributivo sul sito dell'INPS.
+  - Ti aiutiamo a interpretare i dati, chiarendo periodi mancanti o anomalie.
+  - Ti offriamo consulenza per regolarizzare eventuali differenze o omissioni contributive.
+passaggi: []
+documenti: []
+documentiNota: ""
+approfondimenti:
+  - titolo: Che cos'è l'estratto conto contributivo
+    testo: |-
+      È il documento che riporta tutto lo storico dei contributi versati da un lavoratore all'INPS. Serve a verificare che i dati registrati siano corretti, a calcolare l'importo della futura pensione e a individuare eventuali periodi mancanti o errati.
+  - titolo: Come vedere lo storico lavorativo
+    testo: |-
+      Lo storico dei contributi si consulta sul sito dell'INPS, accedendo con le proprie credenziali digitali. Una volta entrati si può visualizzare e scaricare l'estratto contributivo. Se incontri difficoltà, ti aiutiamo nella consultazione.
+faq: []
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=consultazione-estratto-conto-contributivo-previdenziale
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: false
+aggiornatoIl: 2026-11-24
+daCompletare:
+  - "Il vecchio testo offriva assistenza nella creazione delle credenziali di accesso (servizio rimosso su richiesta del cliente): parte tolta. Confermare se lo studio aiuta ancora con l'accesso al portale INPS."
+fonte: Testi migrati da monzaced.it/servizi/consultazione-estratto-conto-contributivo-previdenziale il 24/11/2026, senza i riferimenti al servizio di rilascio delle credenziali digitali (rimosso).

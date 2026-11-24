@@ -1,0 +1,24 @@
+titolo: Accessibilità
+descrizione: "L'impegno di Monza CED per un sito leggibile e usabile da tutti, anche da persone anziane o con disabilità. Come segnalarci un problema."
+bozza: true
+aggiornatoIl: 2026-11-24
+sezioni:
+  - titolo: Il nostro impegno
+    testo: |-
+      Vogliamo che il sito sia facile da usare per tutti, anche per chi ha difficoltà di vista, di movimento o poca dimestichezza con il computer. L'obiettivo è la conformità alle **WCAG 2.2 livello AA**.
+  - titolo: Cosa abbiamo fatto
+    testo: |-
+      - Testo grande (almeno 18 px) e contrasti alti tra testo e sfondo.
+      - Pulsanti grandi, facili da toccare anche dal telefono.
+      - Tutto il sito si usa anche solo con la tastiera, con un indicatore del punto in cui ti trovi ben visibile.
+      - Nessuna funzione richiede il mouse o gesti complessi.
+      - Le animazioni si fermano se nel tuo dispositivo hai scelto di ridurre il movimento; la fascia scorrevole ha un pulsante Pausa.
+      - Le immagini hanno una descrizione testuale; le forme decorative sono ignorate dai lettori di schermo.
+      - I moduli spiegano gli errori in modo chiaro, vicino al campo da correggere.
+  - titolo: Limiti noti
+    testo: |-
+      - I documenti PDF scaricabili prodotti da enti terzi potrebbero non essere accessibili.
+      - [DA AGGIORNARE dopo la verifica con utenti reali.]
+  - titolo: Segnalaci un problema
+    testo: |-
+      Se qualcosa non funziona o è difficile da usare, scrivi a [ingresso@monzaced.it](mailto:ingresso@monzaced.it) o chiama lo **039 326628**: ti aiutiamo anche per telefono.

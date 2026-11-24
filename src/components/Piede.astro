@@ -1,0 +1,112 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { impostazioni as s, getServizi, GRUPPI } from '@/lib/content';
+
+const anno = new Date().getFullYear();
+const gruppi = Object.entries(GRUPPI).sort((a, b) => a[1].ordine - b[1].ordine);
+const servizi = getServizi();
+---
+<footer class="piede su-scuro no-stampa">
+  <svg class="piede__arco" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d="M0 120V60C240 10 480 0 720 0s480 10 720 60v60Z" fill="currentColor" />
+  </svg>
+  <div class="contenitore">
+    <div class="piede__invito">
+      <p class="piede__claim titolo-display">Le tue pratiche, <em>in mani sicure.</em></p>
+      <div class="azioni">
+        <a class="btn btn--chiaro" href={s.ctaPrenota.link}>{s.ctaPrenota.testo} <Icon name="freccia" /></a>
+        <a class="btn btn--secondario" href={s.ctaCarica.link}><Icon name="carica" /> {s.ctaCarica.testo}</a>
+      </div>
+    </div>
+
+    <div class="piede__griglia">
+      <div class="piede__studio">
+        <a href="/" class="piede__logo" aria-label="Monza CED, torna alla home"><Logo /></a>
+        <address>
+          <p><Icon name="mappa" /> <span>{s.indirizzo}<br />{s.cap} {s.citta} ({s.provincia})</span></p>
+          <p><Icon name="telefono" /> <a href={`tel:${s.telefonoLink}`}>{s.telefono}</a></p>
+          <p><Icon name="posta" /> <a href={`mailto:${s.email}`}>{s.email}</a></p>
+          {s.orari.map((o) => (<p><Icon name="orologio" /> <span>{o.giorni}<br />{o.ore}</span></p>))}
+        </address>
+      </div>
+
+      <nav aria-label="Servizi per area">
+        <h2 class="piede__titolo">Servizi</h2>
+        <ul>
+          {gruppi.map(([id, g]) => {
+            const n = servizi.filter((x) => x.gruppo === id).length;
+            return n ? <li><a href={`/servizi#area-${id}`}>{g.nome}</a></li> : null;
+          })}
+          <li><a href="/servizi">Tutti i servizi</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-label="Studio">
+        <h2 class="piede__titolo">Studio</h2>
+        <ul>
+          <li><a href="/chi-siamo">Chi siamo</a></li>
+          <li><a href="/contatti">Contatti</a></li>
+          <li><a href={s.ctaPrenota.link}>Prenota una consulenza</a></li>
+          <li><a href={s.ctaCarica.link}>Carica i documenti</a></li>
+          <li><a href="/cerca">Cerca</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-label="Informazioni legali">
+        <h2 class="piede__titolo">Informazioni</h2>
+        <ul>
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="/cookie">Cookie</a></li>
+          <li><button type="button" class="piede__link-btn" data-preferenze-cookie>Preferenze cookie</button></li>
+          <li><a href="/termini">Termini e condizioni</a></li>
+          <li><a href="/accessibilita">Accessibilità</a></li>
+          <li><a href="/crediti">Crediti</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="piede__fondo">
+      <p class="piede__societa">
+        © {anno} <strong>{s.ragioneSociale}</strong> · Sede legale: {s.indirizzo}, {s.cap} {s.citta} ({s.provincia}) ·
+        P. IVA {s.partitaIva} · Capitale sociale {s.capitaleSociale} ·
+        REA {s.rea ? s.rea : <span class="segnaposto-inline">da completare</span>} ·
+        PEC {s.pec ? <a href={`mailto:${s.pec}`}>{s.pec}</a> : <span class="segnaposto-inline">da completare</span>}
+      </p>
+      <ul class="piede__social">
+        {s.facebook && <li><a href={s.facebook} rel="noopener" target="_blank" aria-label="Facebook (si apre in una nuova scheda)"><Icon name="facebook" /></a></li>}
+        {s.linkedin && <li><a href={s.linkedin} rel="noopener" target="_blank" aria-label="LinkedIn (si apre in una nuova scheda)"><Icon name="linkedin" /></a></li>}
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .piede { position: relative; margin-top: 120px; padding: 40px 0 36px; }
+  .piede__arco { position: absolute; left: 0; right: 0; bottom: calc(100% - 1px); width: 100%; height: clamp(40px, 7vw, 120px); color: var(--inchiostro); }
+  .piede__invito { display: flex; flex-wrap: wrap; gap: 28px 48px; align-items: flex-end; justify-content: space-between; padding-bottom: 56px; border-bottom: 1px solid rgb(255 255 255 / 0.14); }
+  .piede__claim { font-family: var(--f-titoli); font-weight: 800; font-size: clamp(2.2rem, 1.4rem + 3.6vw, 4.6rem); line-height: 1.02; letter-spacing: -0.035em; margin: 0; max-width: 14ch; }
+  .piede__claim em { color: var(--blu); }
+  .piede__griglia { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 40px; padding-block: 56px; }
+  .piede__logo { display: inline-block; margin-bottom: 24px; }
+  .piede__logo :global(.logo) { width: 200px; }
+  address { font-style: normal; }
+  address p { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+  address :global(svg) { flex: none; margin-top: 3px; color: var(--blu); }
+  .piede__titolo { font-size: 1.0625rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blu-chiaro); margin-bottom: 16px; }
+  .piede ul { list-style: none; padding: 0; margin: 0; }
+  .piede nav li { margin-bottom: 4px; }
+  .piede nav a, .piede__link-btn {
+    display: inline-flex; min-height: 44px; align-items: center;
+    color: var(--bianco) !important; text-decoration: none; font-size: 1.125rem;
+  }
+  .piede nav a:hover, .piede__link-btn:hover { text-decoration: underline; }
+  .piede__link-btn { background: none; border: 0; padding: 0; cursor: pointer; font: inherit; font-size: 1.125rem; }
+  .piede__fondo { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center; padding-top: 28px; border-top: 1px solid rgb(255 255 255 / 0.14); }
+  .piede__societa { margin: 0; font-size: 1.125rem; color: #c9d7ee; max-width: 90ch; }
+  .piede__social { display: flex; gap: 10px; }
+  .piede__social a { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; border: 2px solid rgb(255 255 255 / 0.35); color: var(--bianco) !important; transition: background var(--d-micro) var(--ease-out); }
+  .piede__social a:hover { background: var(--blu-scuro); }
+  @media (max-width: 960px) { .piede__griglia { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .piede__griglia { grid-template-columns: minmax(0, 1fr); } }
+</style>

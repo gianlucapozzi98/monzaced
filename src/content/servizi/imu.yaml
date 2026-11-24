@@ -1,0 +1,100 @@
+titolo: IMU
+titoloPagina: 'IMU: Imposta Municipale Propria'
+riassunto: Calcolo, versamento e dichiarazione IMU, con consulenza sulle agevolazioni a cui potresti avere diritto.
+gruppo: casa
+situazioni:
+  - casa
+icona: casa
+immagine: casa-chiavi
+ordine: 4
+seo:
+  titolo: IMU a Monza, calcolo e versamenti | Monza CED
+  descrizione: >-
+    Calcolo dell'IMU, modello F24 e dichiarazione a Monza. Consulenza sulle
+    agevolazioni. Prenota con Monza CED o carica i documenti online.
+introduzione: >-
+  L'IMU è l'imposta che pagano i proprietari di fabbricati, aree edificabili e
+  terreni agricoli. Ti guidiamo nel calcolo, nel pagamento e nella
+  dichiarazione, per rendere semplice ciò che sembra complicato.
+perChi:
+  - Proprietari di immobili o terreni
+  - Titolari di diritti reali come usufrutto, uso, abitazione o superficie
+perChiNota: >-
+  L'IMU si paga su:
+
+
+  - fabbricati diversi dall'abitazione principale (quella in cui hai residenza
+  anagrafica e dimora)
+
+  - abitazioni principali di lusso (categorie catastali A/1, A/8 e A/9)
+
+  - aree fabbricabili
+
+  - terreni agricoli
+cosaFacciamo:
+  - Calcoliamo l'importo dell'IMU dovuto.
+  - >-
+    Offriamo una consulenza individuale per individuare le agevolazioni a cui
+    potresti avere diritto.
+  - Prepariamo e controlliamo il modello F24 per il pagamento.
+passaggi:
+  - titolo: Calcolo
+    testo: Partiamo dal valore catastale e dalle aliquote del tuo Comune.
+  - titolo: Modello F24
+    testo: >-
+      Prepariamo e controlliamo l'F24, che puoi pagare in banca, in posta o con
+      l'home banking.
+  - titolo: Versamento
+    testo: >-
+      In due rate (16 giugno e 16 dicembre) oppure in un'unica rata entro il 16
+      giugno.
+documenti:
+  - voce: Visura o dati catastali degli immobili
+    nota: Da confermare con lo studio
+approfondimenti:
+  - titolo: Quanto si paga
+    testo: >-
+      Il calcolo dipende da diversi fattori, tra cui il valore catastale
+      dell'immobile rivalutato del 5% e le aliquote decise dal Comune in cui si
+      trova l'immobile. **Ogni Comune stabilisce autonomamente le proprie
+      aliquote**, quindi l'importo può cambiare molto da un Comune all'altro.
+  - titolo: Come si paga
+    testo: Con il modello F24, in banca, alla posta oppure online con l'home banking.
+  - titolo: Quando si paga
+    testo: >-
+      In due rate del 50% ciascuna, a sei mesi di distanza: **acconto entro il
+      16 giugno** e **saldo entro il 16 dicembre**. Oppure in un'unica rata
+      entro il 16 giugno.
+  - titolo: La dichiarazione IMU
+    testo: >-
+      Va presentata solo in caso di variazioni che cambiano il calcolo
+      dell'imposta: nuove costruzioni, cambi di destinazione d'uso, passaggi di
+      proprietà.
+
+
+      Il termine è attualmente fissato al **30 giugno dell'anno successivo** a
+      quello in cui si è verificata la variazione.
+faq:
+  - domanda: Pago l'IMU sulla casa in cui vivo?
+    risposta: >-
+      No, se è la tua abitazione principale, a meno che non sia accatastata
+      nelle categorie di lusso A/1, A/8 o A/9.
+  - domanda: Quando scadono le rate?
+    risposta: >-
+      Il 16 giugno (acconto) e il 16 dicembre (saldo). La rata unica si versa
+      entro il 16 giugno.
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=imu
+  carica:
+    testo: Carica i documenti
+    link: '#carica-documenti'
+caricamentoAttivo: true
+datiParticolari: false
+aggiornatoIl: 2026-11-24
+daCompletare:
+  - Elenco documenti per l'IMU (il vecchio sito non lo riporta).
+fonte: >-
+  Testi migrati da monzaced.it/servizi/imu e dalla home (sezione "IMU") il
+  24/11/2026.

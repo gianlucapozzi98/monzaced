@@ -1,0 +1,91 @@
+---
+import Base from '@/layouts/Base.astro';
+import TestataPagina from '@/components/TestataPagina.astro';
+import Icon from '@/components/Icon.astro';
+import { getServizi, GRUPPI, getLegale } from '@/lib/content';
+import { piano } from '@/lib/testo';
+
+const indice = [
+  ...getServizi().map((x) => ({
+    t: x.titolo, d: x.riassunto, u: `/servizi/${x.slug}`, a: GRUPPI[x.gruppo].nome,
+    k: piano([x.titoloPagina, x.introduzione, x.perChi.join(' '), x.cosaFacciamo.join(' '), x.documenti.map((d) => d.voce).join(' '), x.approfondimenti.map((a) => `${a.titolo} ${a.testo}`).join(' '), x.faq.map((f) => f.domanda).join(' ')].join(' ')),
+  })),
+  { t: 'Prenota una consulenza', d: 'Lascia i tuoi recapiti: lo studio ti richiama.', u: '/prenota', a: 'Studio', k: 'appuntamento prenotazione consulenza richiamata' },
+  { t: 'Carica i documenti', d: 'Invia i documenti in modo protetto.', u: '/carica-documenti', a: 'Studio', k: 'upload invio documenti file foto pdf caricamento' },
+  { t: 'Contatti', d: 'Telefono, email, indirizzo e orari.', u: '/contatti', a: 'Studio', k: 'telefono email indirizzo orari via solferino mappa dove siamo' },
+  { t: 'Chi siamo', d: 'Monza CED, Centro di Elaborazione Dati a Monza.', u: '/chi-siamo', a: 'Studio', k: 'azienda studio valori competenza professionalità affidabilità sicurezza' },
+  ...['privacy', 'cookie', 'termini', 'accessibilita'].map((s) => { const p = getLegale(s)!; return { t: p.titolo, d: p.descrizione, u: `/${s}`, a: 'Informazioni', k: p.sezioni.map((x) => x.titolo).join(' ') }; }),
+];
+---
+<Base titolo="Cerca nel sito | Monza CED" descrizione="Cerca un servizio di Monza CED: 730, ISEE, IMU, successioni, colf e badanti, NASpI, pensioni, contabilità e Partita IVA.">
+  <TestataPagina titolo="Cerca" occhiello="Trova il tuo servizio" briciole={[{ nome: 'Home', url: '/' }, { nome: 'Cerca' }]}>
+    <form class="cerca" role="search" action="/cerca" method="get" data-cerca>
+      <label for="q" class="sr-only">Cosa stai cercando?</label>
+      <Icon name="cerca" size={28} />
+      <input id="q" name="q" type="search" placeholder="Es. 730, badante, pensione, affitto…" autocomplete="off" aria-describedby="cerca-esito" />
+      <button class="btn" type="submit">Cerca</button>
+    </form>
+  </TestataPagina>
+  <div class="contenitore-stretto sezione">
+    <p id="cerca-esito" class="cerca__esito" role="status" aria-live="polite"></p>
+    <ul class="risultati" data-risultati></ul>
+    <noscript><p>La ricerca richiede JavaScript. Puoi sfogliare <a href="/servizi">tutti i servizi</a>.</p></noscript>
+    <p class="cerca__tutti">Oppure guarda <a href="/servizi">tutti i servizi</a>.</p>
+  </div>
+  <script type="application/json" data-indice set:html={JSON.stringify(indice)} />
+</Base>
+
+<script>
+  type V = { t: string; d: string; u: string; a: string; k: string };
+  const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const indice: V[] = JSON.parse(document.querySelector('[data-indice]')!.textContent || '[]');
+  const form = document.querySelector<HTMLFormElement>('[data-cerca]')!;
+  const input = form.querySelector('input')!;
+  const out = document.querySelector<HTMLUListElement>('[data-risultati]')!;
+  const esito = document.getElementById('cerca-esito')!;
+  const esegui = (q: string) => {
+    out.innerHTML = '';
+    const parole = norm(q).split(/\s+/).filter((p) => p.length > 1);
+    if (!parole.length) { esito.textContent = ''; return; }
+    const punteggi = indice.map((v) => {
+      const t = norm(v.t), d = norm(v.d), k = norm(v.k);
+      let p = 0;
+      for (const w of parole) { if (t.includes(w)) p += 10; if (d.includes(w)) p += 4; if (k.includes(w)) p += 1; }
+      return { v, p, tutte: parole.every((w) => t.includes(w) || d.includes(w) || k.includes(w)) };
+    }).filter((x) => x.p > 0 && x.tutte).sort((a, b) => b.p - a.p);
+    esito.textContent = punteggi.length ? `${punteggi.length} risultat${punteggi.length === 1 ? 'o' : 'i'} per "${q}".` : `Nessun risultato per "${q}". Prova con un'altra parola o chiamaci.`;
+    for (const { v } of punteggi) {
+      const li = document.createElement('li');
+      li.innerHTML = '<a><span class="risultati__a"></span><strong></strong><span class="risultati__d"></span></a>';
+      li.querySelector('a')!.href = v.u;
+      li.querySelector('.risultati__a')!.textContent = v.a;
+      li.querySelector('strong')!.textContent = v.t;
+      li.querySelector('.risultati__d')!.textContent = v.d;
+      out.appendChild(li);
+    }
+  };
+  const q0 = new URLSearchParams(location.search).get('q') ?? '';
+  input.value = q0;
+  if (q0) esegui(q0);
+  let timer: number | undefined;
+  input.addEventListener('input', () => { clearTimeout(timer); timer = window.setTimeout(() => esegui(input.value), 220); });
+  form.addEventListener('submit', (e) => { e.preventDefault(); history.replaceState(null, '', `/cerca?q=${encodeURIComponent(input.value)}`); esegui(input.value); });
+</script>
+
+<style>
+  .cerca { display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 22px; border-radius: 999px; background: var(--bianco); border: 2px solid var(--inchiostro); max-width: 720px; }
+  .cerca :global(svg) { flex: none; color: var(--blu-scuro); }
+  .cerca input { flex: 1; min-width: 0; border: 0; background: transparent; font-size: 1.25rem; min-height: 56px; }
+  .cerca input:focus { outline: none; }
+  .cerca:focus-within { box-shadow: 0 0 0 4px rgb(46 129 255 / 0.3); }
+  .cerca__esito { font-weight: 700; }
+  .risultati { list-style: none; padding: 0; display: grid; gap: 12px; }
+  .risultati :global(li) { margin: 0; }
+  .risultati :global(a) { display: grid; gap: 4px; padding: 22px 26px; border-radius: 28px; background: var(--bianco); color: var(--inchiostro); text-decoration: none; border: 2px solid transparent; }
+  .risultati :global(a:hover) { border-color: var(--inchiostro); }
+  .risultati :global(strong) { font-family: var(--f-titoli); font-size: 1.35rem; }
+  .risultati :global(.risultati__a) { font-size: 1rem; font-weight: 700; color: var(--blu-scuro); }
+  .risultati :global(.risultati__d) { color: var(--grigio); }
+  .cerca__tutti { margin-top: 28px; }
+  @media (max-width: 560px) { .cerca .btn { padding: 0 18px; } }
+</style>

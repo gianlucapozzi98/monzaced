@@ -1,0 +1,245 @@
+---
+/**
+ * Blocco "Carica i documenti".
+ * - Prima chiede al server se il caricamento è davvero attivo (/api/upload/stato).
+ * - Se non lo è: messaggio onesto + telefono + indirizzo. Mai una finta conferma.
+ * - Se lo è: checklist che si spunta, file (trascinamento, scelta, fotocamera), anteprima, avanzamento,
+ *   verifica antivirus sul server, conferma con codice pratica solo per i file arrivati davvero.
+ */
+import Icon from './Icon.astro';
+import { getServizi, impostazioni as s, type Servizio } from '@/lib/content';
+
+interface Props { servizio?: Servizio; titolo?: string; testo?: string; id?: string; livello?: 'h2' | 'h3' }
+const { servizio, titolo = 'Carica i documenti', testo, id = 'carica-documenti', livello = 'h2' } = Astro.props;
+const Tag = livello;
+const elenco = getServizi()
+  .filter((x) => x.caricamentoAttivo)
+  .map((x) => ({ slug: x.slug, titolo: x.titolo, documenti: x.documenti, datiParticolari: x.datiParticolari }));
+const fisso = servizio ? { slug: servizio.slug, titolo: servizio.titolo, documenti: servizio.documenti, datiParticolari: servizio.datiParticolari } : null;
+const uid = id;
+---
+<section class="caricatore" id={id} aria-labelledby={`${uid}-titolo`} data-caricatore data-servizio={fisso?.slug ?? ''}>
+  <div class="caricatore__testa">
+    <span class="caricatore__icona" aria-hidden="true"><Icon name="lucchetto" size={30} /></span>
+    <div>
+      <Tag id={`${uid}-titolo`} class="caricatore__titolo">{titolo}</Tag>
+      {testo && <p class="caricatore__intro">{testo}</p>}
+    </div>
+  </div>
+
+  <!-- Stato 1: verifica -->
+  <p class="caricatore__verifica" data-vista="verifica" role="status">Controllo se il caricamento online è attivo…</p>
+
+  <!-- Stato 2: caricamento non attivo (modalità sicura) -->
+  <div class="avviso" data-vista="spento" hidden>
+    <p><strong>Il caricamento online non è ancora attivo.</strong></p>
+    <p>
+      Per consegnare i documenti chiamaci al <a href={`tel:${s.telefonoLink}`}><strong>{s.telefono}</strong></a>
+      {s.orari[0] && <> ({s.orari[0].giorni.toLowerCase()}, {s.orari[0].ore})</>}
+      oppure portali in studio, in {s.indirizzo}, {s.citta}. Per sicurezza, non inviarli per email.
+    </p>
+  </div>
+  <noscript>
+    <div class="avviso">
+      <p><strong>Per caricare i documenti serve JavaScript.</strong> Puoi chiamarci al {s.telefono} o portarli in studio, in {s.indirizzo}, {s.citta}.</p>
+    </div>
+  </noscript>
+
+  <!-- Stato 3: modulo -->
+  <form class="caricatore__modulo" data-vista="modulo" hidden novalidate>
+    {!fisso && (
+      <div class="campo">
+        <label for={`${uid}-servizio`}>Per quale servizio? <span class="obbligatorio" aria-hidden="true">*</span></label>
+        <select id={`${uid}-servizio`} name="servizio" required data-sel-servizio aria-describedby={`${uid}-servizio-err`}>
+          <option value="">Scegli il servizio…</option>
+          {elenco.map((x) => <option value={x.slug}>{x.titolo}</option>)}
+        </select>
+        <p class="errore" id={`${uid}-servizio-err`} data-errore-per="servizio"></p>
+      </div>
+    )}
+
+    <fieldset class="checklist" data-checklist hidden={!fisso || fisso.documenti.length === 0}>
+      <legend>Documenti da preparare <span class="checklist__conta" data-checklist-conta></span></legend>
+      <p class="aiuto">Spunta quelli che hai già: ti aiuta a non dimenticare niente. Puoi caricare anche solo una parte.</p>
+      <ul data-checklist-lista>
+        {fisso?.documenti.map((d, i) => (
+          <li>
+            <input type="checkbox" id={`${uid}-doc-${i}`} name="documenti" value={d.voce} />
+            <label for={`${uid}-doc-${i}`}><span class="checklist__box" aria-hidden="true"><Icon name="check" size={18} /></span><span>{d.voce}{d.nota && <small>{d.nota}</small>}</span></label>
+          </li>
+        ))}
+      </ul>
+      <button type="button" class="btn btn--piccolo btn--secondario" data-stampa><Icon name="stampa" size={20} /> Stampa l'elenco</button>
+    </fieldset>
+
+    <div class="zona" data-zona>
+      <Icon name="carica" size={40} />
+      <p class="zona__testo"><strong>Trascina qui i file</strong> <span class="zona__solo-desktop">oppure</span></p>
+      <div class="azioni zona__azioni">
+        <button type="button" class="btn" data-scegli><Icon name="documento" size={22} /> Scegli i file</button>
+        <button type="button" class="btn btn--secondario zona__foto" data-scatta><Icon name="camera" size={22} /> Scatta una foto</button>
+      </div>
+      <p class="aiuto" data-limiti>PDF, JPG o PNG.</p>
+      <input type="file" class="sr-only" tabindex="-1" aria-hidden="true" multiple accept="application/pdf,image/jpeg,image/png,.pdf,.jpg,.jpeg,.png" data-input-file />
+      <input type="file" class="sr-only" tabindex="-1" aria-hidden="true" accept="image/*" capture="environment" data-input-foto />
+    </div>
+    <p class="errore caricatore__errore-file" data-errore-per="file" role="alert"></p>
+    <ul class="file-lista" data-file-lista aria-label="File scelti"></ul>
+
+    <fieldset class="caricatore__dati">
+      <legend>I tuoi dati, per ricontattarti</legend>
+      <div class="caricatore__dati-griglia">
+        <div class="campo">
+          <label for={`${uid}-nome`}>Nome e cognome <span class="obbligatorio" aria-hidden="true">*</span></label>
+          <input id={`${uid}-nome`} name="nome" type="text" autocomplete="name" required maxlength="120" aria-describedby={`${uid}-nome-err`} />
+          <p class="errore" id={`${uid}-nome-err`} data-errore-per="nome"></p>
+        </div>
+        <div class="campo">
+          <label for={`${uid}-tel`}>Telefono <span class="obbligatorio" aria-hidden="true">*</span></label>
+          <input id={`${uid}-tel`} name="telefono" type="tel" autocomplete="tel" inputmode="tel" required maxlength="30" aria-describedby={`${uid}-tel-err`} />
+          <p class="errore" id={`${uid}-tel-err`} data-errore-per="telefono"></p>
+        </div>
+        <div class="campo">
+          <label for={`${uid}-email`}>Email <span class="facoltativo">(facoltativa)</span></label>
+          <input id={`${uid}-email`} name="email" type="email" autocomplete="email" maxlength="160" aria-describedby={`${uid}-email-err`} />
+          <p class="errore" id={`${uid}-email-err`} data-errore-per="email"></p>
+        </div>
+        <div class="campo campo--largo">
+          <label for={`${uid}-note`}>Note per lo studio <span class="facoltativo">(facoltative)</span></label>
+          <textarea id={`${uid}-note`} name="note" maxlength="1500" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="trappola" aria-hidden="true">
+        <label for={`${uid}-sito`}>Lascia vuoto questo campo</label>
+        <input id={`${uid}-sito`} name="sito_web" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+    </fieldset>
+
+    <div class="caricatore__consensi">
+      <label class="spunta">
+        <input type="checkbox" name="consensoPrivacy" required aria-describedby={`${uid}-cp-err`} />
+        <span>Ho letto l'<a href="/privacy" target="_blank" rel="noopener">informativa sulla privacy<span class="sr-only"> (si apre in una nuova scheda)</span></a> e chiedo allo studio di ricevere questi documenti per la mia pratica. <span class="obbligatorio" aria-hidden="true">*</span></span>
+      </label>
+      <p class="errore" id={`${uid}-cp-err`} data-errore-per="consensoPrivacy"></p>
+      <label class="spunta">
+        <input type="checkbox" name="consensoSalute" required aria-describedby={`${uid}-cs-err ${uid}-cs-aiuto`} />
+        <span>Acconsento al trattamento dei <strong>dati relativi alla salute</strong> eventualmente contenuti nei documenti (art. 9 GDPR), solo per questa pratica. <span class="obbligatorio" aria-hidden="true">*</span></span>
+      </label>
+      <p class="aiuto" id={`${uid}-cs-aiuto`} data-nota-salute hidden={!fisso?.datiParticolari}>Per questo servizio i documenti possono contenere dati sanitari (per esempio certificati medici o spese mediche).</p>
+      <p class="errore" id={`${uid}-cs-err`} data-errore-per="consensoSalute"></p>
+    </div>
+
+    <div class="caricatore__invia">
+      <button type="submit" class="btn" data-invia><Icon name="lucchetto" size={22} /> Invia i documenti allo studio</button>
+      <p class="aiuto">I file arrivano solo allo studio, in un archivio privato e cifrato in Europa, dopo il controllo antivirus.</p>
+    </div>
+    <div class="caricatore__esito" data-esito role="status" aria-live="polite"></div>
+  </form>
+
+  <!-- Stato 4: conferma vera -->
+  <div class="caricatore__fatto" data-vista="fatto" hidden tabindex="-1">
+    <div class="avviso avviso--ok">
+      <p class="caricatore__fatto-titolo"><Icon name="check" size={28} /> <strong data-fatto-titolo>Documenti ricevuti.</strong></p>
+      <p>Il tuo <strong>codice pratica</strong> è:</p>
+      <p class="caricatore__codice" data-codice></p>
+      <p>Conservalo: ti servirà se chiami lo studio. Lo studio ti ricontatterà per i passi successivi.</p>
+      <div data-rifiutati-box hidden>
+        <p><strong>Alcuni file non sono stati accettati:</strong></p>
+        <ul data-rifiutati></ul>
+      </div>
+      <p class="caricatore__prova" data-prova hidden>Ambiente di prova: antivirus e notifiche di test.</p>
+      <div class="azioni">
+        <button type="button" class="btn btn--secondario btn--piccolo" data-stampa-codice><Icon name="stampa" size={20} /> Stampa il codice</button>
+        <button type="button" class="btn btn--piccolo" data-ricomincia>Carica altri documenti</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="application/json" data-servizi-caricatore set:html={JSON.stringify(fisso ? [fisso] : elenco)} />
+</section>
+
+<script>
+  import '@/scripts/caricatore';
+</script>
+
+<style>
+  .caricatore { background: var(--bianco); border-radius: 48px 48px 32px 32px; padding: clamp(24px, 4vw, 52px); box-shadow: var(--ombra); position: relative; }
+  .caricatore__testa { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 24px; }
+  .caricatore__icona { flex: none; display: grid; place-items: center; width: 64px; height: 74px; border-radius: 999px 999px 16px 16px; background: var(--blu-scuro); color: #fff; }
+  .caricatore__titolo { margin-bottom: 8px; font-size: clamp(1.7rem, 1.3rem + 1.4vw, 2.5rem); }
+  .caricatore__intro { color: var(--grigio); margin: 0; max-width: 60ch; }
+  .caricatore__verifica { color: var(--grigio); }
+  .facoltativo { font-weight: 400; color: var(--grigio); }
+
+  .checklist { border: 0; padding: 22px; margin: 0 0 24px; border-radius: var(--r-m); background: var(--avorio); }
+  .checklist legend { float: left; width: 100%; font-family: var(--f-titoli); font-weight: 800; font-size: 1.3rem; margin-bottom: 6px; padding: 0; }
+  .checklist legend + * { clear: both; }
+  .checklist__conta { font-family: var(--f-testo); font-weight: 700; font-size: 1rem; color: var(--grigio); margin-left: 6px; }
+  .checklist ul { list-style: none; padding: 0; margin: 8px 0 18px; display: grid; gap: 4px; }
+  .checklist li { margin: 0; position: relative; }
+  .checklist input { position: absolute; opacity: 0; width: 28px; height: 28px; margin: 12px 0 0 10px; }
+  .checklist label { display: flex; gap: 14px; align-items: flex-start; padding: 10px; border-radius: 14px; cursor: pointer; transition: background var(--d-micro) var(--ease-out); }
+  .checklist label:hover { background: rgb(255 255 255 / 0.8); }
+  .checklist small { display: block; color: var(--grigio); font-size: 1rem; }
+  .checklist__box {
+    flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; border: 2px solid var(--inchiostro); background: #fff; color: transparent;
+    transition: background var(--d-comp) var(--ease-out), transform var(--d-micro) var(--ease-molla), color var(--d-micro) var(--ease-out);
+  }
+  .checklist input:checked + label .checklist__box { background: var(--ok); border-color: var(--ok); color: #fff; transform: scale(1.08); }
+  .checklist input:checked + label > span:last-child { text-decoration: line-through; text-decoration-color: var(--ok); text-decoration-thickness: 2px; color: var(--grigio); }
+  .checklist input:focus-visible + label { outline: 3px solid var(--blu-scuro); outline-offset: 2px; }
+
+  .zona {
+    display: grid; justify-items: center; text-align: center; gap: 10px; padding: 34px 20px;
+    border: 3px dashed #8a94a3; border-radius: 40px; background: var(--avorio); color: var(--inchiostro);
+    transition: border-color var(--d-comp) var(--ease-out), background var(--d-comp) var(--ease-out), transform var(--d-comp) var(--ease-molla);
+  }
+  .zona > :global(svg) { color: var(--blu-scuro); }
+  .zona__testo { margin: 0; font-size: 1.2rem; }
+  .zona__azioni { justify-content: center; }
+  .zona__foto { display: none; }
+  @media (pointer: coarse) { .zona__foto { display: inline-flex; } .zona__testo strong, .zona__solo-desktop { display: none; } }
+  :global(.zona--sopra) { border-color: var(--blu-scuro) !important; background: var(--cielo) !important; transform: scale(1.01); }
+  .caricatore__errore-file { margin: 10px 0 0; }
+
+  .file-lista { list-style: none; padding: 0; margin: 16px 0 24px; display: grid; gap: 10px; }
+  .file-lista :global(li) {
+    margin: 0; display: grid; grid-template-columns: 64px 1fr auto; gap: 14px; align-items: center;
+    padding: 10px 12px 10px 10px; border-radius: 22px; background: var(--avorio); border: 2px solid transparent;
+  }
+  .file-lista :global(.anteprima) { width: 64px; height: 64px; border-radius: 16px; object-fit: cover; background: var(--cielo); display: grid; place-items: center; color: var(--blu-scuro); font-weight: 800; font-size: 0.9rem; }
+  .file-lista :global(.nome) { font-weight: 700; word-break: break-word; line-height: 1.3; }
+  .file-lista :global(.dettaglio) { font-size: 1rem; color: var(--grigio); }
+  .file-lista :global(.barra) { height: 8px; border-radius: 8px; background: var(--linea); overflow: hidden; margin-top: 8px; }
+  .file-lista :global(.barra span) { display: block; height: 100%; width: 100%; background: var(--blu-scuro); transform-origin: left; transform: scaleX(0); transition: transform 500ms var(--ease-out), background var(--d-comp); }
+  .file-lista :global(li.ok) { border-color: var(--ok); }
+  .file-lista :global(li.ok .barra span) { background: var(--ok); }
+  .file-lista :global(li.ko) { border-color: var(--errore); background: var(--errore-tenue); }
+  .file-lista :global(li.ko .barra span) { background: var(--errore); }
+  .file-lista :global(.togli) { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--inchiostro); background: #fff; display: grid; place-items: center; cursor: pointer; }
+  .file-lista :global(.togli[hidden]) { display: none; }
+
+  .caricatore__dati { border: 0; padding: 0; margin: 0 0 8px; }
+  .caricatore__dati legend { font-family: var(--f-titoli); font-weight: 800; font-size: 1.3rem; margin-bottom: 14px; padding: 0; }
+  .caricatore__dati-griglia { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 20px; }
+  .campo--largo { grid-column: 1 / -1; }
+  .caricatore__consensi { margin: 8px 0 18px; }
+  .caricatore__invia { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .caricatore__invia .aiuto { margin: 0; max-width: 44ch; color: var(--grigio); font-size: 1.0625rem; }
+  .caricatore__esito { margin-top: 18px; }
+  .caricatore__esito:empty { display: none; }
+  .caricatore__fatto-titolo { display: flex; gap: 10px; align-items: center; font-size: 1.4rem; }
+  .caricatore__fatto-titolo :global(svg) { color: var(--ok); }
+  .caricatore__codice { font-family: var(--f-titoli); font-weight: 800; font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem); letter-spacing: 0.04em; margin: 4px 0 14px; }
+  .caricatore__prova { font-size: 1rem; color: var(--grigio); }
+  @media (max-width: 680px) {
+    .caricatore__testa { flex-direction: column; gap: 14px; }
+    .caricatore__dati-griglia { grid-template-columns: minmax(0, 1fr); }
+    .file-lista :global(li) { grid-template-columns: 52px 1fr auto; }
+    .file-lista :global(.anteprima) { width: 52px; height: 52px; }
+    .caricatore__invia .btn { width: 100%; }
+  }
+  @media print {
+    :global(body.stampa-checklist) > *:not(main) { display: none !important; }
+  }
+</style>

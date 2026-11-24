@@ -1,0 +1,42 @@
+---
+import Icon from './Icon.astro';
+import { blocchi } from '@/lib/testo';
+interface Props { voci: { domanda: string; risposta: string }[]; titolo?: string; id?: string; livello?: 'h2' | 'h3' }
+const { voci, titolo, id = 'faq', livello = 'h2' } = Astro.props;
+const Tag = livello;
+---
+{voci.length > 0 && (
+  <div class="faq" id={id}>
+    {titolo && <Tag class="faq__titolo" data-rivela>{titolo}</Tag>}
+    <div class="faq__lista">
+      {voci.map((v) => (
+        <details class="faq__voce">
+          <summary>
+            <span>{v.domanda}</span>
+            <span class="faq__segno" aria-hidden="true"><Icon name="piu" /></span>
+          </summary>
+          <div class="faq__risposta testo-ricco" set:html={blocchi(v.risposta)} />
+        </details>
+      ))}
+    </div>
+  </div>
+)}
+
+<style>
+  .faq__lista { border-top: 2px solid var(--inchiostro); }
+  .faq__voce { border-bottom: 2px solid var(--linea); }
+  .faq__voce summary {
+    list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    padding: 24px 4px; cursor: pointer; font-family: var(--f-titoli); font-weight: 700; font-size: clamp(1.2rem, 1.1rem + 0.4vw, 1.45rem); line-height: 1.3;
+  }
+  .faq__voce summary::-webkit-details-marker { display: none; }
+  .faq__voce summary:hover { color: var(--blu-scuro); }
+  .faq__segno {
+    flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
+    border: 2px solid var(--inchiostro); transition: transform var(--d-comp) var(--ease-molla), background var(--d-comp) var(--ease-out), color var(--d-comp) var(--ease-out);
+  }
+  .faq__voce[open] .faq__segno { transform: rotate(45deg); background: var(--inchiostro); color: #fff; }
+  .faq__risposta { padding: 0 4px 26px; max-width: 70ch; }
+  .faq__voce::details-content { block-size: 0; overflow: clip; transition: block-size var(--d-comp) var(--ease-out), content-visibility var(--d-comp) allow-discrete; }
+  .faq__voce[open]::details-content { block-size: auto; }
+</style>

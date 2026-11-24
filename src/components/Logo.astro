@@ -1,0 +1,11 @@
+---
+/**
+ * Logo originale del cliente (monza-ced.svg), usato così com'è:
+ * "MONZA" bianco + "CED" corsivo blu #2E81FF. Va usato su fondo scuro.
+ * È un file a parte (in cache), non ripetuto dentro ogni pagina.
+ */
+import logo from '@/assets/brand/monza-ced.svg';
+interface Props { class?: string; titolo?: string; decorativo?: boolean }
+const { class: cls = '', titolo = 'Monza CED', decorativo = false } = Astro.props;
+---
+<img class={`logo ${cls}`} src={logo.src} width="252" height="31" alt={decorativo ? '' : titolo} decoding="async" />

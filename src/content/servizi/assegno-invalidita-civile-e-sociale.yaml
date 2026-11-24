@@ -1,0 +1,59 @@
+titolo: Invalidità civile e assegno sociale
+titoloPagina: Invalidità civile e assegno sociale
+riassunto: Richiesta e gestione dell'invalidità civile, dell'assegno sociale e delle agevolazioni fiscali per i disabili.
+gruppo: pensioni
+situazioni:
+  - pensione
+  - famiglia
+icona: mano
+immagine: pensioni
+ordine: 15
+seo:
+  titolo: Invalidità civile e assegno sociale a Monza | Monza CED
+  descrizione: "Invalidità civile, assegno sociale e agevolazioni fiscali per i disabili a Monza: documenti e domanda. Prenota una consulenza con Monza CED."
+introduzione: |-
+  Ti guidiamo nella richiesta e nella gestione dell'invalidità civile e dell'assegno sociale, due strumenti di sostegno economico, e nelle agevolazioni fiscali per le persone con disabilità.
+perChi:
+  - "Assegno di invalidità civile: chi ha una riduzione della capacità lavorativa"
+  - "Assegno sociale: cittadini che raggiungono una certa età e vivono in condizioni economiche disagiate"
+  - "Agevolazioni fiscali: persone con disabilità"
+perChiNota: ""
+cosaFacciamo:
+  - Consulenza personalizzata per valutare il tuo diritto alle prestazioni.
+  - Preparazione e presentazione della documentazione.
+  - Supporto nella richiesta delle agevolazioni fiscali per i disabili.
+passaggi:
+  - titolo: Certificazione
+    testo: Per l'invalidità civile si parte dalla certificazione della condizione presso le commissioni mediche dell'INPS.
+  - titolo: Valutazione
+    testo: La commissione valuta il grado di invalidità e l'eventuale diritto alla prestazione.
+  - titolo: Domanda e agevolazioni
+    testo: Ti seguiamo nella documentazione e nella richiesta delle agevolazioni.
+documenti:
+  - voce: Documento d'identità valido
+    nota: ""
+  - voce: Codice fiscale
+    nota: ""
+  - voce: Certificati medici che attestano la condizione di disabilità
+    nota: ""
+  - voce: Documenti sulla situazione economica del richiedente
+    nota: Se richiesti
+documentiNota: ""
+approfondimenti:
+  - titolo: Le agevolazioni fiscali
+    testo: |-
+      Oltre agli assegni, la legge prevede numerose agevolazioni fiscali per le persone con disabilità: detrazioni IRPEF, IVA agevolata per l'acquisto di beni e servizi necessari, esenzioni e riduzioni su tasse e tributi locali. Ti aiutiamo a capire a quali potresti avere diritto e come ottenerle.
+faq: []
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=assegno-invalidita-civile-e-sociale
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: true
+aggiornatoIl: 2026-11-24
+daCompletare:
+  - "Il vecchio testo collegava anche l'assegno sociale alle commissioni mediche: separato. Confermare il percorso per l'assegno sociale."
+fonte: Testi migrati da monzaced.it/servizi/assegno-invalidita-civile-e-sociale il 24/11/2026.

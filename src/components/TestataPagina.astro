@@ -1,0 +1,72 @@
+---
+/** Intestazione delle pagine interne: testo a sinistra, foto in un arco a destra, colore per area. */
+import { Picture } from 'astro:assets';
+import { img, alt } from '@/lib/immagini';
+interface Props {
+  titolo: string;
+  occhiello?: string;
+  immagine?: string;
+  briciole?: { nome: string; url?: string }[];
+  gruppo?: string; // es. 'famiglia': colore dell'area
+}
+const { titolo, occhiello, immagine, briciole = [], gruppo } = Astro.props;
+---
+<header class:list={['testata-pagina', gruppo && `g-${gruppo}`]}>
+  <div class="contenitore testata-pagina__griglia">
+    <div class="testata-pagina__testo">
+      {briciole.length > 0 && (
+        <nav aria-label="Percorso di navigazione" class="briciole">
+          <ol>
+            {briciole.map((b, i) => (
+              <li>{b.url && i < briciole.length - 1 ? <a href={b.url}>{b.nome}</a> : <span aria-current="page">{b.nome}</span>}</li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      {occhiello && <p class="occhiello">{occhiello}</p>}
+      <h1 class="testata-pagina__titolo">{titolo}</h1>
+      <slot />
+    </div>
+    {immagine && (
+      <div class="testata-pagina__arco">
+        <div data-parallasse="0.2">
+          <Picture src={img(immagine)} alt={alt(immagine)} widths={[420, 640, 900, 1200]} sizes="(min-width: 960px) 40vw, 90vw" formats={['avif', 'webp']} loading="eager" fetchpriority="high" />
+        </div>
+      </div>
+    )}
+  </div>
+</header>
+
+<style>
+  .testata-pagina {
+    position: relative; padding: 150px 0 clamp(56px, 7vw, 110px);
+    background: var(--g, var(--cielo)); border-radius: 0 0 clamp(40px, 7vw, 110px) clamp(40px, 7vw, 110px);
+    overflow: hidden;
+  }
+  .testata-pagina::after {
+    content: ''; position: absolute; width: 60vw; aspect-ratio: 1; border-radius: 50%; right: -18vw; top: -26vw;
+    border: 3px solid rgb(46 129 255 / 0.35); pointer-events: none;
+  }
+  .testata-pagina__griglia { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(28px, 5vw, 80px); align-items: end; position: relative; z-index: 1; }
+  .testata-pagina__titolo { font-size: clamp(2.4rem, 1.5rem + 3.6vw, 4.8rem); max-width: 16ch; }
+  .testata-pagina__arco { aspect-ratio: 4 / 5; max-height: 560px; border-radius: 999px 999px 32px 32px; overflow: hidden; background: var(--bianco); box-shadow: var(--ombra); }
+  .testata-pagina__arco > div { height: 120%; margin-top: -10%; }
+  .testata-pagina__arco :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  :global(.js-motion) .testata-pagina__arco { animation: arco-su 1200ms var(--ease-in-out) backwards; }
+  :global(.js-motion) .testata-pagina__testo > * { animation: testo-su 900ms var(--ease-out) backwards; }
+  :global(.js-motion) .testata-pagina__testo > :nth-child(2) { animation-delay: 80ms; }
+  :global(.js-motion) .testata-pagina__testo > :nth-child(3) { animation-delay: 160ms; }
+  :global(.js-motion) .testata-pagina__testo > :nth-child(n + 4) { animation-delay: 240ms; }
+  @keyframes arco-su { from { clip-path: inset(100% 0 0 0 round 999px 999px 0 0); } to { clip-path: inset(0 0 0 0 round 999px 999px 32px 32px); } }
+  @keyframes testo-su { from { opacity: 0; transform: translateY(24px); } }
+  .briciole ol { list-style: none; padding: 0; margin: 0 0 22px; display: flex; flex-wrap: wrap; gap: 6px; font-size: 1.0625rem; }
+  .briciole li { margin: 0; display: flex; gap: 6px; align-items: center; }
+  .briciole li + li::before { content: '›'; color: var(--grigio); }
+  .briciole a { color: var(--inchiostro); }
+  .briciole [aria-current] { color: var(--grigio); }
+  @media (max-width: 960px) {
+    .testata-pagina { padding-top: 116px; }
+    .testata-pagina__griglia { grid-template-columns: minmax(0, 1fr); }
+    .testata-pagina__arco { aspect-ratio: 5 / 4; max-width: 560px; }
+  }
+</style>

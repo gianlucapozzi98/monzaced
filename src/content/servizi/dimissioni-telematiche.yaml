@@ -1,0 +1,62 @@
+titolo: Dimissioni telematiche
+titoloPagina: Dimissioni telematiche
+riassunto: Presentiamo le tue dimissioni online in modo corretto e conforme alle norme.
+gruppo: lavoro
+situazioni:
+  - lavoro
+icona: uscita
+immagine: lavoro
+ordine: 7
+seo:
+  titolo: Dimissioni telematiche a Monza | Monza CED
+  descrizione: "Dimissioni online a Monza: verifichiamo i documenti e inviamo la pratica per te. Prenota una consulenza con Monza CED o carica i documenti."
+introduzione: |-
+  Niente code e niente attese: ti aiutiamo a presentare le dimissioni online in modo semplice e sicuro, gestendo la pratica correttamente e nel rispetto delle norme.
+
+  Con la trasmissione telematica non servono scambi di carta né visite agli uffici.
+perChi:
+  - Tutti i lavoratori dipendenti
+  - A tempo determinato o indeterminato
+  - Part-time o full-time
+perChiNota: ""
+cosaFacciamo:
+  - Prepariamo e verifichiamo con te i documenti necessari.
+  - Ti supportiamo nella compilazione e nell'invio della pratica.
+  - Ti aiutiamo a capire i tuoi diritti e le tue responsabilità al momento delle dimissioni.
+  - Ti assistiamo dopo le dimissioni per liquidazione, documenti finali e certificazioni.
+passaggi:
+  - titolo: Verifica dei documenti
+    testo: Controlliamo con te che tutto sia completo.
+  - titolo: Compilazione e invio
+    testo: Compiliamo la pratica e la trasmettiamo per via telematica.
+  - titolo: Dopo le dimissioni
+    testo: Ti seguiamo per liquidazione, documenti finali e certificazioni.
+documenti:
+  - voce: Documento d'identità in corso di validità
+    nota: ""
+  - voce: Codice fiscale o Partita IVA del datore di lavoro
+    nota: ""
+  - voce: Ultima busta paga
+    nota: ""
+  - voce: Indirizzo PEC del datore di lavoro
+    nota: ""
+  - voce: Il tuo indirizzo email personale
+    nota: ""
+documentiNota: ""
+approfondimenti: []
+faq:
+  - domanda: Posso dimettermi online anche se sono part-time?
+    risposta: Sì, il servizio è disponibile per tutti i lavoratori dipendenti, part-time o full-time, a tempo determinato o indeterminato.
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=dimissioni-telematiche
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: false
+aggiornatoIl: 2026-11-24
+daCompletare:
+  - "Il vecchio sito parlava di \"consulenza legale\": confermare se lo studio offre consulenza legale e con quale titolo (nel nuovo testo è scritto \"ti aiutiamo a capire i tuoi diritti\")."
+fonte: Testi migrati da monzaced.it/servizi/dimissioni-telematiche il 24/11/2026.

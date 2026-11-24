@@ -1,0 +1,60 @@
+---
+import Studio from '@/layouts/Studio.astro';
+import { utenteSessione } from '@/lib/server/accesso';
+import { cfg, statoCaricamento } from '@/lib/server/config';
+import { elencoPratiche, elencoRichieste, registra } from '@/lib/server/pratiche';
+export const prerender = false;
+Astro.response.headers.set('cache-control', 'no-store');
+const u = utenteSessione(Astro.cookies);
+if (!u) return Astro.redirect('/area-studio/accesso');
+const c = cfg();
+const stato = statoCaricamento(c);
+let pratiche: Awaited<ReturnType<typeof elencoPratiche>> = [];
+let richieste: Awaited<ReturnType<typeof elencoRichieste>> = [];
+let erroreArchivio = '';
+try { pratiche = await elencoPratiche(); richieste = await elencoRichieste(); } catch (e) { erroreArchivio = String(e); }
+await registra('vista-elenco', { utente: u });
+const data = (iso: string) => new Date(iso).toLocaleString('it-IT', { dateStyle: 'short', timeStyle: 'short' });
+---
+<Studio titolo="Pratiche" utente={u}>
+  <h1 class="studio-h1">Pratiche e richieste</h1>
+  {Astro.url.searchParams.get('eliminata') && <div class="avviso avviso--ok"><p>Pratica eliminata.</p></div>}
+  {!stato.attivo && (
+    <div class="avviso avviso--errore"><p><strong>Il caricamento dal sito è in modalità sicura</strong> (i visitatori vedono il messaggio con il telefono). Da sistemare:</p><ul>{stato.motivi.map((m) => <li>{m}</li>)}</ul></div>
+  )}
+  {c.prova && <div class="avviso"><p>Modalità di prova attiva: antivirus e notifiche di test.</p></div>}
+  {erroreArchivio && <div class="avviso avviso--errore"><p>Archivio non raggiungibile: {erroreArchivio}</p></div>}
+
+  <h2 class="studio-h2 mt-l">Documenti caricati ({pratiche.length})</h2>
+  <p class="aiuto">I documenti restano qui {c.conservazioneGiorni ? `per ${c.conservazioneGiorni} giorni` : 'fino alla definizione del periodo di conservazione'}, poi vengono cancellati automaticamente (npm run purge).</p>
+  <div class="scorri">
+    <table class="tabella">
+      <thead><tr><th>Codice</th><th>Arrivata</th><th>Servizio</th><th>Nome</th><th>Telefono</th><th>File</th><th>Stato</th></tr></thead>
+      <tbody>
+        {pratiche.length === 0 && <tr><td colspan="7">Nessuna pratica.</td></tr>}
+        {pratiche.map((p) => (
+          <tr>
+            <td><a href={`/area-studio/pratica/${p.id}`}><strong>{p.codice}</strong></a></td>
+            <td>{data(p.creata)}</td><td>{p.servizioTitolo}</td><td>{p.nome}</td><td>{p.telefono}</td>
+            <td>{p.file.filter((f) => f.stato === 'accettato').length}</td>
+            <td><span class:list={['badge', { 'badge--ok': p.stato === 'lavorata' }]}>{p.stato}</span></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="studio-h2 mt-l">Richieste di consulenza e contatti ({richieste.length})</h2>
+  <div class="scorri">
+    <table class="tabella">
+      <thead><tr><th>Codice</th><th>Arrivata</th><th>Tipo</th><th>Nome</th><th>Telefono</th><th>Email</th><th>Servizio</th><th>Preferenza</th><th>Messaggio</th></tr></thead>
+      <tbody>
+        {richieste.length === 0 && <tr><td colspan="9">Nessuna richiesta.</td></tr>}
+        {richieste.map((r) => (
+          <tr><td><strong>{r.codice}</strong></td><td>{data(r.creata)}</td><td>{r.tipo === 'prenota' ? 'Consulenza' : 'Contatto'}</td><td>{r.nome}</td><td>{r.telefono}</td><td>{r.email}</td><td>{r.servizio}</td><td>{r.preferenza}</td><td>{r.messaggio}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="mt-l"><a href="/area-studio/registro">Registro degli accessi e degli eventi</a></p>
+</Studio>

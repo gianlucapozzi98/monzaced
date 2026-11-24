@@ -1,0 +1,25 @@
+---
+import Studio from '@/layouts/Studio.astro';
+import { utenteSessione } from '@/lib/server/accesso';
+import { leggiRegistro } from '@/lib/server/pratiche';
+export const prerender = false;
+Astro.response.headers.set('cache-control', 'no-store');
+const u = utenteSessione(Astro.cookies);
+if (!u) return Astro.redirect('/area-studio/accesso');
+const eventi = await leggiRegistro(30);
+---
+<Studio titolo="Registro" utente={u}>
+  <p><a href="/area-studio">← Pratiche</a></p>
+  <h1 class="studio-h1">Registro (ultimi 30 giorni)</h1>
+  <div class="scorri">
+    <table class="tabella">
+      <thead><tr><th>Quando</th><th>Evento</th><th>Dettagli</th></tr></thead>
+      <tbody>
+        {eventi.map((e) => {
+          const { ts, tipo, ...resto } = e;
+          return <tr><td>{new Date(ts).toLocaleString('it-IT')}</td><td>{tipo}</td><td><code>{JSON.stringify(resto)}</code></td></tr>;
+        })}
+      </tbody>
+    </table>
+  </div>
+</Studio>

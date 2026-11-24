@@ -1,0 +1,106 @@
+---
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/home/Hero.astro';
+import Percorso from '@/components/Percorso.astro';
+import Fascia from '@/components/Fascia.astro';
+import ComeLavoriamo from '@/components/home/ComeLavoriamo.astro';
+import ChiSiamoBreve from '@/components/home/ChiSiamoBreve.astro';
+import Caricatore from '@/components/Caricatore.astro';
+import Faq from '@/components/Faq.astro';
+import ModuloRichiesta from '@/components/ModuloRichiesta.astro';
+import Mappa from '@/components/Mappa.astro';
+import Icon from '@/components/Icon.astro';
+import { home, faqHome, impostazioni as s } from '@/lib/content';
+import { schemaStudio, schemaFaq } from '@/lib/schema';
+import { inline } from '@/lib/testo';
+---
+<Base titolo={home.seoTitolo} descrizione={home.seoDescrizione} modifica="singleton/home" jsonld={[schemaStudio(Astro.site), schemaFaq(faqHome)]}>
+  <Hero />
+
+  <div class="dopo-hero">
+    <Percorso titolo={home.domanda} sotto={home.domandaSotto} occhiello="Il percorso" />
+  </div>
+
+  <Fascia parole={home.fascia} />
+
+  <ComeLavoriamo />
+
+  <!-- Invito a metà pagina + blocco rapido di caricamento -->
+  <section class="sezione carica-home" aria-labelledby="carica-home-titolo">
+    <div class="contenitore carica-home__griglia">
+      <div class="carica-home__testo">
+        <p class="occhiello">Carica i documenti</p>
+        <h2 id="carica-home-titolo" data-rivela>{home.caricaTitolo}</h2>
+        <p class="sottotesto" data-rivela data-ritardo="0.1">{home.caricaTesto}</p>
+        <ul class="carica-home__punti">
+          <li><Icon name="lucchetto" /> Archivio privato e cifrato in Europa</li>
+          <li><Icon name="scudo" /> Ogni file controllato dall'antivirus</li>
+          <li><Icon name="documento" /> Codice pratica alla fine dell'invio</li>
+        </ul>
+        <p>Preferisci parlarne prima? <a href={s.ctaPrenota.link}><strong>{s.ctaPrenota.testo}</strong></a>.</p>
+      </div>
+      <Caricatore id="carica-documenti-home" titolo="Invia i tuoi documenti" testo="Scegli il servizio: ti mostriamo quali documenti preparare." />
+    </div>
+  </section>
+
+  <ChiSiamoBreve />
+
+  <section class="sezione faq-home" aria-labelledby="faq-home-titolo">
+    <div class="contenitore faq-home__griglia">
+      <div>
+        <p class="occhiello">Domande frequenti</p>
+        <h2 id="faq-home-titolo" data-rivela>{home.faqTitolo}</h2>
+        <p class="sottotesto">Non trovi la risposta? Chiamaci al <a href={`tel:${s.telefonoLink}`}>{s.telefono.replace('+39 ', '')}</a>.</p>
+      </div>
+      <Faq voci={faqHome} id="faq-home" />
+    </div>
+  </section>
+
+  <section class="sezione consulenza su-scuro" id="consulenza" aria-labelledby="consulenza-titolo">
+    <svg class="consulenza__arco" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 0h1440v20C1200 110 960 120 720 120S240 110 0 20Z" fill="currentColor" /></svg>
+    <div class="contenitore consulenza__griglia">
+      <div class="consulenza__testo">
+        <p class="occhiello">Consulenza</p>
+        <h2 id="consulenza-titolo" data-rivela set:html={inline(home.chiusuraTitolo)} />
+        <p class="sottotesto">{home.chiusuraTesto}</p>
+        <a class="consulenza__tel" href={`tel:${s.telefonoLink}`}><Icon name="telefono" size={30} /> {s.telefono}</a>
+        <ul class="consulenza__info">
+          {s.orari.map((o) => <li><Icon name="orologio" /> {o.giorni}: {o.ore}</li>)}
+          <li><Icon name="mappa" /> {s.indirizzo}, {s.cap} {s.citta} ({s.provincia})</li>
+          <li><Icon name="posta" /> <a href={`mailto:${s.email}`}>{s.email}</a></li>
+        </ul>
+        <div class="consulenza__mappa"><Mappa /></div>
+      </div>
+      <div class="consulenza__modulo">
+        <ModuloRichiesta tipo="prenota" id="prenota-home" titolo="Richiedi un appuntamento" livello="h3" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .dopo-hero { position: relative; z-index: 2; background: var(--avorio); border-radius: clamp(40px, 7vw, 110px) clamp(40px, 7vw, 110px) 0 0; margin-top: -2px; }
+  .carica-home__griglia { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(28px, 5vw, 80px); align-items: start; }
+  .carica-home__testo { position: sticky; top: 130px; }
+  .carica-home__punti { list-style: none; padding: 0; margin: 28px 0; display: grid; gap: 14px; }
+  .carica-home__punti li { display: flex; gap: 14px; align-items: center; font-weight: 700; margin: 0; }
+  .carica-home__punti :global(svg) { flex: none; width: 44px; height: 44px; padding: 10px; border-radius: 50%; background: var(--cielo); color: var(--blu-scuro); }
+  .faq-home { background: var(--bianco); }
+  .faq-home__griglia { display: grid; grid-template-columns: 4fr 7fr; gap: clamp(28px, 5vw, 80px); }
+  .consulenza { margin-bottom: -120px; padding-bottom: 220px; }
+  .consulenza__arco { position: absolute; top: -1px; left: 0; width: 100%; height: clamp(40px, 6vw, 110px); color: var(--bianco); }
+  .consulenza__griglia { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(32px, 5vw, 80px); padding-top: 40px; }
+  .consulenza h2 em { color: var(--blu); }
+  .consulenza__tel { display: inline-flex; gap: 14px; align-items: center; font-family: var(--f-titoli); font-weight: 800; font-size: clamp(1.8rem, 1.3rem + 2vw, 2.8rem); color: var(--bianco) !important; text-decoration: none; margin: 10px 0 24px; }
+  .consulenza__tel :global(svg) { color: var(--blu); }
+  .consulenza__info { list-style: none; padding: 0; display: grid; gap: 10px; margin-bottom: 32px; }
+  .consulenza__info li { display: flex; gap: 12px; align-items: flex-start; margin: 0; }
+  .consulenza__info :global(svg) { flex: none; color: var(--blu); margin-top: 3px; }
+  .consulenza__mappa { color: var(--inchiostro); }
+  .consulenza__modulo { background: var(--bianco); color: var(--inchiostro); border-radius: 48px 48px 32px 32px; padding: clamp(24px, 4vw, 48px); align-self: start; }
+  .consulenza__modulo :global(a) { color: var(--blu-scuro); }
+  @media (max-width: 960px) {
+    .carica-home__griglia, .faq-home__griglia, .consulenza__griglia { grid-template-columns: minmax(0, 1fr); }
+    .carica-home__testo { position: static; }
+  }
+</style>

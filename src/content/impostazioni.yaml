@@ -1,0 +1,26 @@
+ragioneSociale: Monza CED Srl
+indirizzo: Via Solferino 11
+cap: "20900"
+citta: Monza
+provincia: MB
+telefono: +39 039 326628
+telefonoLink: "+39039326628"
+email: ingresso@monzaced.it
+pec: ""
+partitaIva: "12488810966"
+rea: ""
+capitaleSociale: € 10.000,00 i.v.
+orari:
+  - giorni: Lunedì–venerdì
+    ore: 9:30–13:00 e 14:00–18:00
+facebook: https://www.facebook.com/monzaced/
+linkedin: https://www.linkedin.com/company/monzaced/
+profiloGoogle: ""
+mappaLat: "45.57818"
+mappaLon: "9.26831"
+ctaPrenota:
+  testo: Prenota una consulenza
+  link: /prenota
+ctaCarica:
+  testo: Carica i documenti
+  link: /carica-documenti

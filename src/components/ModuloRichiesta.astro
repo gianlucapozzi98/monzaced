@@ -1,0 +1,88 @@
+---
+/** Modulo breve: "prenota" (consulenza) o "contatto". Invio reale a /api/richiesta; mai "inviato" senza risposta positiva. */
+import Icon from './Icon.astro';
+import { getServizi, contatti, impostazioni as s } from '@/lib/content';
+interface Props { tipo?: 'prenota' | 'contatto'; servizio?: string; id?: string; titolo?: string; livello?: 'h2' | 'h3' }
+const { tipo = 'prenota', servizio = '', id = `modulo-${tipo}`, titolo, livello = 'h2' } = Astro.props;
+const Tag = livello;
+const servizi = getServizi();
+---
+<div class="modulo-richiesta" data-richiesta data-tipo={tipo} id={id}>
+  {titolo && <Tag class="modulo-richiesta__titolo">{titolo}</Tag>}
+  <div class="avviso" data-vista-r="spento" hidden>
+    <p><strong>Il modulo online non è ancora attivo.</strong> Chiamaci al <a href={`tel:${s.telefonoLink}`}><strong>{s.telefono}</strong></a>{s.orari[0] && <> ({s.orari[0].giorni.toLowerCase()}, {s.orari[0].ore})</>} oppure scrivi a <a href={`mailto:${s.email}`}>{s.email}</a>.</p>
+  </div>
+  <noscript><p class="avviso">Per inviare il modulo serve JavaScript. Chiamaci al {s.telefono} o scrivi a {s.email}.</p></noscript>
+  <form novalidate data-vista-r="modulo" hidden>
+    <div class="modulo-richiesta__griglia">
+      <div class="campo">
+        <label for={`${id}-nome`}>Nome e cognome <span class="obbligatorio" aria-hidden="true">*</span></label>
+        <input id={`${id}-nome`} name="nome" type="text" autocomplete="name" required maxlength="120" aria-describedby={`${id}-nome-e`} />
+        <p class="errore" id={`${id}-nome-e`} data-errore-per="nome"></p>
+      </div>
+      <div class="campo">
+        <label for={`${id}-tel`}>Telefono {tipo === 'prenota' ? <span class="obbligatorio" aria-hidden="true">*</span> : <span class="facoltativo">(o email)</span>}</label>
+        <input id={`${id}-tel`} name="telefono" type="tel" inputmode="tel" autocomplete="tel" required={tipo === 'prenota'} maxlength="30" aria-describedby={`${id}-tel-e`} />
+        <p class="errore" id={`${id}-tel-e`} data-errore-per="telefono"></p>
+      </div>
+      <div class="campo">
+        <label for={`${id}-email`}>Email {tipo === 'prenota' && <span class="facoltativo">(facoltativa)</span>}</label>
+        <input id={`${id}-email`} name="email" type="email" autocomplete="email" maxlength="160" aria-describedby={`${id}-email-e`} />
+        <p class="errore" id={`${id}-email-e`} data-errore-per="email"></p>
+      </div>
+      <div class="campo">
+        <label for={`${id}-serv`}>Servizio {tipo === 'contatto' && <span class="facoltativo">(facoltativo)</span>}</label>
+        <select id={`${id}-serv`} name="servizio" data-preseleziona={servizio} aria-describedby={`${id}-serv-e`}>
+          <option value="">{tipo === 'prenota' ? 'Non lo so ancora / più di uno' : 'Nessuno in particolare'}</option>
+          {servizi.map((x) => <option value={x.slug} selected={x.slug === servizio}>{x.titolo}</option>)}
+          <option value="altro">Altro</option>
+        </select>
+        <p class="errore" id={`${id}-serv-e`} data-errore-per="servizio"></p>
+      </div>
+    </div>
+    <fieldset class="scelte">
+      <legend>Sei…</legend>
+      <label class="scelta"><input type="radio" name="profilo" value="privato" checked /><span>Un privato</span></label>
+      <label class="scelta"><input type="radio" name="profilo" value="azienda" /><span>Un'azienda o un professionista</span></label>
+    </fieldset>
+    {tipo === 'prenota' && (
+      <fieldset class="scelte">
+        <legend>Quando preferisci essere richiamato?</legend>
+        <label class="scelta"><input type="radio" name="preferenza" value="mattina" /><span>Mattina</span></label>
+        <label class="scelta"><input type="radio" name="preferenza" value="pomeriggio" /><span>Pomeriggio</span></label>
+        <label class="scelta"><input type="radio" name="preferenza" value="indifferente" checked /><span>Indifferente</span></label>
+      </fieldset>
+    )}
+    <div class="campo">
+      <label for={`${id}-msg`}>{tipo === 'prenota' ? <>Vuoi aggiungere qualcosa? <span class="facoltativo">(facoltativo)</span></> : <>Messaggio <span class="obbligatorio" aria-hidden="true">*</span></>}</label>
+      <textarea id={`${id}-msg`} name="messaggio" maxlength="2000" rows="4" aria-describedby={`${id}-msg-e ${id}-msg-a`}></textarea>
+      <p class="aiuto" id={`${id}-msg-a`}>Non scrivere qui dati sanitari: per i documenti usa "Carica i documenti".</p>
+      <p class="errore" id={`${id}-msg-e`} data-errore-per="messaggio"></p>
+    </div>
+    <div class="trappola" aria-hidden="true"><label for={`${id}-sito`}>Lascia vuoto</label><input id={`${id}-sito`} name="sito_web" type="text" tabindex="-1" autocomplete="off" /></div>
+    <label class="spunta">
+      <input type="checkbox" name="consenso" required aria-describedby={`${id}-cons-e`} />
+      <span>Ho letto l'<a href="/privacy" target="_blank" rel="noopener">informativa sulla privacy<span class="sr-only"> (si apre in una nuova scheda)</span></a> e chiedo di essere ricontattato. <span class="obbligatorio" aria-hidden="true">*</span></span>
+    </label>
+    <p class="errore" id={`${id}-cons-e`} data-errore-per="consenso"></p>
+    <button class="btn" type="submit" data-invia-r>{tipo === 'prenota' ? 'Invia la richiesta' : 'Invia il messaggio'} <Icon name="freccia" /></button>
+    <div class="modulo-richiesta__esito" role="status" aria-live="polite" data-esito-r></div>
+  </form>
+  <div class="avviso avviso--ok" data-vista-r="fatto" hidden tabindex="-1">
+    <p><strong>{contatti.conferma}</strong></p>
+    <p>Codice della richiesta: <strong data-codice-r></strong></p>
+  </div>
+</div>
+
+<script>
+  import '@/scripts/richiesta';
+</script>
+
+<style>
+  .modulo-richiesta__griglia { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 20px; }
+  .modulo-richiesta__esito { margin-top: 16px; }
+  .modulo-richiesta__esito:empty { display: none; }
+  .modulo-richiesta .facoltativo { font-weight: 400; color: var(--grigio); }
+  .modulo-richiesta .btn { margin-top: 8px; }
+  @media (max-width: 680px) { .modulo-richiesta__griglia { grid-template-columns: minmax(0, 1fr); } .modulo-richiesta .btn { width: 100%; } }
+</style>

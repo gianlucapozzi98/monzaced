@@ -1,0 +1,56 @@
+---
+import '@/styles/global.css';
+import { Font } from 'astro:assets';
+import Logo from '@/components/Logo.astro';
+interface Props { titolo: string; utente?: string | null }
+const { titolo, utente } = Astro.props;
+---
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="referrer" content="no-referrer" />
+    <title>{titolo} · Area riservata · Monza CED</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <Font cssVariable="--font-display" />
+    <Font cssVariable="--font-body" />
+  </head>
+  <body class="studio">
+    <header class="studio__testa su-scuro">
+      <a href="/area-studio" aria-label="Area riservata"><Logo /></a>
+      <span>Area riservata dello studio</span>
+      {utente && (
+        <form method="post" action="/api/studio/esci" class="studio__esci">
+          <span>Accesso: <strong>{utente}</strong></span>
+          <button class="btn btn--piccolo btn--secondario" type="submit">Esci</button>
+        </form>
+      )}
+    </header>
+    <main class="contenitore studio__main" id="contenuto"><slot /></main>
+  </body>
+</html>
+<style is:global>
+  .studio { background: var(--avorio); }
+  .studio__testa { display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; padding: 16px var(--gutter); }
+  .studio__testa .logo { width: 150px; }
+  .studio__esci { margin-left: auto; display: flex; gap: 14px; align-items: center; }
+  .studio__main { padding-block: 40px 80px; }
+  .tabella { width: 100%; border-collapse: collapse; background: #fff; border-radius: 20px; overflow: hidden; font-size: 1.0625rem; }
+  .tabella th, .tabella td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--linea); vertical-align: top; }
+  .tabella th { background: var(--cielo); font-family: var(--f-titoli); }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-weight: 700; font-size: 0.95rem; background: var(--cielo); }
+  .badge--ok { background: var(--ok-tenue); color: var(--ok); }
+  .badge--ko { background: var(--errore-tenue); color: var(--errore); }
+  .scheda-studio { background: #fff; border-radius: 28px; padding: 28px; margin-bottom: 24px; }
+  .scorri { overflow-x: auto; }
+  .studio-h1 { font-size: 2.4rem; }
+  .studio-h2 { font-size: 1.6rem; }
+  .studio-h3 { font-size: 1.4rem; }
+  .studio-dl { display: grid; grid-template-columns: max-content 1fr; gap: 8px 24px; margin: 0; }
+  .studio-dl dd { margin: 0; }
+  .studio-dl .pre { white-space: pre-wrap; }
+  .studio-accesso { max-width: 560px; }
+  .m-0 { margin: 0; }
+</style>

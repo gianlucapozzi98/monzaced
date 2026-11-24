@@ -1,0 +1,235 @@
+---
+/**
+ * Modello unico per tutte le pagine dei servizi. Ogni pagina si genera dai campi del pannello:
+ * aggiungere un servizio nel pannello = nuova pagina, senza toccare il codice.
+ */
+import Base from '@/layouts/Base.astro';
+import TestataPagina from '@/components/TestataPagina.astro';
+import Caricatore from '@/components/Caricatore.astro';
+import Faq from '@/components/Faq.astro';
+import ModuloRichiesta from '@/components/ModuloRichiesta.astro';
+import Icon from '@/components/Icon.astro';
+import Segnaposto from '@/components/Segnaposto.astro';
+import { getServizi, GRUPPI, home, impostazioni as s, formatData, type Servizio } from '@/lib/content';
+import { blocchi, inline } from '@/lib/testo';
+import { schemaServizio, schemaBriciole, schemaFaq } from '@/lib/schema';
+
+export function getStaticPaths() {
+  return getServizi().map((servizio) => ({ params: { slug: servizio.slug }, props: { servizio } }));
+}
+const { servizio: x } = Astro.props as { servizio: Servizio };
+const tutti = getServizi();
+const pos = tutti.findIndex((t) => t.slug === x.slug);
+const prec = tutti[(pos - 1 + tutti.length) % tutti.length];
+const succ = tutti[(pos + 1) % tutti.length];
+const collegati = tutti.filter((t) => t.slug !== x.slug && (t.gruppo === x.gruppo || t.situazioni.some((si) => x.situazioni.includes(si)))).slice(0, 3);
+const gruppo = GRUPPI[x.gruppo];
+const passi = x.passaggi.length ? x.passaggi : home.passi;
+const briciole = [{ nome: 'Home', url: '/' }, { nome: 'Servizi', url: '/servizi' }, { nome: x.titolo }];
+const titoloSeo = x.seo.titolo || `${x.titolo} a Monza | Monza CED`;
+const descrSeo = x.seo.descrizione || x.riassunto;
+const ld = [schemaServizio(x, Astro.site), schemaBriciole([{ nome: 'Home', url: '/' }, { nome: 'Servizi', url: '/servizi' }, { nome: x.titolo, url: `/servizi/${x.slug}` }], Astro.site)];
+if (x.faq.length) ld.push(schemaFaq(x.faq) as any);
+---
+<Base titolo={titoloSeo} descrizione={descrSeo} modifica={`collection/servizi/item/${x.slug}`} jsonld={ld}>
+  <TestataPagina titolo={x.titoloPagina} occhiello={gruppo.nome} immagine={x.immagine} briciole={briciole} gruppo={x.gruppo}>
+    <div class="servizio__intro testo-ricco" set:html={blocchi(x.introduzione)} />
+    <div class="azioni">
+      <a class="btn" href={x.pulsanti.prenota.link}>{x.pulsanti.prenota.testo} <Icon name="freccia" /></a>
+      {x.caricamentoAttivo && <a class="btn btn--secondario" href={x.pulsanti.carica.link}><Icon name="carica" /> {x.pulsanti.carica.testo}</a>}
+    </div>
+    <p class="servizio__agg">Testo aggiornato il {formatData(x.aggiornatoIl)}.</p>
+  </TestataPagina>
+
+  <Segnaposto voci={x.daCompletare} titolo="Da completare con lo studio" classe="contenitore servizio__da-completare" />
+
+  <div class="contenitore servizio">
+    <nav class="servizio__indice" aria-label="In questa pagina">
+      <p class="servizio__indice-titolo">In questa pagina</p>
+      <ol>
+        {x.perChi.length > 0 && <li><a href="#per-chi">Per chi è</a></li>}
+        {x.cosaFacciamo.length > 0 && <li><a href="#cosa-facciamo">Cosa facciamo per te</a></li>}
+        <li><a href="#come-funziona">Come funziona</a></li>
+        {x.caricamentoAttivo && <li><a href="#carica-documenti">Documenti e caricamento</a></li>}
+        {x.approfondimenti.length > 0 && <li><a href="#approfondimenti">Approfondimenti</a></li>}
+        {x.faq.length > 0 && <li><a href="#domande">Domande frequenti</a></li>}
+        <li><a href="#prenota">Prenota una consulenza</a></li>
+      </ol>
+    </nav>
+
+    <div class="servizio__corpo">
+      {x.perChi.length > 0 && (
+        <section id="per-chi" class="servizio__sez" aria-labelledby="per-chi-t">
+          <h2 id="per-chi-t" data-rivela>Per chi è</h2>
+          <ul class="per-chi">
+            {x.perChi.map((p) => <li set:html={inline(p)} />)}
+          </ul>
+          {x.perChiNota && <div class="testo-ricco" set:html={blocchi(x.perChiNota)} />}
+        </section>
+      )}
+
+      {x.cosaFacciamo.length > 0 && (
+        <section id="cosa-facciamo" class="servizio__sez" aria-labelledby="cosa-t">
+          <h2 id="cosa-t" data-rivela>Cosa facciamo per te</h2>
+          <ul class="cosa">
+            {x.cosaFacciamo.map((c) => <li><span class="cosa__ico" aria-hidden="true"><Icon name="check" size={22} /></span><span set:html={inline(c)} /></li>)}
+          </ul>
+        </section>
+      )}
+
+      <section id="come-funziona" class="servizio__sez" aria-labelledby="come-t">
+        <h2 id="come-t" data-rivela>{x.passaggi.length ? 'Come funziona' : 'Come iniziare'}</h2>
+        <div class="passaggi">
+          <svg class="filo passaggi__filo" data-filo data-inizio="top 75%" data-fine="bottom 70%" viewBox="0 0 40 400" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path data-traccia pathLength="1" d="M20 0 C 36 80, 4 120, 20 200 S 36 320, 20 400" />
+          </svg>
+          <ol>
+            {passi.map((p, i) => (
+              <li data-rivela>
+                <span class="passaggi__n" aria-hidden="true">{i + 1}</span>
+                <h3>{p.titolo}</h3>
+                <p>{p.testo}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+        {!x.passaggi.length && <Segnaposto voci={['Passaggi specifici di questo servizio (procedura, tempi indicativi solo se confermati).']} titolo="Segnaposto" />}
+      </section>
+
+      {x.caricamentoAttivo && (
+        <section class="servizio__sez" aria-label="Documenti e caricamento">
+          {x.documenti.length === 0 && <Segnaposto voci={[`Elenco dei documenti da portare per "${x.titolo}" (il vecchio sito non lo riporta).`]} titolo="Segnaposto: checklist documenti" />}
+          {x.documentiNota && <div class="testo-ricco servizio__nota-doc" set:html={blocchi(x.documentiNota)} />}
+          <Caricatore servizio={x} titolo={x.documenti.length ? 'Documenti da portare e caricamento' : 'Carica i documenti'} testo="Spunta i documenti che hai, poi caricali qui in modo protetto. Puoi anche portarli in studio." />
+        </section>
+      )}
+
+      {x.approfondimenti.length > 0 && (
+        <section id="approfondimenti" class="servizio__sez" aria-labelledby="appr-t">
+          <h2 id="appr-t" data-rivela>Approfondimenti</h2>
+          {x.approfondimenti.map((a) => (
+            <article class="approfondimento">
+              <h3>{a.titolo}</h3>
+              <div class="testo-ricco" set:html={blocchi(a.testo)} />
+            </article>
+          ))}
+        </section>
+      )}
+
+      {x.faq.length > 0 && (
+        <section id="domande" class="servizio__sez" aria-labelledby="domande-t">
+          <h2 id="domande-t" data-rivela>Domande frequenti</h2>
+          <Faq voci={x.faq} id={`faq-${x.slug}`} />
+        </section>
+      )}
+
+      <p class="servizio__avvertenza">
+        <Icon name="avviso" /> <span>Testo aggiornato il {formatData(x.aggiornatoIl)}. Le norme cambiano spesso: queste informazioni non sostituiscono una consulenza e non garantiscono esiti, importi o tempi. Verifica sempre la tua situazione con lo studio.</span>
+      </p>
+    </div>
+  </div>
+
+  <section id="prenota" class="sezione prenota-servizio su-scuro" aria-labelledby="prenota-t">
+    <div class="contenitore prenota-servizio__griglia">
+      <div>
+        <p class="occhiello">{x.titolo}</p>
+        <h2 id="prenota-t">Parliamone: <em>prenota una consulenza.</em></h2>
+        <p class="sottotesto">Lasciaci i tuoi recapiti: lo studio ti richiama per fissare l'appuntamento. Oppure chiama subito.</p>
+        <a class="prenota-servizio__tel" href={`tel:${s.telefonoLink}`}><Icon name="telefono" size={28} /> {s.telefono}</a>
+        {s.orari.map((o) => <p class="prenota-servizio__orari">{o.giorni}: {o.ore}</p>)}
+      </div>
+      <div class="prenota-servizio__modulo">
+        <ModuloRichiesta tipo="prenota" servizio={x.slug} id={`prenota-${x.slug}`} />
+      </div>
+    </div>
+  </section>
+
+  <section class="contenitore collegati" aria-labelledby="collegati-t">
+    <h2 id="collegati-t" class="collegati__titolo">Servizi collegati</h2>
+    <ul class="collegati__lista">
+      {collegati.map((c) => (
+        <li class={`g-${c.gruppo}`}>
+          <a href={`/servizi/${c.slug}`}><span class="collegati__ico" aria-hidden="true"><Icon name={c.icona} size={28} /></span><span><strong>{c.titolo}</strong><span>{c.riassunto}</span></span></a>
+        </li>
+      ))}
+    </ul>
+    <nav class="prec-succ" aria-label="Servizio precedente e successivo">
+      <a href={`/servizi/${prec.slug}`} rel="prev"><Icon name="freccia-sx" /> <span><small>Precedente</small>{prec.titolo}</span></a>
+      <a href="/servizi" class="prec-succ__tutti">Tutti i servizi</a>
+      <a href={`/servizi/${succ.slug}`} rel="next"><span><small>Successivo</small>{succ.titolo}</span> <Icon name="freccia" /></a>
+    </nav>
+  </section>
+</Base>
+
+<style>
+  .servizio__intro { font-size: clamp(1.1875rem, 1.1rem + 0.35vw, 1.35rem); margin-bottom: 28px; max-width: 58ch; }
+  .servizio__agg { margin: 20px 0 0; font-size: 1.0625rem; color: var(--grigio); }
+  :global(.servizio__da-completare) { margin-top: 32px; }
+  .servizio { display: grid; grid-template-columns: 260px 1fr; gap: clamp(28px, 5vw, 80px); padding-block: clamp(56px, 7vw, 110px) 40px; }
+  .servizio__indice { position: sticky; top: 130px; align-self: start; }
+  .servizio__indice-titolo { font-family: var(--f-titoli); font-weight: 800; margin-bottom: 10px; }
+  .servizio__indice ol { list-style: none; padding: 0; margin: 0; border-left: 3px solid var(--linea); }
+  .servizio__indice li { margin: 0; }
+  .servizio__indice a { display: block; padding: 8px 0 8px 18px; margin-left: -3px; border-left: 3px solid transparent; color: var(--inchiostro); text-decoration: none; font-size: 1.0625rem; }
+  .servizio__indice a:hover { border-left-color: var(--blu); color: var(--blu-scuro); }
+  .servizio__sez { margin-bottom: clamp(56px, 7vw, 96px); scroll-margin-top: 120px; }
+  .servizio__sez > h2 { font-size: clamp(1.9rem, 1.4rem + 1.8vw, 2.9rem); }
+  .per-chi { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+  .per-chi li { margin: 0; padding: 12px 22px; border-radius: 999px; background: var(--bianco); border: 2px solid var(--inchiostro); font-weight: 700; }
+  .cosa { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .cosa li { margin: 0; display: flex; gap: 14px; align-items: flex-start; padding: 20px; border-radius: 26px; background: var(--bianco); }
+  .cosa__ico { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--ok-tenue); color: var(--ok); }
+  .passaggi { position: relative; }
+  .passaggi__filo { left: 22px; top: 0; width: 40px; height: 100%; }
+  .passaggi ol { list-style: none; padding: 0; margin: 0 0 20px; display: grid; gap: 20px; position: relative; }
+  .passaggi li { margin: 0; position: relative; padding: 8px 0 8px 104px; min-height: 84px; }
+  .passaggi__n {
+    position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%;
+    background: var(--avorio); border: 3px solid var(--blu); font-family: var(--f-titoli); font-weight: 800; font-size: 1.9rem;
+  }
+  .passaggi h3 { margin-bottom: 6px; }
+  .passaggi p { color: var(--grigio); margin: 0; }
+  .servizio__nota-doc { margin-bottom: 20px; }
+  .approfondimento { padding: 28px 0; border-top: 2px solid var(--linea); }
+  .approfondimento h3 { font-size: 1.6rem; }
+  .servizio__avvertenza { display: flex; gap: 14px; align-items: flex-start; padding: 22px; border-radius: 24px; background: var(--cielo); font-size: 1.0625rem; }
+  .servizio__avvertenza :global(svg) { flex: none; color: var(--blu-scuro); margin-top: 2px; }
+  .prenota-servizio { border-radius: clamp(40px, 7vw, 110px); margin-inline: clamp(0px, 1.5vw, 24px); }
+  .prenota-servizio__griglia { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(28px, 5vw, 80px); }
+  .prenota-servizio h2 em { color: var(--blu); }
+  .prenota-servizio__tel { display: inline-flex; gap: 12px; align-items: center; font-family: var(--f-titoli); font-weight: 800; font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem); color: #fff !important; text-decoration: none; margin: 8px 0 12px; }
+  .prenota-servizio__tel :global(svg) { color: var(--blu); }
+  .prenota-servizio__orari { color: #c9d7ee; margin: 0; }
+  .prenota-servizio__modulo { background: var(--bianco); color: var(--inchiostro); border-radius: 44px 44px 30px 30px; padding: clamp(22px, 4vw, 44px); }
+  .prenota-servizio__modulo :global(a) { color: var(--blu-scuro); }
+  .collegati { padding-block: clamp(56px, 7vw, 100px) 0; }
+  .collegati__titolo { font-size: clamp(1.8rem, 1.4rem + 1.4vw, 2.6rem); }
+  .collegati__lista { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .collegati__lista li { margin: 0; }
+  .collegati__lista a { display: flex; gap: 16px; padding: 22px; height: 100%; border-radius: 30px 30px 22px 22px; background: var(--bianco); color: var(--inchiostro); text-decoration: none; border: 2px solid transparent; transition: border-color var(--d-comp) var(--ease-out), transform var(--d-comp) var(--ease-out); }
+  .collegati__lista a:hover { border-color: var(--inchiostro); transform: translateY(-4px); }
+  .collegati__lista strong { display: block; font-family: var(--f-titoli); font-size: 1.25rem; margin-bottom: 4px; }
+  .collegati__lista span span { color: var(--grigio); font-size: 1.0625rem; }
+  .collegati__ico { flex: none; display: grid; place-items: center; width: 56px; height: 64px; border-radius: 999px 999px 14px 14px; background: var(--g); color: var(--ga); }
+  .prec-succ { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 40px; padding-top: 28px; border-top: 2px solid var(--linea); }
+  .prec-succ a { display: inline-flex; gap: 12px; align-items: center; min-height: 56px; min-width: 0; color: var(--inchiostro); text-decoration: none; font-weight: 700; }
+  .prec-succ a[rel] { flex: 1 1 0; }
+  .prec-succ a[rel='next'] { justify-content: flex-end; }
+  .prec-succ a :global(svg) { flex: none; }
+  .prec-succ small { display: block; font-weight: 400; color: var(--grigio); font-size: 1rem; }
+  .prec-succ a[rel='next'] { text-align: right; }
+  .prec-succ__tutti { padding: 0 22px; border: 2px solid var(--inchiostro); border-radius: 999px; }
+  @media (max-width: 1024px) {
+    .servizio { grid-template-columns: minmax(0, 1fr); }
+    .servizio__indice { position: static; }
+    .collegati__lista { grid-template-columns: minmax(0, 1fr); }
+    .prenota-servizio__griglia { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 680px) {
+    .cosa { grid-template-columns: minmax(0, 1fr); }
+    .passaggi li { padding-left: 84px; }
+    .passaggi__n { width: 64px; height: 64px; font-size: 1.5rem; }
+    .passaggi__filo { left: 12px; }
+    .prec-succ .prec-succ__tutti { display: none; }
+  }
+</style>

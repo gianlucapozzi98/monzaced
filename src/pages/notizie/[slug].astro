@@ -1,0 +1,14 @@
+---
+import Base from '@/layouts/Base.astro';
+import TestataPagina from '@/components/TestataPagina.astro';
+import { getNotizie, formatData, type Notizia } from '@/lib/content';
+import { blocchi } from '@/lib/testo';
+export function getStaticPaths() {
+  return getNotizie().map((n) => ({ params: { slug: n.slug }, props: { n } }));
+}
+const { n } = Astro.props as { n: Notizia };
+---
+<Base titolo={`${n.titolo} | Monza CED`} descrizione={n.riassunto || n.titolo}>
+  <TestataPagina titolo={n.titolo} occhiello={formatData(n.data)} briciole={[{ nome: 'Home', url: '/' }, { nome: 'Notizie', url: '/notizie' }, { nome: n.titolo }]} />
+  <div class="contenitore-stretto sezione testo-ricco" set:html={blocchi(n.testo)} />
+</Base>

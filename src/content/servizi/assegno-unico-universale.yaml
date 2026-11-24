@@ -1,0 +1,63 @@
+titolo: Assegno unico
+titoloPagina: Assegno Unico Universale
+riassunto: Ti aiutiamo con la domanda dell'Assegno Unico e con l'ISEE che serve a calcolarne l'importo.
+gruppo: famiglia
+situazioni:
+  - famiglia
+icona: cuore
+immagine: famiglia
+ordine: 10
+seo:
+  titolo: Assegno Unico Universale a Monza | Monza CED
+  descrizione: "Domanda dell'Assegno Unico Universale a Monza, con l'ISEE per l'importo personalizzato. Prenota una consulenza o carica i documenti online."
+introduzione: |-
+  L'Assegno Unico Universale è un sostegno economico per le famiglie, pensato per aiutare i genitori con figli fino al 21° anno di età. Per la domanda puoi rivolgerti a noi.
+perChi:
+  - Famiglie con figli minorenni
+  - Donne in gravidanza dal settimo mese
+  - Genitori di figli maggiorenni fino a 21 anni, a certe condizioni (studenti, disoccupati in cerca di lavoro, tirocinanti o lavoratori con redditi inferiori a 8.000 euro l'anno)
+  - Famiglie con figli disabili, senza limiti di età
+perChiNota: ""
+cosaFacciamo:
+  - Consulenza personalizzata per capire la misura e i suoi vantaggi.
+  - Supporto nella raccolta e nella presentazione dei documenti.
+  - Assistenza per [ottenere o aggiornare l'ISEE](/servizi/modello-isee), che determina l'importo dell'assegno.
+  - Supporto per le domande successive, per mantenere o aggiornare la prestazione.
+passaggi: []
+documenti:
+  - voce: Documento d'identità e codice fiscale del richiedente
+    nota: Permesso di soggiorno se cittadino straniero
+  - voce: Codici fiscali dei familiari interessati
+    nota: ""
+  - voce: Certificato di gravidanza
+    nota: Se applicabile
+  - voce: Attestazione ISEE valida
+    nota: Per un importo personalizzato in base al reddito
+documentiNota: ""
+approfondimenti:
+  - titolo: Che cosa ha sostituito
+    testo: |-
+      Si chiama "unico" e "universale" perché è un'unica prestazione per tutte le famiglie con figli fiscalmente a carico fino a 21 anni, e prende il posto di altre misure:
+
+      - premio alla nascita di 800 euro
+      - bonus bebè
+      - fondo prestiti ai neo genitori
+      - assegni al nucleo familiare
+      - assegno al nucleo familiare dei Comuni
+      - detrazioni per i figli a carico
+faq:
+  - domanda: Serve l'ISEE?
+    risposta: |-
+      L'ISEE serve per ottenere un importo personalizzato in base al reddito. Possiamo aiutarti anche a ottenerlo o aggiornarlo.
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=assegno-unico-universale
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: true
+aggiornatoIl: 2026-11-24
+daCompletare: []
+fonte: Testi migrati da monzaced.it/servizi/assegno-unico-universale il 24/11/2026 (tolto il riferimento all'anno 2024).

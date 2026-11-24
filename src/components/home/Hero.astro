@@ -1,0 +1,248 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from '../Icon.astro';
+import { home, impostazioni as s } from '@/lib/content';
+import { img, alt } from '@/lib/immagini';
+
+// Il titolo entra parola per parola; la parte tra *asterischi* è in corsivo blu (come "CED" nel logo).
+const segmenti = home.titolo.split(/(\*[^*]+\*)/).filter(Boolean).map((t) => ({ em: t.startsWith('*'), testo: t.replace(/\*/g, '') }));
+let i = 0;
+const parole = segmenti.flatMap((seg) => seg.testo.split(/\s+/).filter(Boolean).map((p) => ({ p, em: seg.em, i: i++ })));
+---
+<section class="hero" data-hero aria-labelledby="hero-titolo">
+  <div class="hero__scena" data-hero-scena>
+    <div class="hero__testo contenitore" data-hero-testo>
+      <p class="occhiello">{home.occhiello}</p>
+      <h1 id="hero-titolo" class="hero__titolo">
+        {parole.map((w) => (
+          <span class="parola">{w.em ? <em><span>{w.p}</span></em> : <span>{w.p}</span>}</span>
+        ))}
+      </h1>
+      <p class="sottotesto hero__sotto">{home.sottotitolo}</p>
+      <div class="azioni">
+        <a class="btn" href={s.ctaPrenota.link}>{s.ctaPrenota.testo} <Icon name="freccia" /></a>
+        <a class="btn btn--secondario" href={s.ctaCarica.link}><Icon name="carica" /> {s.ctaCarica.testo}</a>
+      </div>
+      <p class="hero__tel">
+        Oppure chiama il <a href={`tel:${s.telefonoLink}`}>{s.telefono.replace('+39 ', '')}</a>
+        {s.orari[0] && <span> · {s.orari[0].giorni.toLowerCase()}, {s.orari[0].ore}</span>}
+      </p>
+    </div>
+
+    <div class="hero__foto" data-porta>
+      <Picture
+        src={img('hero-documenti-casa')}
+        alt={alt('hero-documenti-casa')}
+        widths={[480, 720, 1080, 1440, 1920, 2400]}
+        sizes="(min-width: 1024px) 100vw, calc(100vw - 32px)"
+        formats={['avif', 'webp']}
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        class="hero__img"
+      />
+      <div class="hero__velo" data-hero-velo aria-hidden="true"></div>
+      <p class="hero__frase" data-hero-frase>{home.fraseApertura}</p>
+    </div>
+
+    <div class="hero__cerchio" data-hero-cerchio>
+      <div data-parallasse="0.45">
+        <Picture src={img('dettaglio-firma')} alt="" widths={[240, 360, 480]} sizes="240px" formats={['avif', 'webp']} loading="eager" />
+      </div>
+    </div>
+
+    <svg class="filo hero__filo" data-hero-filo viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <!-- Il filo corre sopra il testo e poi nello spazio tra testo e arco: non attraversa mai le scritte -->
+      <path pathLength="1" d="M-20 124 C 180 84, 400 156, 590 112 S 736 150, 734 270 C 732 390, 742 470, 734 560 S 724 780, 770 870 S 880 930, 960 960" />
+    </svg>
+
+    <a class="hero__invito" href="#di-cosa-hai-bisogno" data-hero-invito>
+      <span>{home.domanda}</span>
+      <span class="hero__invito-icona"><Icon name="freccia-giu" /></span>
+    </a>
+  </div>
+</section>
+
+<script>
+  /**
+   * Il filo dell'hero si calcola dalle posizioni reali di testo e arco, a ogni dimensione dello schermo:
+   * passa sopra l'occhiello e scende nello spazio tra le scritte e l'arco, senza mai attraversare il testo.
+   */
+  const svg = document.querySelector<SVGSVGElement>('[data-hero-filo]');
+  const scena = document.querySelector<HTMLElement>('[data-hero-scena]');
+  const disegna = () => {
+    if (!svg || !scena || getComputedStyle(svg).display === 'none') return;
+    const path = svg.querySelector('path')!;
+    const base = scena.getBoundingClientRect();
+    const W = base.width, H = base.height;
+    const rel = (el: Element) => { const r = el.getBoundingClientRect(); return { top: r.top - base.top, bottom: r.bottom - base.top, left: r.left - base.left, right: r.right - base.left }; };
+    const occ = scena.querySelector('.occhiello');
+    const nav = document.querySelector('.testata__barra');
+    if (!occ) return;
+    const o = rel(occ);
+    const navBottom = nav ? Math.max(0, nav.getBoundingClientRect().bottom - base.top) : 0;
+    // fascia libera tra la barra di navigazione e l'occhiello
+    const y0 = Math.max(navBottom + 10, Math.min(o.top - 26, (navBottom + o.top) / 2));
+    // bordo destro delle scritte e bordo sinistro dell'arco
+    let destra = 0;
+    scena.querySelectorAll('[data-hero-testo] > *, [data-hero-testo] .btn').forEach((el) => {
+      const rg = document.createRange(); rg.selectNodeContents(el);
+      [...rg.getClientRects(), el.getBoundingClientRect()].forEach((r) => { if (r.width) destra = Math.max(destra, r.right - base.left); });
+    });
+    const arco = W * 0.52;
+    const spazio = arco - destra;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    let d: string;
+    if (spazio >= 18) {
+      const gx = destra + spazio * 0.45;
+      d = `M -20 ${y0 + 8} C ${gx * 0.25} ${y0 - 16}, ${gx * 0.55} ${y0 + 18}, ${gx - 90} ${y0} S ${gx} ${y0 + 20}, ${gx} ${y0 + 90}`
+        + ` C ${gx} ${H * 0.4}, ${gx + spazio * 0.2} ${H * 0.55}, ${gx} ${H * 0.7} S ${gx + spazio * 0.25} ${H * 0.95}, ${gx + 70} ${H + 30}`;
+    } else {
+      // spazio troppo stretto: il filo resta sopra il testo e va a toccare la cima dell'arco
+      d = `M -20 ${y0 + 8} C ${arco * 0.25} ${y0 - 16}, ${arco * 0.55} ${y0 + 18}, ${arco - 40} ${y0} S ${arco + 80} ${y0 - 6}, ${arco + 140} ${y0 - 30}`;
+    }
+    path.setAttribute('d', d);
+  };
+  disegna();
+  document.fonts?.ready.then(disegna);
+  // ricalcolo quando cambiano le dimensioni (finestra, caratteri, passaggio alla modalità "porta")
+  if (scena) new ResizeObserver(() => requestAnimationFrame(disegna)).observe(scena);
+  // e a fine animazione d'ingresso, quando il testo è nella posizione definitiva
+  setTimeout(disegna, 1800);
+</script>
+
+<style>
+  .hero { position: relative; }
+  .hero__scena {
+    position: relative; min-height: 100svh; display: grid; align-content: center;
+    padding: 132px 0 120px; overflow: hidden;
+  }
+  .hero__testo { position: relative; z-index: 3; }
+  .hero__titolo { max-width: 11.5ch; margin-bottom: 28px; }
+  .parola { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+  .parola > span, .parola > em > span { display: inline-block; }
+  .parola:not(:last-child) { margin-right: 0.24em; }
+  .parola:nth-child(1) { --i: 0; }
+  .parola:nth-child(2) { --i: 1; }
+  .parola:nth-child(3) { --i: 2; }
+  .parola:nth-child(4) { --i: 3; }
+  .parola:nth-child(5) { --i: 4; }
+  .parola:nth-child(6) { --i: 5; }
+  .parola:nth-child(7) { --i: 6; }
+  .parola:nth-child(8) { --i: 7; }
+  .parola:nth-child(9) { --i: 8; }
+  .parola:nth-child(10) { --i: 9; }
+  .parola:nth-child(11) { --i: 10; }
+  .parola:nth-child(12) { --i: 11; }
+  .parola:nth-child(13) { --i: 12; }
+  .parola:nth-child(14) { --i: 13; }
+  .parola:nth-child(15) { --i: 14; }
+  .parola:nth-child(16) { --i: 15; }
+  .hero__sotto { margin-bottom: 32px; }
+  .hero__tel { margin: 22px 0 0; font-size: 1.125rem; color: var(--grigio); }
+  .hero__tel a { font-weight: 700; }
+
+  /* Foto: livello a tutto schermo ritagliato ad arco (desktop) */
+  .hero__foto {
+    --p: 0;
+    --t0: 118px; --r0: var(--gutter); --b0: 40px; --l0: 52vw;
+    --rad0: calc((100vw - var(--l0) - var(--r0)) / 2);
+    position: absolute; inset: 0; z-index: 1;
+    /* --p: apertura allo scroll (GSAP) · --e: ingresso al caricamento (CSS). --q le combina. */
+    --q: calc(var(--p) - (1 - var(--e)) * 0.35);
+    clip-path: inset(
+      calc((1 - var(--q)) * var(--t0)) calc((1 - var(--q)) * var(--r0)) calc((1 - var(--q)) * var(--b0)) calc((1 - var(--q)) * var(--l0))
+      round calc((1 - var(--q)) * var(--rad0)) calc((1 - var(--q)) * var(--rad0)) calc((1 - var(--q)) * 28px) calc((1 - var(--q)) * 28px)
+    );
+    background: var(--cielo);
+  }
+  .hero__foto :global(picture), .hero__foto :global(img) { width: 100%; height: 100%; }
+  .hero__foto :global(img) {
+    object-fit: cover; object-position: 50% 40%;
+    transform: translateX(calc((1 - var(--q)) * 25vw)) scale(calc(1.04 + (1 - var(--q)) * 0.06));
+    transform-origin: 70% 50%;
+  }
+  .hero__velo {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgb(14 26 43 / 0) 40%, rgb(14 26 43 / 0.82) 100%);
+  }
+  .hero__frase {
+    position: absolute; z-index: 2; margin: 0;
+    left: calc(var(--l0) + 36px); right: calc(var(--r0) + 36px); bottom: calc(var(--b0) + 34px);
+    color: var(--bianco); font-family: var(--f-titoli); font-weight: 800; letter-spacing: -0.02em;
+    font-size: clamp(1.5rem, 1rem + 1.2vw, 2.2rem); line-height: 1.12; text-wrap: balance;
+  }
+  :global(.hero--animata) { height: 210svh; }
+  :global(.hero--animata) .hero__scena { position: sticky; top: 0; height: 100svh; min-height: 0; }
+  :global(.hero--animata) .hero__velo { background: rgb(14 26 43 / 0.7); }
+  :global(.hero--animata) .hero__frase {
+    left: var(--gutter); right: var(--gutter); bottom: auto; top: 50%; translate: 0 -50%;
+    text-align: center; font-size: clamp(2.6rem, 1.4rem + 4vw, 5.6rem); line-height: 1.02; letter-spacing: -0.035em;
+    max-width: 16ch; margin-inline: auto; text-shadow: 0 2px 24px rgb(14 26 43 / 0.45);
+  }
+
+  .hero__cerchio {
+    position: absolute; z-index: 2; width: clamp(150px, 15vw, 230px); aspect-ratio: 1;
+    left: calc(52vw - clamp(75px, 7.5vw, 115px)); bottom: 13%;
+    border-radius: 50%; overflow: hidden; border: 6px solid var(--avorio); box-shadow: var(--ombra);
+  }
+  .hero__cerchio > div { height: 125%; margin-top: -12%; }
+  .hero__cerchio :global(img) { width: 100%; height: 100%; object-fit: cover; }
+
+  .hero__filo { inset: 0; width: 100%; height: 100%; z-index: 1; } /* sotto testo e cerchio */
+  .hero__filo path { stroke-dasharray: 1; stroke-dashoffset: 0; }
+
+  .hero__invito {
+    position: absolute; z-index: 3; left: var(--gutter); bottom: 34px;
+    display: inline-flex; align-items: center; gap: 14px; text-decoration: none; color: var(--inchiostro);
+    font-family: var(--f-titoli); font-weight: 800; font-size: 1.2rem;
+  }
+  .hero__invito-icona {
+    display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%;
+    background: var(--inchiostro); color: var(--bianco);
+    transition: transform var(--d-comp) var(--ease-molla);
+  }
+  .hero__invito:hover .hero__invito-icona { transform: translateY(4px) scale(1.05); }
+
+  /* Ingresso (solo con movimento) */
+  :global(.js-motion) .parola > span, :global(.js-motion) .parola > em > span {
+    animation: parola-su 1000ms var(--ease-out) both;
+    animation-delay: calc(var(--rit, 120ms) + var(--i) * 70ms);
+  }
+  :global(.js-motion.con-caricamento) .hero { --rit: 900ms; }
+  :global(.js-motion) .hero__sotto, :global(.js-motion) .hero__testo .azioni, :global(.js-motion) .hero__tel, :global(.js-motion) .hero__testo .occhiello {
+    animation: sale 900ms var(--ease-out) both; animation-delay: calc(var(--rit, 120ms) + 380ms);
+  }
+  :global(.js-motion) .hero__foto { animation: porta-in 1400ms var(--ease-in-out) backwards; animation-delay: var(--rit, 0ms); }
+  :global(.js-motion) .hero__cerchio { animation: cerchio-in 1100ms var(--ease-out) backwards; animation-delay: calc(var(--rit, 0ms) + 600ms); }
+  :global(.js-motion) .hero__filo path { stroke-dashoffset: 1; animation: traccia 1800ms var(--ease-in-out) forwards; animation-delay: calc(var(--rit, 0ms) + 500ms); }
+  @keyframes parola-su { from { transform: translateY(105%); } }
+  @keyframes sale { from { opacity: 0; transform: translateY(24px); } }
+  @keyframes porta-in { from { --e: 0; } }
+  @keyframes cerchio-in { from { transform: scale(0.4); opacity: 0; } }
+  @keyframes traccia { to { stroke-dashoffset: 0; } }
+
+  @media (min-width: 1024px) {
+    .hero__testo { padding-right: 50vw; }
+    .hero__testo.contenitore { width: auto; margin: 0; padding-left: var(--gutter); }
+  }
+
+  /* Tablet e mobile: niente porta che si apre, l'arco è una foto nel flusso */
+  @media (max-width: 1023.98px) {
+    .hero__scena { min-height: auto; padding: 116px 0 40px; display: block; }
+    .hero__titolo { max-width: 14ch; }
+    .hero__foto {
+      position: relative; inset: auto; margin: 40px var(--gutter) 0; height: min(62svh, 560px);
+      clip-path: none; border-radius: 999px 999px 28px 28px; overflow: hidden;
+    }
+    @supports (corner-shape: round) { .hero__foto { border-radius: 50% 50% 28px 28px / 36% 36% 28px 28px; } }
+    .hero__foto :global(img) { transform: none; }
+    .hero__frase { left: 24px; right: 24px; bottom: 26px; font-size: clamp(1.35rem, 1.1rem + 1.4vw, 1.9rem); }
+    .hero__cerchio { left: auto; right: calc(var(--gutter) + 8px); bottom: auto; top: calc(100% - min(62svh, 560px) - 70px); width: 120px; }
+    .hero__filo, .hero__invito { display: none; }
+    :global(.js-motion) .hero__foto { animation: none; }
+  }
+  @media (max-width: 1023.98px) and (min-width: 700px) {
+    .hero__cerchio { top: auto; bottom: calc(min(62svh, 560px) - 40px); }
+  }
+</style>

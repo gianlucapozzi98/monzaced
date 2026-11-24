@@ -1,0 +1,23 @@
+titolo: Cookie policy
+descrizione: "Quali cookie e tecnologie simili usa il sito di Monza CED, perché, e come cambiare le tue scelte in qualsiasi momento."
+bozza: true
+aggiornatoIl: 2026-11-24
+sezioni:
+  - titolo: In breve
+    testo: |-
+      Questo sito **non usa cookie di profilazione né di statistica**. Usa solo strumenti tecnici necessari al funzionamento. I contenuti di terze parti (la mappa) si caricano **solo se dai il consenso**.
+  - titolo: Strumenti tecnici (sempre attivi)
+    testo: |-
+      - **Preferenze sul consenso** — memorizza nel tuo browser (archiviazione locale) le scelte fatte nel banner, per non chiedertele di nuovo. Durata: 6 mesi.
+      - **Visita già fatta** — memorizza per la sola sessione che hai già visto l'animazione di apertura, per non mostrartela di nuovo.
+      - **Sessione dell'area riservata** — cookie tecnico usato solo dallo studio quando accede all'area riservata. Durata: fino a 8 ore.
+
+      Questi strumenti non richiedono consenso (art. 122 Codice Privacy e Linee guida del Garante del 10 giugno 2021).
+  - titolo: Contenuti di terze parti (solo con consenso)
+    testo: |-
+      - **Mappa (OpenStreetMap)** — nella sezione "Dove siamo". Prima del consenso al suo posto c'è un riquadro con l'indirizzo. Se acconsenti, il tuo browser si collega ai server di OpenStreetMap, che possono raccogliere il tuo indirizzo IP. Informativa: [OpenStreetMap Foundation](https://osmfoundation.org/wiki/Privacy_Policy).
+
+      I link a Facebook e LinkedIn sono semplici collegamenti: non caricano nulla finché non li apri.
+  - titolo: Come cambiare le tue scelte
+    testo: |-
+      In qualsiasi momento dal link **"Preferenze cookie"** in fondo a ogni pagina. Se hai rifiutato, non ti chiederemo di nuovo il consenso prima di 6 mesi, salvo cambiamenti nel sito.

@@ -1,0 +1,49 @@
+titolo: Autonomi e Partita IVA
+titoloPagina: Apertura e gestione di nuove attività con Partita IVA
+riassunto: Dall'apertura della Partita IVA alla gestione quotidiana, fatturazione elettronica compresa.
+gruppo: imprese
+situazioni:
+  - impresa
+  - lavoro
+icona: valigetta
+immagine: imprese
+ordine: 17
+seo:
+  titolo: Aprire la Partita IVA a Monza | Monza CED
+  descrizione: "Apertura e gestione della Partita IVA a Monza: regime forfettario, contabilità, fatturazione elettronica. Prenota una consulenza con Monza CED."
+introduzione: |-
+  Avviare un'attività è un passo entusiasmante, ma le norme fiscali e amministrative possono complicarlo. Ti seguiamo in ogni fase: dalla registrazione della Partita IVA alla gestione di tutti i giorni.
+
+  Assistenza e adempimenti per Agenzia delle Entrate, Registro Imprese, regime fiscale e dichiarativo, fatturazione elettronica.
+perChi:
+  - Lavoratori autonomi
+  - Titolari di Partita IVA
+  - Chi vuole aprire una nuova attività
+perChiNota: ""
+cosaFacciamo:
+  - Contabilità ordinaria e semplificata, compreso il bilancio d'esercizio.
+  - Assistenza specifica per il regime forfettario, con dichiarazioni e agevolazioni previste.
+  - Fatturazione elettronica completa (redazione, trasmissione, ricezione e conservazione a norma), con un gestionale online a disposizione.
+  - Apertura, variazione e cessazione della Partita IVA, con registrazioni all'Agenzia delle Entrate e posizioni INPS e INAIL.
+  - Consulenza fiscale e preparazione dei modelli dichiarativi, con invio telematico.
+  - Adempimenti presso Agenzia delle Entrate, Camera di Commercio e SUAP.
+  - Operazioni internazionali, compresi i modelli Intrastat e le operazioni con soggetti non residenti.
+  - Elaborazione delle paghe e adempimenti collegati.
+passaggi: []
+documenti: []
+documentiNota: ""
+approfondimenti: []
+faq: []
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=apertura-attivita-partita-iva
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: false
+aggiornatoIl: 2026-11-24
+daCompletare:
+  - Elenco documenti per l'apertura della Partita IVA.
+fonte: Testi migrati da monzaced.it/servizi/apertura-attivita-partita-iva e dalla home (riquadro "Titolare Partita IVA?") il 24/11/2026.

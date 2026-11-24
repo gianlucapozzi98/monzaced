@@ -1,0 +1,111 @@
+titolo: Modello 730
+titoloPagina: "Modello 730: la dichiarazione dei redditi"
+riassunto: Compilazione e invio telematico del 730 per dipendenti, pensionati e altri redditi.
+gruppo: dichiarazioni
+situazioni:
+  - famiglia
+  - lavoro
+  - pensione
+icona: modulo
+immagine: dichiarazioni
+ordine: 1
+seo:
+  titolo: Modello 730 a Monza | Monza CED
+  descrizione: "Compilazione e invio del Modello 730 a Monza per dipendenti, pensionati e altri redditi. Prenota una consulenza o carica i documenti online."
+introduzione: |-
+  Quando arriva il momento della dichiarazione dei redditi, conta avere accanto qualcuno di affidabile. Monza CED ti segue nel Modello 730 con un servizio personalizzato, attento e aggiornato alle ultime normative fiscali.
+
+  Ci occupiamo della compilazione e della trasmissione telematica del 730.
+perChi:
+  - Lavoratori dipendenti
+  - Pensionati
+  - Chi ha percepito redditi assimilati a quelli di lavoro dipendente
+  - Chi ha redditi diversi
+  - Contribuenti deceduti che avevano i requisiti (la dichiarazione la presenta l'erede)
+perChiNota: |-
+  Con il 730 i tuoi dati fiscali vengono elaborati direttamente: si calcolano l'imponibile e le imposte dovute e, quando spetta, il rimborso arriva in busta paga o sulla pensione.
+cosaFacciamo:
+  - Ti guidiamo nella raccolta e nell'ordine dei documenti necessari.
+  - Compiliamo il modello in modo chiaro e semplice.
+  - Ti aiutiamo a individuare le spese che puoi detrarre o dedurre (spese mediche, interessi sul mutuo, istruzione, ristrutturazioni e altre).
+  - Trasmettiamo il 730 per via telematica.
+passaggi:
+  - titolo: Raccogli i documenti
+    testo: Usa la checklist qui sotto. Puoi caricarli online o portarli in studio.
+  - titolo: Compiliamo insieme il modello
+    testo: Verifichiamo redditi, detrazioni e deduzioni con te.
+  - titolo: Invio telematico
+    testo: Trasmettiamo il 730 all'Agenzia delle Entrate.
+documenti:
+  - voce: Documento d'identità, codice fiscale e, se serve, permesso di soggiorno
+    nota: Del dichiarante e dei familiari a carico
+  - voce: 730 o Modello Redditi dell'anno precedente
+    nota: Solo se è la prima volta che ti rivolgi a noi
+  - voce: Certificazione Unica (CU) e dati dell'attuale datore di lavoro
+    nota: ""
+  - voce: Atti di acquisto o vendita di terreni e fabbricati
+    nota: ""
+  - voce: Rogito di acquisto e rogito del mutuo
+    nota: Solo se è la prima volta che ti rivolgi a noi
+  - voce: Interessi passivi del mutuo e fattura del notaio per il contratto di mutuo
+    nota: ""
+  - voce: Contratti d'affitto e relative ricevute di pagamento
+    nota: ""
+  - voce: Spese sanitarie del dichiarante, dei familiari a carico e dei disabili
+    nota: Fatture con pagamento tracciabile (POS, bonifico, scontrino di farmacia)
+  - voce: Spese di istruzione (dall'asilo all'università) e attività sportive dei ragazzi
+    nota: Con le ricevute di pagamento
+  - voce: Spese di ristrutturazione, risparmio energetico e arredo
+    nota: Con fatture, bonifici e la documentazione richiesta (ENEA, comunicazioni al Comune)
+  - voce: Spese veterinarie, funebri e abbonamenti ai trasporti pubblici
+    nota: Con le ricevute di pagamento
+  - voce: Erogazioni a enti e associazioni, previdenza integrativa, contributi volontari, riscatto della laurea
+    nota: Con le quietanze
+  - voce: Contributi pagati per colf, badanti e babysitter
+    nota: Bollettini quietanzati
+  - voce: Assicurazioni vita, infortuni, invalidità ed eventi calamitosi
+    nota: Con le quietanze
+  - voce: Verbale di invalidità (Legge 104), se presente
+    nota: ""
+  - voce: Modelli F24 degli acconti versati nell'anno
+    nota: ""
+  - voce: Scelta per la destinazione dell'8, 5 e 2 per mille
+    nota: ""
+documentiNota: |-
+  L'elenco completo e le regole su limiti e importi cambiano ogni anno: in consulenza ti diciamo esattamente cosa serve nel tuo caso.
+approfondimenti:
+  - titolo: Che cos'è il Modello 730
+    testo: |-
+      È la dichiarazione dei redditi precompilata dall'Agenzia delle Entrate, pensata per lavoratori dipendenti e pensionati. Permette di regolarizzare la propria posizione fiscale con una procedura semplificata, che tiene conto delle detrazioni e delle deduzioni di spese e oneri.
+  - titolo: Le scadenze
+    testo: |-
+      Le date sono definite ogni anno. In generale il 730 si presenta **dal 1° maggio al 30 settembre**.
+
+      Rispettare le scadenze è importante per evitare sanzioni e per ricevere in tempo gli eventuali rimborsi.
+  - titolo: Detrazioni e deduzioni
+    testo: |-
+      Sfruttare bene le detrazioni e le deduzioni è il modo per ottimizzare la dichiarazione. Spese mediche, interessi sul mutuo, istruzione, ristrutturazioni: ti aiutiamo a capire quali voci puoi portare in detrazione o in deduzione.
+faq:
+  - domanda: Entro quando si presenta il 730?
+    risposta: |-
+      Le date sono stabilite ogni anno: in generale dal 1° maggio al 30 settembre. Chiamaci per conoscere le date dell'anno in corso.
+  - domanda: Il rimborso dove arriva?
+    risposta: |-
+      Quando spetta, il rimborso arriva direttamente in busta paga o sulla pensione.
+  - domanda: "È la prima volta che vengo da voi: cosa porto in più?"
+    risposta: |-
+      Oltre ai documenti dell'anno, porta il 730 o il Modello Redditi dell'anno precedente e, se hai un mutuo, i rogiti di acquisto e del mutuo.
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=modello-730
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: true
+aggiornatoIl: 2026-11-24
+daCompletare:
+  - Confermare le date di presentazione del 730 per l'anno in corso.
+  - Fornire l'elenco documenti aggiornato (quello online sul vecchio sito era per il 730/2024, redditi 2023).
+fonte: Testi migrati da monzaced.it/servizi/modello-730, dalla home (sezione "Dichiarazione dei redditi") e dall'elenco documenti collegato alla pagina (immagine "Documentazione 2023 necessaria per 730/Unico 2024"), letti il 24/11/2026.

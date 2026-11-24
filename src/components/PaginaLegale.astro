@@ -1,0 +1,32 @@
+---
+import Base from '@/layouts/Base.astro';
+import TestataPagina from '@/components/TestataPagina.astro';
+import { getLegale, formatData } from '@/lib/content';
+import { blocchi } from '@/lib/testo';
+interface Props { slug: string }
+const p = getLegale(Astro.props.slug)!;
+---
+<Base titolo={`${p.titolo} | Monza CED`} descrizione={p.descrizione} modifica={`collection/legale/item/${Astro.props.slug}`}>
+  <TestataPagina titolo={p.titolo} occhiello="Informazioni" briciole={[{ nome: 'Home', url: '/' }, { nome: p.titolo }]}>
+    {p.aggiornatoIl && <p>Ultimo aggiornamento: {formatData(p.aggiornatoIl)}</p>}
+  </TestataPagina>
+  <div class="contenitore-stretto sezione legale">
+    {p.bozza && <p class="avviso"><strong>Testo in revisione.</strong> Questa è una bozza in attesa di validazione da parte dello studio e del suo consulente.</p>}
+    <nav aria-label="Indice" class="legale__indice">
+      <ol>{p.sezioni.map((s, i) => <li><a href={`#s${i + 1}`}>{s.titolo}</a></li>)}</ol>
+    </nav>
+    {p.sezioni.map((s, i) => (
+      <section id={`s${i + 1}`}>
+        <h2>{s.titolo}</h2>
+        <div class="testo-ricco" set:html={blocchi(s.testo)} />
+      </section>
+    ))}
+  </div>
+</Base>
+<style>
+  .legale section { padding-top: 28px; margin-top: 28px; border-top: 2px solid var(--linea); scroll-margin-top: 120px; }
+  .legale h2 { font-size: clamp(1.5rem, 1.3rem + 0.8vw, 2rem); }
+  .legale__indice { margin: 28px 0; padding: 22px 26px; border-radius: 26px; background: var(--bianco); }
+  .legale__indice ol { margin: 0; }
+  .legale :global(.testo-ricco) { max-width: none; }
+</style>

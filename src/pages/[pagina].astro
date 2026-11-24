@@ -1,0 +1,55 @@
+---
+/**
+ * Pagine che esistono solo se hanno contenuti veri:
+ *  - /convenzioni-offerte: solo se "pubblicata" nel pannello e con almeno un'offerta (con condizioni);
+ *  - /notizie: solo se c'è almeno una notizia pubblicata.
+ */
+import Base from '@/layouts/Base.astro';
+import TestataPagina from '@/components/TestataPagina.astro';
+import { convenzioni as c, getNotizie, formatData, impostazioni as s } from '@/lib/content';
+import { blocchi } from '@/lib/testo';
+
+export function getStaticPaths() {
+  const out: { params: { pagina: string } }[] = [];
+  if (c.pubblicata) out.push({ params: { pagina: 'convenzioni-offerte' } });
+  if (getNotizie().length) out.push({ params: { pagina: 'notizie' } });
+  return out;
+}
+const { pagina } = Astro.params;
+const notizie = getNotizie();
+---
+{pagina === 'convenzioni-offerte' ? (
+  <Base titolo={`${c.titolo} | Monza CED`} descrizione="Convenzioni e offerte di Monza CED, con condizioni e periodo di validità.">
+    <TestataPagina titolo={c.titolo} briciole={[{ nome: 'Home', url: '/' }, { nome: c.titolo }]}>
+      <div set:html={blocchi(c.introduzione)} />
+    </TestataPagina>
+    <div class="contenitore-stretto sezione">
+      {c.offerte.map((o) => (
+        <article class="voce-lista">
+          <h2>{o.titolo}</h2>
+          <div class="testo-ricco" set:html={blocchi(o.descrizione)} />
+          <h3>Condizioni</h3>
+          <div class="testo-ricco" set:html={blocchi(o.condizioni)} />
+          {(o.validaDal || o.validaAl) && <p><strong>Validità:</strong> {o.validaDal && `dal ${formatData(o.validaDal)}`} {o.validaAl && `al ${formatData(o.validaAl)}`}</p>}
+        </article>
+      ))}
+      <p>Per informazioni: <a href={`tel:${s.telefonoLink}`}>{s.telefono}</a>.</p>
+    </div>
+  </Base>
+) : (
+  <Base titolo="Notizie | Monza CED" descrizione="Notizie e aggiornamenti da Monza CED, Centro di Elaborazione Dati a Monza.">
+    <TestataPagina titolo="Notizie" briciole={[{ nome: 'Home', url: '/' }, { nome: 'Notizie' }]} />
+    <div class="contenitore-stretto sezione">
+      {notizie.map((n) => (
+        <article class="voce-lista">
+          <p>{formatData(n.data)}</p>
+          <h2><a href={`/notizie/${n.slug}`}>{n.titolo}</a></h2>
+          <p>{n.riassunto}</p>
+        </article>
+      ))}
+    </div>
+  </Base>
+)}
+<style>
+  .voce-lista { padding: 28px 0; border-top: 2px solid var(--linea); }
+</style>

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.astro/
+.data/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+
+# Volantino ISEE di terzi scaricato dal vecchio sito (non va pubblicato)
+/elenco-documenti-isee-monza-ced.pdf

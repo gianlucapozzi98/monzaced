@@ -1,0 +1,111 @@
+---
+import '@/styles/global.css';
+import { Font } from 'astro:assets';
+import Testata from '@/components/Testata.astro';
+import Piede from '@/components/Piede.astro';
+import BannerCookie from '@/components/BannerCookie.astro';
+import Caricamento from '@/components/Caricamento.astro';
+
+interface Props {
+  titolo: string;
+  descrizione: string;
+  immagineOg?: string;
+  noindex?: boolean;
+  jsonld?: object | object[];
+  sfondo?: 'avorio' | 'bianco';
+  /** Percorso nel pannello per "Modifica questa pagina", es. 'collection/servizi/item/imu' o 'singleton/home'. */
+  modifica?: string;
+}
+const { titolo, descrizione, immagineOg = '/og/monza-ced.jpg', noindex = false, jsonld, sfondo = 'avorio', modifica } = Astro.props;
+// Il pulsante compare solo dove il pannello esiste (sviluppo o produzione con GitHub)
+const pannelloAttivo = import.meta.env.DEV || import.meta.env.PUBLIC_KEYSTATIC_STORAGE === 'github';
+const site = Astro.site ?? new URL('https://monzaced.it');
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const canonical = new URL(path, site).href;
+const ogImg = new URL(immagineOg, site).href;
+const ld = jsonld ? (Array.isArray(jsonld) ? jsonld : [jsonld]) : [];
+---
+<!doctype html>
+<html lang="it" data-sfondo={sfondo}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titolo}</title>
+    <meta name="description" content={descrizione} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#0e1a2b" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content="Monza CED" />
+    <meta property="og:title" content={titolo} />
+    <meta property="og:description" content={descrizione} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImg} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Monza CED — Le tue pratiche, in mani sicure." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={titolo} />
+    <meta name="twitter:description" content={descrizione} />
+    <meta name="twitter:image" content={ogImg} />
+
+    <Font cssVariable="--font-display" preload={[{ style: 'normal' }]} />
+    <Font cssVariable="--font-body" preload={[{ style: 'normal' }]} />
+
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('js');
+        var ridotto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!ridotto) d.classList.add('js-motion');
+        try {
+          if (!ridotto && !sessionStorage.getItem('mced-visto')) {
+            d.classList.add('con-caricamento');
+            sessionStorage.setItem('mced-visto', '1');
+          }
+        } catch (e) {}
+        // Banner cookie visibile subito se non c'è una scelta valida (stessa regola di scripts/consenso.ts)
+        try {
+          var c = JSON.parse(localStorage.getItem('mced-consenso') || 'null');
+          if (!(c && c.v === 1 && Date.now() - new Date(c.data).getTime() <= 182 * 864e5)) d.classList.add('senza-consenso');
+        } catch (e) { d.classList.add('senza-consenso'); }
+        // Rete di sicurezza: se lo script delle animazioni non arriva, si mostra tutto.
+        setTimeout(function () { if (!d.classList.contains('movimento-pronto')) d.classList.remove('js-motion'); }, 3500);
+      })();
+    </script>
+    {ld.map((o) => <script type="application/ld+json" set:html={JSON.stringify(o)} />)}
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="salta-contenuto" href="#contenuto">Vai al contenuto</a>
+    <Caricamento />
+    <Testata />
+    <main id="contenuto" tabindex="-1">
+      <slot />
+    </main>
+    <Piede />
+    <BannerCookie />
+    {pannelloAttivo && modifica && (
+      <a class="modifica-pagina no-stampa" href={`/keystatic/${modifica}`}>✎ Modifica questa pagina</a>
+    )}
+    <script>
+      import '@/scripts/movimento';
+    </script>
+  </body>
+</html>
+
+<style>
+  main:focus { outline: none; }
+  html[data-sfondo='bianco'] body { background: var(--bianco); }
+  .modifica-pagina {
+    position: fixed; right: 16px; bottom: 16px; z-index: 55; padding: 12px 18px; border-radius: 999px;
+    background: #fff4e6; color: #7c2d12; border: 2px dashed #c2410c; font-weight: 700; text-decoration: none;
+  }
+</style>

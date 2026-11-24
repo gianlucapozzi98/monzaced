@@ -1,0 +1,71 @@
+titolo: Contratti di locazione
+titoloPagina: Contratti di locazione
+riassunto: Registrazione, tassazione e gestione del contratto d'affitto, fino a proroghe, cessioni e risoluzioni.
+gruppo: casa
+situazioni:
+  - casa
+icona: chiave
+immagine: casa-chiavi
+ordine: 5
+seo:
+  titolo: Contratti di locazione a Monza | Monza CED
+  descrizione: "Registrazione del contratto d'affitto, cedolare secca o Irpef, proroghe e risoluzioni a Monza. Prenota una consulenza o carica i documenti."
+introduzione: |-
+  Ti offriamo consulenza e assistenza su ogni aspetto del contratto d'affitto: dalla registrazione alla tassazione, fino a proroghe, cessioni, rinegoziazioni e risoluzioni.
+perChi:
+  - Proprietari che affittano un immobile (locatori)
+  - Inquilini (conduttori)
+perChiNota: ""
+cosaFacciamo:
+  - Ti aiutiamo a scegliere la tipologia di contratto più adatta alle tue esigenze.
+  - Seguiamo la registrazione del contratto.
+  - Ti assistiamo nella scelta del regime di tassazione.
+  - Ti seguiamo nelle fasi successive: proroghe, cessioni, rinegoziazioni e risoluzioni.
+  - Ti aiutiamo a raccogliere e preparare i documenti.
+passaggi: []
+documenti:
+  - voce: Copia del contratto firmato da entrambe le parti
+    nota: Locatore e conduttore
+  - voce: Codice fiscale del proprietario e dell'inquilino
+    nota: ""
+  - voce: Attestato di prestazione energetica (APE) dell'immobile
+    nota: ""
+  - voce: Planimetria catastale dell'immobile
+    nota: ""
+documentiNota: ""
+approfondimenti:
+  - titolo: Tipologie di contratto
+    testo: |-
+      Esistono diverse tipologie di contratto di locazione. Le più comuni sono il contratto standard, il contratto a canone libero, il contratto a canone concordato (detto anche "convenzionato") e il contratto per uso transitorio. Ognuna ha conseguenze legali e fiscali specifiche.
+  - titolo: Tassazione - cedolare secca o Irpef
+    testo: |-
+      Il reddito da locazione può essere tassato in due modi:
+
+      - con l'**Irpef**, ad aliquote progressive;
+      - con la **cedolare secca**, un'imposta sostitutiva ad aliquota fissa.
+
+      La scelta dipende da diversi fattori: il tipo di contratto, l'importo del canone e le preferenze personali nella gestione fiscale.
+  - titolo: Dopo la registrazione
+    testo: |-
+      - **Proroga:** il rinnovo del contratto alla fine del periodo iniziale.
+      - **Cessione:** il trasferimento dei diritti di locazione a un terzo.
+      - **Rinegoziazione:** la modifica delle condizioni, per esempio del canone.
+      - **Risoluzione:** la chiusura anticipata del contratto.
+
+      Ognuna di queste fasi richiede una procedura specifica, che seguiamo con te nel rispetto della normativa.
+faq:
+  - domanda: Meglio cedolare secca o Irpef?
+    risposta: |-
+      Dipende dal tipo di contratto, dall'importo del canone e dalle tue preferenze: ne parliamo in consulenza.
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=contratti-locazione
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: false
+aggiornatoIl: 2026-11-24
+daCompletare: []
+fonte: Testi migrati da monzaced.it/servizi/contratti-locazione il 24/11/2026.

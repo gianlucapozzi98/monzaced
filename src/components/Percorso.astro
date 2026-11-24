@@ -1,0 +1,186 @@
+---
+/**
+ * "Di cosa hai bisogno?": pillole per situazione + schede dei servizi + pannello di dettaglio.
+ * Senza JavaScript le schede sono semplici link alle pagine dei servizi.
+ */
+import Icon from './Icon.astro';
+import { getServizi, GRUPPI, SITUAZIONI, impostazioni as s } from '@/lib/content';
+import { piano } from '@/lib/testo';
+
+interface Props { id?: string; titolo: string; sotto?: string; livello?: 'h1' | 'h2'; occhiello?: string }
+const { id = 'di-cosa-hai-bisogno', titolo, sotto, livello = 'h2', occhiello } = Astro.props;
+const servizi = getServizi();
+const Tag = livello;
+
+const dati = servizi.map((x) => ({
+  slug: x.slug,
+  titolo: x.titolo,
+  titoloPagina: x.titoloPagina,
+  gruppo: x.gruppo,
+  gruppoNome: GRUPPI[x.gruppo].nome,
+  riassunto: x.riassunto,
+  intro: piano(x.introduzione.split(/\n\s*\n/)[0] ?? ''),
+  perChi: x.perChi.slice(0, 4),
+  prenota: x.pulsanti.prenota.link,
+  carica: x.caricamentoAttivo ? `/servizi/${x.slug}#carica-documenti` : s.ctaCarica.link,
+  ndoc: x.documenti.length,
+}));
+---
+<section class="percorso" id={id} aria-labelledby={`${id}-titolo`} data-percorso>
+  <svg class="filo percorso__filo" data-filo viewBox="0 0 1440 400" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path data-traccia pathLength="1" d="M980 -20 C 1000 120, 1240 120, 1300 200 S 1120 380, 760 330 S 200 300, 120 400" />
+  </svg>
+  <div class="contenitore">
+    <div class="percorso__testa">
+      {occhiello && <p class="occhiello">{occhiello}</p>}
+      <Tag id={`${id}-titolo`} class="percorso__titolo" data-rivela>{titolo}</Tag>
+      {sotto && <p class="sottotesto" data-rivela data-ritardo="0.1">{sotto}</p>}
+    </div>
+
+    <div class="pillole" role="group" aria-label="Filtra i servizi per situazione" data-pillole>
+      <button type="button" class="pillola" aria-pressed="true" data-situazione="tutti"><span class="pallino" aria-hidden="true"></span>Tutti i servizi</button>
+      {SITUAZIONI.map((sit) => (
+        <button type="button" class="pillola" aria-pressed="false" data-situazione={sit.id}><span class="pallino" aria-hidden="true"></span>{sit.nome}</button>
+      ))}
+    </div>
+    <p class="percorso__esito" aria-live="polite" data-esito></p>
+
+    <ul class="schede" data-schede>
+      {servizi.map((x) => (
+        <li class={`scheda g-${x.gruppo}`} data-slug={x.slug} data-situazioni={x.situazioni.join(' ')}>
+          <a href={`/servizi/${x.slug}`} class="scheda__link" data-apri={x.slug}>
+            <span class="scheda__arco" aria-hidden="true"><Icon name={x.icona} size={34} /></span>
+            <span class="scheda__area">{GRUPPI[x.gruppo].breve}</span>
+            <span class="scheda__titolo">{x.titolo}</span>
+            <span class="scheda__riassunto">{x.riassunto}</span>
+            <span class="scheda__vai">Scopri <Icon name="freccia" size={20} /></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <dialog class="pannello" aria-labelledby="pannello-titolo" data-pannello>
+    <div class="pannello__corpo">
+      <div class="pannello__testa">
+        <span class="pannello__arco" aria-hidden="true" data-p-icona></span>
+        <button type="button" class="pannello__chiudi" data-chiudi><Icon name="x" /> <span>Chiudi</span></button>
+      </div>
+      <p class="pannello__area" data-p-area></p>
+      <h2 id="pannello-titolo" class="pannello__titolo" data-p-titolo></h2>
+      <p class="pannello__intro" data-p-intro></p>
+      <div data-p-perchi-box>
+        <h3 class="pannello__sotto">Per chi è</h3>
+        <ul class="pannello__lista" data-p-perchi></ul>
+      </div>
+      <div class="azioni pannello__azioni">
+        <a class="btn" data-p-pagina href="#">Leggi la pagina completa <Icon name="freccia" /></a>
+        <a class="btn btn--secondario" data-p-prenota href="#">Prenota una consulenza</a>
+        <a class="btn btn--secondario" data-p-carica href="#"><Icon name="carica" /> Carica i documenti</a>
+      </div>
+      <nav class="pannello__nav" aria-label="Altri servizi">
+        <button type="button" class="pannello__freccia" data-prec><Icon name="freccia-sx" /> <span>Precedente<span class="sr-only">: </span><span class="pannello__nome" data-prec-nome></span></span></button>
+        <span class="pannello__conta" data-conta-pannello></span>
+        <button type="button" class="pannello__freccia pannello__freccia--succ" data-succ><span>Successivo<span class="sr-only">: </span><span class="pannello__nome" data-succ-nome></span></span> <Icon name="freccia" /></button>
+      </nav>
+    </div>
+  </dialog>
+  <script type="application/json" data-servizi-json set:html={JSON.stringify(dati)} />
+</section>
+
+<script>
+  import '@/scripts/percorso';
+</script>
+
+<style>
+  .percorso { position: relative; padding-block: clamp(80px, 9vw, 150px); }
+  .percorso__filo { left: 0; top: 0; width: 100%; height: 340px; z-index: 0; opacity: 0.9; }
+  .percorso .contenitore { position: relative; z-index: 1; }
+  .percorso__testa { max-width: 760px; margin-bottom: 36px; }
+  .pillole { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+  .percorso__esito { min-height: 1.6em; margin: 0 0 28px; color: var(--grigio); font-size: 1.125rem; }
+
+  .schede { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 18px; }
+  .scheda { margin: 0; position: relative; }
+  .scheda__link {
+    position: relative; display: flex; flex-direction: column; height: 100%; min-height: 300px;
+    padding: 26px 26px 24px; border-radius: 34px 34px 26px 26px; background: var(--bianco);
+    color: var(--inchiostro); text-decoration: none; border: 2px solid transparent;
+    box-shadow: 0 1px 2px rgb(14 26 43 / 0.05);
+    transition: transform var(--d-comp) var(--ease-out), box-shadow var(--d-comp) var(--ease-out), border-color var(--d-comp) var(--ease-out), background var(--d-comp) var(--ease-out);
+  }
+  .scheda__link:hover { transform: translateY(-6px); box-shadow: var(--ombra); border-color: var(--inchiostro); }
+  .scheda__arco {
+    display: grid; place-items: center; width: 76px; height: 88px; margin-bottom: 22px;
+    border-radius: 999px 999px 18px 18px; background: var(--g); color: var(--ga);
+    transition: transform var(--d-comp) var(--ease-molla), border-radius var(--d-comp) var(--ease-out);
+  }
+  .scheda__link:hover .scheda__arco { transform: scale(1.06); border-radius: 999px; }
+  .scheda__area { font-size: 1rem; font-weight: 700; color: var(--ga); letter-spacing: 0.02em; margin-bottom: 6px; }
+  .scheda__titolo { font-family: var(--f-titoli); font-weight: 800; font-size: 1.45rem; line-height: 1.15; letter-spacing: -0.015em; margin-bottom: 10px; }
+  .scheda__riassunto { font-size: 1.125rem; color: var(--grigio); margin-bottom: 18px; }
+  .scheda__vai { margin-top: auto; display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--blu-scuro); }
+  .scheda__vai :global(svg) { transition: transform var(--d-comp) var(--ease-out); }
+  .scheda__link:hover .scheda__vai :global(svg) { transform: translateX(5px); }
+
+  /* Stato filtrato */
+  :global(.schede--filtrate) .scheda.in-evidenza .scheda__link { border-color: var(--blu); box-shadow: 0 0 0 4px rgb(46 129 255 / 0.18), var(--ombra); }
+  :global(.schede--filtrate) .scheda.in-evidenza .scheda__arco { background: var(--blu); color: var(--bianco); border-radius: 999px; }
+  :global(.schede--filtrate) .scheda:not(.in-evidenza) .scheda__link { background: transparent; border-color: var(--linea); min-height: 0; }
+  :global(.schede--filtrate) .scheda:not(.in-evidenza) .scheda__arco { width: 54px; height: 60px; margin-bottom: 14px; }
+  :global(.schede--filtrate) .scheda:not(.in-evidenza) .scheda__riassunto { display: none; }
+  .schede :global(.separatore) {
+    grid-column: 1 / -1; display: flex; align-items: center; gap: 16px; margin: 18px 0 4px;
+    font-family: var(--f-titoli); font-weight: 800; font-size: 1.25rem;
+  }
+  .schede :global(.separatore)::after { content: ''; flex: 1; height: 2px; background: var(--linea); border-radius: 2px; }
+
+  /* Telefono: schede compatte in riga (icona a sinistra), meno scorrimento */
+  @media (max-width: 640px) {
+    .schede { gap: 10px; }
+    .scheda__link { min-height: 0; display: grid; grid-template-columns: 56px minmax(0, 1fr); column-gap: 16px; padding: 18px 18px 16px; border-radius: 28px 28px 22px 22px; }
+    .scheda__arco { width: 56px; height: 64px; margin: 0; grid-row: 1 / span 4; }
+    .scheda__arco :global(svg) { width: 26px; height: 26px; }
+    .scheda__area { margin-bottom: 2px; }
+    .scheda__titolo { font-size: 1.3rem; margin-bottom: 6px; }
+    .scheda__riassunto { margin-bottom: 8px; font-size: 1.0625rem; }
+    :global(.schede--filtrate) .scheda:not(.in-evidenza) .scheda__arco { width: 56px; height: 64px; margin: 0; }
+  }
+
+  /* Pannello di dettaglio */
+  .pannello {
+    border: 0; padding: 0; width: min(760px, calc(100% - 24px)); max-height: calc(100svh - 32px);
+    border-radius: 44px 44px 32px 32px; background: var(--bianco); color: var(--inchiostro); overflow: auto;
+    box-shadow: 0 40px 100px -30px rgb(14 26 43 / 0.6);
+  }
+  .pannello::backdrop { background: rgb(14 26 43 / 0.6); backdrop-filter: blur(3px); }
+  .pannello[open] { animation: pannello-in var(--d-comp) var(--ease-out); }
+  .pannello[open]::backdrop { animation: velo-in var(--d-comp) var(--ease-out); }
+  @keyframes pannello-in { from { opacity: 0; transform: translateY(40px) scale(0.97); clip-path: inset(10% 0 0 0 round 44px); } to { clip-path: inset(0 0 0 0 round 0); } }
+  @keyframes velo-in { from { opacity: 0; } }
+  .pannello__corpo { padding: clamp(24px, 4vw, 44px); }
+  .pannello__testa { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
+  .pannello__arco { display: grid; place-items: center; width: 86px; height: 100px; border-radius: 999px 999px 20px 20px; background: var(--g, var(--cielo)); color: var(--ga, var(--blu-scuro)); }
+  .pannello__arco :global(svg) { width: 38px; height: 38px; }
+  .pannello__chiudi { display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 18px; border-radius: 999px; border: 2px solid var(--inchiostro); background: var(--bianco); font-weight: 700; cursor: pointer; }
+  .pannello__area { font-weight: 700; color: var(--ga, var(--blu-scuro)); margin-bottom: 6px; }
+  .pannello__titolo { font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.7rem); margin-bottom: 14px; }
+  .pannello__intro { font-size: 1.1875rem; }
+  .pannello__sotto { font-size: 1.2rem; margin: 22px 0 10px; }
+  .pannello__lista { list-style: none; padding: 0; }
+  .pannello__lista li { position: relative; padding-left: 32px; }
+  .pannello__lista li::before { content: ''; position: absolute; left: 4px; top: 0.55em; width: 14px; height: 14px; border-radius: 50%; border: 3px solid var(--blu); }
+  .pannello__azioni { margin: 26px 0 8px; }
+  .pannello__nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--linea); }
+  .pannello__freccia { display: inline-flex; align-items: center; gap: 10px; min-height: 56px; padding: 6px 18px; border-radius: 999px; border: 2px solid var(--linea); background: var(--bianco); text-align: left; cursor: pointer; font-weight: 700; max-width: 45%; transition: border-color var(--d-micro) var(--ease-out); }
+  .pannello__freccia:hover { border-color: var(--inchiostro); }
+  .pannello__freccia--succ { text-align: right; }
+  .pannello__nome { display: block; font-weight: 400; font-size: 1rem; color: var(--grigio); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 22ch; }
+  .pannello__conta { color: var(--grigio); font-size: 1rem; white-space: nowrap; }
+  @media (max-width: 640px) {
+    .pannello { width: 100%; max-width: 100%; margin: auto 0 0; border-radius: 36px 36px 0 0; max-height: 92svh; }
+    .pannello__azioni .btn { width: 100%; }
+    .pannello__conta { display: none; }
+    .pannello__nome { max-width: 12ch; }
+  }
+</style>

@@ -1,0 +1,56 @@
+---
+import Base from '@/layouts/Base.astro';
+import TestataPagina from '@/components/TestataPagina.astro';
+import Percorso from '@/components/Percorso.astro';
+import Icon from '@/components/Icon.astro';
+import { getServizi, GRUPPI, impostazioni as s, type Gruppo } from '@/lib/content';
+import { schemaBriciole } from '@/lib/schema';
+const servizi = getServizi();
+const gruppi = (Object.entries(GRUPPI) as [Gruppo, (typeof GRUPPI)[Gruppo]][]).sort((a, b) => a[1].ordine - b[1].ordine);
+---
+<Base
+  titolo="Servizi fiscali e amministrativi a Monza | Monza CED"
+  descrizione={`${servizi.length} servizi a Monza: 730, ISEE, successioni, IMU, colf e badanti, pensioni, NASpI, contabilità e Partita IVA. Prenota una consulenza.`}
+  jsonld={schemaBriciole([{ nome: 'Home', url: '/' }, { nome: 'Servizi', url: '/servizi' }], Astro.site)}
+>
+  <TestataPagina titolo="I nostri servizi" occhiello={`${servizi.length} servizi, ${gruppi.length} aree`} immagine="dichiarazioni" briciole={[{ nome: 'Home', url: '/' }, { nome: 'Servizi' }]}>
+    <p class="sottotesto">Affidati all'esperienza dei nostri professionisti per un servizio affidabile, personalizzato e aggiornato alle ultime normative.</p>
+    <div class="azioni">
+      <a class="btn" href={s.ctaPrenota.link}>{s.ctaPrenota.testo} <Icon name="freccia" /></a>
+      <a class="btn btn--secondario" href={s.ctaCarica.link}><Icon name="carica" /> {s.ctaCarica.testo}</a>
+    </div>
+  </TestataPagina>
+
+  <Percorso id="filtra-servizi" titolo="Di cosa hai bisogno?" sotto="Scegli la tua situazione per vedere prima i servizi che fanno per te." />
+
+  <section class="contenitore aree" aria-labelledby="aree-t">
+    <h2 id="aree-t">Tutti i servizi per area</h2>
+    <div class="aree__griglia">
+      {gruppi.map(([id, g]) => {
+        const lista = servizi.filter((x) => x.gruppo === id);
+        return lista.length ? (
+          <section class={`area g-${id}`} id={`area-${id}`} aria-labelledby={`area-${id}-t`}>
+            <h3 id={`area-${id}-t`}>{g.nome}</h3>
+            <ul>{lista.map((x) => <li><a href={`/servizi/${x.slug}`}><Icon name={x.icona} size={22} /> {x.titolo}</a></li>)}</ul>
+          </section>
+        ) : null;
+      })}
+    </div>
+    <p class="aree__altro">Non trovi quello che cerchi? <a href="/contatti">Contattaci</a>: siamo disponibili a parlare delle tue esigenze.</p>
+  </section>
+</Base>
+
+<style>
+  .aree { padding-bottom: 40px; }
+  .aree__griglia { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 28px; }
+  .area { background: var(--g); border-radius: 40px 40px 26px 26px; padding: 28px; scroll-margin-top: 120px; }
+  .area h3 { font-size: 1.45rem; }
+  .area ul { list-style: none; padding: 0; margin: 0; }
+  .area li { margin: 0; }
+  .area a { display: flex; gap: 12px; align-items: center; min-height: 48px; color: var(--inchiostro); font-weight: 700; text-decoration: none; }
+  .area a :global(svg) { color: var(--ga); flex: none; }
+  .area a:hover { text-decoration: underline; }
+  .aree__altro { margin-top: 32px; font-size: 1.2rem; }
+  @media (max-width: 960px) { .aree__griglia { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 620px) { .aree__griglia { grid-template-columns: minmax(0, 1fr); } }
+</style>

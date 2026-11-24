@@ -1,0 +1,29 @@
+# Sito + antivirus ClamAV sulla stessa macchina (server in UE).
+# NON provato in questo ambiente: Docker non era disponibile. Le variabili sono in ../.env (vedi .env.example).
+services:
+  clamav:
+    image: clamav/clamav:stable
+    restart: unless-stopped
+    # clamd ascolta sulla porta 3310 solo nella rete interna
+    healthcheck:
+      test: ["CMD", "clamdcheck.sh"]
+      interval: 60s
+      retries: 5
+  sito:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      args:
+        SITE_URL: ${SITE_URL}
+        S3_ENDPOINT: ${S3_ENDPOINT}
+    restart: unless-stopped
+    env_file: ../.env
+    environment:
+      ANTIVIRUS_DRIVER: clamd
+      CLAMD_HOST: clamav
+      CLAMD_PORT: "3310"
+      MODALITA_PROVA: "0"
+    ports:
+      - "127.0.0.1:4321:4321"   # davanti: un proxy HTTPS (Caddy, nginx) che imposta X-Forwarded-For
+    depends_on:
+      - clamav

@@ -1,0 +1,83 @@
+titolo: Assistenza familiare
+titoloPagina: "Assistenza familiare: colf, badanti e babysitter"
+riassunto: Ricerca, assunzione e gestione di colf, badanti e babysitter, con buste paga e contributi INPS.
+gruppo: famiglia
+situazioni:
+  - famiglia
+  - pensione
+icona: aiuto
+immagine: famiglia
+ordine: 6
+seo:
+  titolo: Colf, badanti e babysitter a Monza | Monza CED
+  descrizione: "Ricerca, assunzione, buste paga e contributi INPS per colf, badanti e babysitter a Monza. Prenota una consulenza o carica i documenti."
+introduzione: |-
+  Colf, assistenti per i familiari anziani, babysitter: ti offriamo un servizio completo per gestire i collaboratori domestici, con tranquillità e affidabilità per la tua famiglia.
+
+  Cerchi una badante o una colf? **La troviamo noi.** Il pacchetto completo comprende la ricerca e l'assunzione di figure referenziate, la gestione del contratto, il calcolo del prospetto paga e dei versamenti INPS.
+perChi:
+  - Famiglie che cercano o hanno già una colf, una badante o una babysitter
+  - Datori di lavoro domestico che vogliono gestire contratto, buste paga e contributi
+perChiNota: ""
+cosaFacciamo:
+  - Ricerca e assunzione di figure referenziate.
+  - Assunzione, dalla selezione alla verifica dei documenti fino alla comunicazione all'INPS.
+  - Stipula del contratto secondo il CCNL del lavoro domestico.
+  - Elaborazione mensile delle buste paga.
+  - Consulenza e gestione dei contributi previdenziali.
+  - Procedure di cessazione del rapporto di lavoro.
+passaggi:
+  - titolo: Selezione
+    testo: Ti aiutiamo a trovare la persona giusta e a verificare i documenti necessari.
+  - titolo: Lettera di assunzione e contratto
+    testo: Prepariamo la lettera di assunzione e il contratto secondo il CCNL del lavoro domestico.
+  - titolo: Comunicazione all'INPS
+    testo: Va fatta entro le 24 ore del giorno prima dell'inizio del lavoro, anche se è un giorno festivo.
+  - titolo: Gestione nel tempo
+    testo: Buste paga mensili, contributi e, quando serve, la cessazione del rapporto.
+documenti:
+  - voce: Documento di riconoscimento valido del datore di lavoro e del lavoratore
+    nota: ""
+  - voce: Codice fiscale del datore di lavoro e del lavoratore
+    nota: ""
+  - voce: Permesso di soggiorno del lavoratore
+    nota: Dove necessario
+documentiNota: |-
+  Datore di lavoro e lavoratore si presentano con questi documenti al momento della stipula.
+approfondimenti:
+  - titolo: Cosa deve contenere la lettera di assunzione
+    testo: |-
+      - data di inizio del rapporto di lavoro
+      - categoria lavorativa
+      - durata del periodo di prova
+      - presenza o meno della convivenza, totale o parziale
+      - orario di lavoro giornaliero
+      - mezza giornata di riposo settimanale in aggiunta alla domenica
+      - retribuzione
+      - eventuali spostamenti temporanei per villeggiatura o altri motivi familiari
+  - titolo: La comunicazione all'INPS
+    testo: |-
+      Quando assumi un collaboratore domestico devi informare l'INPS con l'apposita comunicazione **entro le 24 ore del giorno prima dell'inizio del lavoro** (anche se è un giorno festivo). Serve a dichiarare l'assunzione e a iscrivere il lavoratore all'INPS, che si occupa poi della copertura assicurativa.
+  - titolo: Buste paga
+    testo: |-
+      Ci occupiamo dell'elaborazione mensile delle buste paga per colf, badanti e babysitter. La busta paga comprende il calcolo di ferie, malattia, straordinari, assenze e permessi non retribuiti, le trattenute dei contributi INPS a carico del lavoratore, il calcolo della tredicesima e la predisposizione del CUD.
+  - titolo: Contributi previdenziali
+    testo: |-
+      Gestire bene i contributi garantisce ai lavoratori domestici i diritti previdenziali che spettano loro. Ti offriamo consulenza e gestione dei contributi, nel rispetto delle disposizioni INPS, per tutelare il lavoratore e la famiglia.
+faq:
+  - domanda: Entro quando va comunicata l'assunzione all'INPS?
+    risposta: Entro le 24 ore del giorno prima dell'inizio del lavoro, anche se è un giorno festivo.
+  - domanda: Mi aiutate anche a trovare la persona?
+    risposta: Sì, il servizio comprende la ricerca e l'assunzione di figure referenziate.
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=assistenza-familiare-colf-badanti-babysitter
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: false
+aggiornatoIl: 2026-11-24
+daCompletare: []
+fonte: Testi migrati da monzaced.it/servizi/assistenza-familiare-colf-badanti-babysitter e dal riquadro "Cerchi una badante o una colf?" di /chi-siamo il 24/11/2026.

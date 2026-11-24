@@ -1,0 +1,54 @@
+titolo: Ricostituzioni reddituali INPS
+titoloPagina: Ricostituzioni reddituali INPS
+riassunto: Ricalcolo delle prestazioni INPS legate al reddito quando cambia la tua situazione economica.
+gruppo: pensioni
+situazioni:
+  - pensione
+icona: ricalcolo
+immagine: pensioni
+ordine: 11
+seo:
+  titolo: Ricostituzione reddituale INPS a Monza | Monza CED
+  descrizione: "Ricostituzione reddituale INPS a Monza per pensione di invalidità, assegno sociale e pensione ai superstiti. Prenota una consulenza o carica i documenti."
+introduzione: |-
+  La ricostituzione reddituale riguarda chi riceve prestazioni previdenziali legate al reddito, come la pensione di invalidità, l'assegno sociale o la pensione ai superstiti. Ti guidiamo nella pratica con l'INPS.
+perChi:
+  - Chi riceve prestazioni INPS legate al reddito
+  - Chi ha avuto cambiamenti nella situazione economica personale o familiare
+perChiNota: ""
+cosaFacciamo:
+  - Valutiamo la tua situazione specifica.
+  - Ti supportiamo nella raccolta dei documenti.
+  - Gestiamo la pratica.
+passaggi: []
+documenti:
+  - voce: Documento d'identità e codice fiscale del richiedente
+    nota: ""
+  - voce: Codici fiscali del coniuge e dei familiari a carico
+    nota: Per valutare il nucleo familiare e il reddito complessivo
+  - voce: Autocertificazione dello stato civile e della composizione familiare
+    nota: Con data e luogo del matrimonio
+  - voce: Certificato della pensione da ricalcolare
+    nota: ""
+  - voce: Ultima dichiarazione dei redditi del nucleo familiare
+    nota: ""
+  - voce: Permesso di soggiorno
+    nota: Per i cittadini extracomunitari
+documentiNota: ""
+approfondimenti:
+  - titolo: A cosa serve
+    testo: |-
+      Permette di rivedere e, se necessario, ricalcolare l'importo delle prestazioni in base ai cambiamenti della situazione economica personale o familiare, perché l'assistenza ricevuta rispecchi le tue esigenze attuali.
+faq: []
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=ricostituzione-reddituale-inps
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: false
+aggiornatoIl: 2026-11-24
+daCompletare: []
+fonte: Testi migrati da monzaced.it/servizi/ricostituzione-reddituale-inps il 24/11/2026.

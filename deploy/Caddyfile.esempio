@@ -1,0 +1,10 @@
+# Esempio di proxy HTTPS con Caddy (certificato automatico). Da adattare.
+www.monzaced.it {
+	redir https://monzaced.it{uri} permanent
+}
+monzaced.it {
+	request_body {
+		max_size 20MB
+	}
+	reverse_proxy 127.0.0.1:4321
+}

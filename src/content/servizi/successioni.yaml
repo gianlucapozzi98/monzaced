@@ -1,0 +1,78 @@
+titolo: Successioni
+titoloPagina: Dichiarazione di successione
+riassunto: Ti seguiamo in ogni passaggio della dichiarazione di successione, dai documenti al calcolo dell'imposta.
+gruppo: casa
+situazioni:
+  - famiglia
+  - casa
+icona: albero
+immagine: dettaglio-firma
+ordine: 3
+seo:
+  titolo: Dichiarazione di successione a Monza | Monza CED
+  descrizione: "Dichiarazione di successione a Monza: documenti, calcolo dell'imposta ed esenzioni. Prenota una consulenza con Monza CED o carica i documenti."
+introduzione: |-
+  Una successione arriva in un momento delicato, e le procedure fiscali e civili possono sembrare un ostacolo. Monza CED ti offre un servizio completo e gestisce con te ogni passaggio della dichiarazione di successione.
+perChi:
+  - Eredi
+  - Legatari
+  - Chi ha diritti sugli immobili ereditati
+perChiNota: |-
+  La dichiarazione va presentata **entro 12 mesi dalla data del decesso**.
+cosaFacciamo:
+  - Ti aiutiamo a individuare e raccogliere tutti i documenti, per evitare ritardi o errori.
+  - Ti offriamo consulenza per calcolare correttamente l'imposta dovuta e individuare le esenzioni applicabili.
+  - Seguiamo gli aspetti legati al versamento dell'imposta.
+passaggi:
+  - titolo: Raccolta dei documenti
+    testo: Certificato di morte, atto di notorietà, elenco dei beni.
+  - titolo: Dichiarazione e calcolo dell'imposta
+    testo: Prepariamo la dichiarazione e calcoliamo l'imposta in base alla parentela e al valore dei beni.
+  - titolo: Presentazione all'Agenzia delle Entrate
+    testo: Le imposte vengono liquidate dall'Agenzia delle Entrate dopo la presentazione della dichiarazione.
+documenti:
+  - voce: Certificato di morte
+    nota: ""
+  - voce: Atto di notorietà
+    nota: ""
+  - voce: Elenco dei beni del defunto
+    nota: ""
+documentiNota: ""
+approfondimenti:
+  - titolo: Che cos'è la dichiarazione di successione
+    testo: |-
+      È il documento da presentare all'Agenzia delle Entrate per comunicare il passaggio dei beni dal defunto agli eredi. Serve a definire legalmente i nuovi proprietari e a calcolare l'imposta di successione dovuta.
+
+      Richiede una buona conoscenza delle norme fiscali e civili: dalla valutazione dei beni ereditati alla loro ripartizione tra gli eredi.
+  - titolo: Imposta di successione
+    testo: |-
+      Le aliquote per eredi e legatari:
+
+      - **Coniuge e parenti in linea retta: 4%.** Quota esente per eredi in linea retta e coniuge: € 1.000.000,00.
+      - **Altri parenti fino al 4° grado, affini in linea retta e affini in linea collaterale fino al 3° grado: 6%.** Quota esente per fratelli e sorelle: € 100.000,00.
+      - **Altri soggetti: 8%.**
+
+      La quota esente per le persone con handicap grave è di € 1.500.000,00 (non cumulabile con le esenzioni precedenti).
+
+      Le imposte vengono liquidate dall'Agenzia delle Entrate dopo la presentazione della dichiarazione.
+  - titolo: Come si calcola
+    testo: |-
+      L'imposta cambia in base al grado di parentela tra il defunto e l'erede e al valore dei beni ereditati.
+faq:
+  - domanda: Entro quando va presentata?
+    risposta: Entro 12 mesi dalla data del decesso.
+  - domanda: Chi deve presentarla?
+    risposta: Tutti gli eredi, i legatari o chi ha diritti sugli immobili ereditati.
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=successioni
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: false
+aggiornatoIl: 2026-11-24
+daCompletare:
+  - Confermare aliquote e franchigie riportate (dal vecchio sito).
+fonte: Testi migrati da monzaced.it/servizi/successioni il 24/11/2026.

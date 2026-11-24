@@ -1,0 +1,10 @@
+{
+  "CORSRules": [
+    {
+      "AllowedOrigins": ["https://monzaced.it", "https://www.monzaced.it"],
+      "AllowedMethods": ["PUT"],
+      "AllowedHeaders": ["content-type", "x-amz-server-side-encryption"],
+      "MaxAgeSeconds": 600
+    }
+  ]
+}

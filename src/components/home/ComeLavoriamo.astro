@@ -1,0 +1,76 @@
+---
+import { Picture } from 'astro:assets';
+import { home } from '@/lib/content';
+import { img, alt } from '@/lib/immagini';
+const foto = ['dettaglio-firma', 'dichiarazioni', 'pensioni'];
+---
+<section class="lavoriamo sezione" aria-labelledby="lavoriamo-titolo">
+  <div class="contenitore">
+    <p class="occhiello">Monza CED, esperienza e serietà</p>
+    <h2 id="lavoriamo-titolo" class="lavoriamo__titolo" data-rivela>{home.valoriTitolo}</h2>
+    <ul class="valori">
+      {home.valori.map((v, i) => (
+        <li class="valore">
+          <div class="valore__arco" data-rivela="arco" data-ritardo={String(i * 0.12)}>
+            <div data-parallasse="0.12">
+              <Picture src={img(foto[i % foto.length])} alt={alt(foto[i % foto.length])} widths={[360, 540, 720]} sizes="(min-width: 900px) 30vw, 90vw" formats={['avif', 'webp']} />
+            </div>
+          </div>
+          <h3>{v.titolo}</h3>
+          <p>{v.testo}</p>
+        </li>
+      ))}
+    </ul>
+
+    <div class="passi" id="come-si-inizia">
+      <h2 class="passi__titolo" data-rivela>{home.passiTitolo}</h2>
+      <div class="passi__corpo">
+        <svg class="filo passi__filo" data-filo data-inizio="top 70%" data-fine="bottom 55%" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path data-traccia pathLength="1" d="M40 60 C 220 -10, 380 130, 600 60 S 980 -10, 1160 60" />
+        </svg>
+        <ol class="passi__lista">
+          {home.passi.map((p, i) => (
+            <li data-rivela data-ritardo={String(i * 0.12)}>
+              <span class="passi__n" aria-hidden="true">{i + 1}</span>
+              <h3>{p.titolo}</h3>
+              <p>{p.testo}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .lavoriamo { background: var(--bianco); border-radius: clamp(40px, 8vw, 120px) clamp(40px, 8vw, 120px) 0 0; margin-top: clamp(56px, 7vw, 110px); }
+  .valori { list-style: none; padding: 0; margin: 48px 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 40px); }
+  .valore { margin: 0; }
+  .valore__arco { aspect-ratio: 4 / 5; border-radius: 999px 999px 28px 28px; overflow: hidden; margin-bottom: 26px; background: var(--cielo); }
+  .valore__arco > div { height: 118%; margin-top: -9%; }
+  .valore__arco :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .valore:nth-child(2) { margin-top: clamp(0px, 6vw, 90px); }
+  .valore h3 { margin-bottom: 10px; }
+  .valore p { color: var(--grigio); max-width: 34ch; }
+  .passi { margin-top: clamp(80px, 10vw, 150px); }
+  .passi__corpo { position: relative; }
+  .passi__filo { left: 0; top: 18px; width: 100%; height: 120px; }
+  .passi__lista { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; position: relative; }
+  .passi__lista li { margin: 0; }
+  .passi__n {
+    display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%; margin-bottom: 22px;
+    background: var(--avorio); border: 3px solid var(--blu); color: var(--inchiostro);
+    font-family: var(--f-titoli); font-weight: 800; font-size: 2rem; position: relative; z-index: 1;
+  }
+  .passi__lista li:nth-child(2) .passi__n { background: var(--blu-scuro); border-color: var(--blu-scuro); color: #fff; }
+  .passi__lista p { color: var(--grigio); max-width: 30ch; }
+  @media (max-width: 860px) {
+    .valori, .passi__lista { grid-template-columns: minmax(0, 1fr); }
+    .valore:nth-child(2) { margin-top: 0; }
+    .valore__arco { aspect-ratio: 5 / 4; }
+    .passi__filo { display: none; }
+    .passi__lista { gap: 8px; border-left: 3px solid var(--blu); margin-left: 40px; padding-left: 0; }
+    .passi__lista li { position: relative; padding: 0 0 24px 64px; }
+    .passi__n { position: absolute; left: -42px; top: 0; width: 80px; height: 80px; }
+  }
+</style>

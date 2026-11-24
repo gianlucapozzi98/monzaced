@@ -1,0 +1,27 @@
+---
+import Base from '@/layouts/Base.astro';
+import TestataPagina from '@/components/TestataPagina.astro';
+import Caricatore from '@/components/Caricatore.astro';
+import Icon from '@/components/Icon.astro';
+import { contatti as c, impostazioni as s } from '@/lib/content';
+---
+<Base modifica="singleton/contatti" titolo="Carica i documenti in modo protetto | Monza CED" descrizione="Invia i documenti a Monza CED in modo protetto: archivio privato e cifrato in Europa, controllo antivirus, codice pratica. Dal computer o dal telefono.">
+  <TestataPagina titolo={c.caricaTitolo} occhiello="Invio protetto" briciole={[{ nome: 'Home', url: '/' }, { nome: 'Carica i documenti' }]} immagine="dichiarazioni">
+    <p class="sottotesto">{c.caricaTesto}</p>
+    <ul class="garanzie">
+      <li><Icon name="lucchetto" /> Archivio privato e cifrato in Europa, nessun link pubblico</li>
+      <li><Icon name="scudo" /> Controllo antivirus su ogni file</li>
+      <li><Icon name="documento" /> Codice pratica alla fine, solo se i file sono arrivati</li>
+    </ul>
+  </TestataPagina>
+  <div class="contenitore-stretto sezione">
+    <Caricatore id="carica-documenti" titolo="Invia i documenti" testo="Scegli il servizio: ti mostriamo i documenti da preparare. Puoi caricare foto dal telefono." />
+    <p class="carica-altro">Hai dubbi su cosa inviare? <a href={s.ctaPrenota.link}>Prenota una consulenza</a> o chiama il <a href={`tel:${s.telefonoLink}`}>{s.telefono}</a>.</p>
+  </div>
+</Base>
+<style>
+  .garanzie { list-style: none; padding: 0; display: grid; gap: 12px; margin: 8px 0 0; }
+  .garanzie li { display: flex; gap: 12px; align-items: center; font-weight: 700; margin: 0; }
+  .garanzie :global(svg) { flex: none; color: var(--blu-scuro); }
+  .carica-altro { margin-top: 28px; font-size: 1.2rem; }
+</style>

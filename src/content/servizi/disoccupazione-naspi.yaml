@@ -1,0 +1,69 @@
+titolo: Disoccupazione (NASpI)
+titoloPagina: "Disoccupazione: la NASpI"
+riassunto: Verifichiamo i requisiti e ti seguiamo nella domanda di NASpI, dalla raccolta dei documenti all'invio all'INPS.
+gruppo: lavoro
+situazioni:
+  - lavoro
+icona: ombrello
+immagine: lavoro
+ordine: 8
+seo:
+  titolo: Disoccupazione NASpI a Monza | Monza CED
+  descrizione: "Domanda di disoccupazione NASpI a Monza: verifica dei requisiti, documenti e invio all'INPS. Prenota una consulenza o carica i documenti."
+introduzione: |-
+  La NASpI (Nuova Assicurazione Sociale per l'Impiego) è un sostegno concreto per chi è in stato di disoccupazione. Ti guidiamo nella richiesta, passo dopo passo.
+perChi:
+  - Lavoratori dipendenti che hanno perso il lavoro involontariamente
+perChiNota: |-
+  Secondo il testo del sito, per accedere alla NASpI servono questi requisiti:
+
+  - aver perso il lavoro involontariamente
+  - almeno 13 settimane di contributi negli ultimi 4 anni
+  - almeno 30 giorni di lavoro nell'anno solare precedente la disoccupazione
+
+  Ti aiutiamo a capire se rispondi ai criteri prima di presentare la domanda.
+cosaFacciamo:
+  - Verifichiamo con te i requisiti di ammissibilità.
+  - Ti forniamo l'elenco dei documenti e ti aiutiamo a raccoglierli.
+  - Compiliamo la domanda e la trasmettiamo all'INPS.
+passaggi:
+  - titolo: Verifica dei requisiti
+    testo: Valutiamo la tua situazione.
+  - titolo: Raccolta dei documenti
+    testo: Usa la checklist qui sotto.
+  - titolo: Domanda all'INPS
+    testo: Compiliamo la domanda e la trasmettiamo all'INPS.
+documenti:
+  - voce: Documento d'identità valido
+    nota: ""
+  - voce: Codice fiscale
+    nota: ""
+  - voce: Modello SR163
+    nota: Per l'accredito su conto corrente
+  - voce: Certificato di disoccupazione rilasciato dal datore di lavoro
+    nota: ""
+  - voce: Attestati di corsi di formazione professionale
+    nota: Se presenti
+documentiNota: ""
+approfondimenti:
+  - titolo: Che cos'è la NASpI
+    testo: |-
+      È l'indennità di disoccupazione pagata dall'INPS ai lavoratori dipendenti che hanno perso il lavoro involontariamente. Accompagna la persona mentre cerca una nuova occupazione, con un'indennità mensile calcolata in base ai contributi versati e al periodo di lavoro.
+faq:
+  - domanda: Chi paga la NASpI?
+    risposta: L'INPS.
+  - domanda: Mi aiutate a capire se ne ho diritto?
+    risposta: Sì, valutiamo con te la tua situazione prima di presentare la domanda.
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=disoccupazione-naspi
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: false
+aggiornatoIl: 2026-11-24
+daCompletare:
+  - "DA VERIFICARE: il requisito dei \"30 giorni di lavoro nell'anno precedente\" risulta abolito dal 2022; i requisiti NASpI sono cambiati anche in seguito. Aggiornare l'elenco requisiti prima della pubblicazione."
+fonte: Testi migrati da monzaced.it/servizi/disoccupazione-naspi il 24/11/2026.

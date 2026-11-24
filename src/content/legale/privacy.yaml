@@ -1,0 +1,57 @@
+titolo: Informativa sulla privacy
+descrizione: "Come Monza CED Srl tratta i dati personali raccolti dal sito: prenotazioni, contatti e documenti caricati. Informativa ai sensi dell'art. 13 GDPR."
+bozza: true
+aggiornatoIl: 2026-11-24
+sezioni:
+  - titolo: Chi è il titolare del trattamento
+    testo: |-
+      **Monza CED Srl**, Via Solferino 11, 20900 Monza (MB), Partita IVA 12488810966.
+      Email: [ingresso@monzaced.it](mailto:ingresso@monzaced.it) · Telefono: 039 326628 · PEC: [DA COMPLETARE].
+
+      Responsabile della protezione dei dati (DPO): [DA VERIFICARE se nominato].
+  - titolo: Quali dati trattiamo
+    testo: |-
+      - **Dati di contatto** che ci lasci nei moduli: nome e cognome, telefono, email, se sei un privato o un'azienda, il servizio che ti interessa, le preferenze di orario e il messaggio.
+      - **Documenti che carichi** con "Carica i documenti" e i dati che contengono. Possono contenere **dati economici e patrimoniali**, **dati di familiari e di minori** e anche **dati relativi alla salute** (per esempio certificati medici, verbali di invalidità, certificati di gravidanza, spese sanitarie), che sono "categorie particolari" di dati (art. 9 GDPR).
+      - **Dati tecnici** necessari al funzionamento e alla sicurezza del sito: indirizzo IP e data e ora delle richieste, usati per bloccare abusi (limiti di invio) e per i registri di sicurezza.
+  - titolo: Perché li trattiamo e su quale base
+    testo: |-
+      - **Rispondere alle tue richieste e fissare la consulenza** — base: misure precontrattuali richieste da te (art. 6.1.b GDPR).
+      - **Ricevere e gestire i documenti per la tua pratica** — base: misure precontrattuali/contratto (art. 6.1.b) e, per i dati relativi alla salute, il tuo **consenso esplicito** (art. 9.2.a), che puoi revocare in qualsiasi momento.
+      - **Adempiere a obblighi di legge** (per esempio fiscali) quando la pratica viene avviata — base: obbligo legale (art. 6.1.c).
+      - **Proteggere il sito e i dati** da accessi abusivi e invii automatici — base: legittimo interesse del titolare (art. 6.1.f).
+      - **Mostrare la mappa** (contenuto di terze parti) — solo con il tuo consenso, dato dal banner dei cookie.
+
+      Non usiamo i dati per profilazione né per marketing. Non usiamo strumenti di statistica che installano cookie.
+  - titolo: È obbligatorio fornire i dati?
+    testo: |-
+      No, ma senza i dati di contatto non possiamo risponderti, e senza il consenso per i dati relativi alla salute non possiamo ricevere online documenti che li contengono. Puoi sempre chiamarci o portare i documenti in studio.
+  - titolo: Per quanto tempo li conserviamo
+    testo: |-
+      - **Richieste di contatto e prenotazione:** [DA DEFINIRE con lo studio, per esempio 12 mesi dall'ultimo contatto se non diventi cliente].
+      - **Documenti caricati online:** restano nell'archivio online per **[DA DEFINIRE] giorni** dal caricamento e poi vengono **cancellati automaticamente**. Se la pratica prosegue, lo studio li conserva per il tempo richiesto dagli obblighi di legge [DA DEFINIRE].
+      - **Registri di sicurezza e di accesso:** [DA DEFINIRE, per esempio 12 mesi].
+      - **File rifiutati** (per esempio dall'antivirus o perché di tipo non ammesso): cancellati subito.
+  - titolo: Come proteggiamo i documenti
+    testo: |-
+      I documenti caricati sono trasmessi con connessione cifrata, controllati da un antivirus e conservati in un archivio **privato e cifrato con sede nell'Unione Europea**. Non esistono link pubblici ai file: possono essere aperti solo dallo studio, con accesso protetto da password, e ogni accesso viene registrato. Le notifiche allo studio non contengono mai i documenti.
+  - titolo: A chi possono essere comunicati
+    testo: |-
+      - Fornitori che ci aiutano a far funzionare il sito e l'archivio (hosting, archiviazione dei file, invio delle notifiche), nominati responsabili del trattamento (art. 28 GDPR): [DA COMPLETARE con i nomi dei fornitori scelti].
+      - Enti pubblici (per esempio INPS, Agenzia delle Entrate, Comuni) solo quando serve per la pratica che ci affidi.
+
+      I dati non vengono diffusi.
+  - titolo: Trasferimenti fuori dall'Unione Europea
+    testo: |-
+      Non previsti: l'archivio dei documenti si trova nell'Unione Europea. [DA CONFERMARE quando saranno scelti i fornitori.]
+  - titolo: I tuoi diritti
+    testo: |-
+      Puoi chiedere in ogni momento di accedere ai tuoi dati, correggerli, cancellarli, limitarne il trattamento, riceverli in formato leggibile (portabilità) e opporti al trattamento (artt. 15–22 GDPR). Puoi revocare il consenso senza conseguenze sui trattamenti già fatti.
+
+      Scrivi a [ingresso@monzaced.it](mailto:ingresso@monzaced.it) o chiama lo 039 326628. Hai anche il diritto di proporre reclamo al Garante per la protezione dei dati personali ([www.garanteprivacy.it](https://www.garanteprivacy.it)).
+  - titolo: Dati dei minori e dei familiari
+    testo: |-
+      Se carichi documenti che riguardano figli minori o altri familiari, dichiari di farlo in qualità di genitore, tutore o comunque con titolo per farlo, e solo per la pratica richiesta.
+  - titolo: Valutazione d'impatto
+    testo: |-
+      [NOTA PER LO STUDIO — da togliere prima della pubblicazione] Il caricamento online di documenti che possono contenere dati sanitari e di minori richiede di valutare con il consulente privacy una DPIA (art. 35 GDPR) e il registro dei trattamenti.

@@ -1,0 +1,62 @@
+---
+/**
+ * Caricamento iniziale: il logo e il "filo" che si traccia. < 1,2 s, solo alla prima pagina
+ * della sessione, mai con "riduci movimento". È solo CSS: se lo script non arriva, sparisce comunque.
+ * Il contenuto è già disegnato sotto; un clic, un tasto o "Salta" lo chiudono subito.
+ */
+import Logo from './Logo.astro';
+---
+<div class="caricamento-iniziale" data-caricamento>
+  <div class="caricamento-iniziale__centro" aria-hidden="true">
+    <Logo />
+    <svg viewBox="0 0 420 60" class="caricamento-iniziale__filo" focusable="false">
+      <path d="M4 40 C 70 6, 130 6, 180 30 S 300 58, 416 14" pathLength="1" />
+    </svg>
+  </div>
+  <button type="button" class="caricamento-iniziale__salta" data-salta>Salta</button>
+</div>
+
+<script>
+  const el = document.querySelector<HTMLElement>('[data-caricamento]');
+  const root = document.documentElement;
+  if (el) {
+    const fine = () => { el.remove(); root.classList.remove('con-caricamento'); root.classList.add('caricamento-finito'); };
+    if (!root.classList.contains('con-caricamento')) {
+      el.remove();
+    } else {
+      const salta = () => { el.classList.add('salta'); setTimeout(fine, 220); };
+      el.addEventListener('click', salta);
+      addEventListener('keydown', salta, { once: true });
+      el.addEventListener('animationend', (e) => { if (e.target === el) fine(); });
+      setTimeout(fine, 1300);
+    }
+  }
+</script>
+
+<style>
+  .caricamento-iniziale { display: none; }
+  :global(html.con-caricamento) .caricamento-iniziale {
+    position: fixed; inset: 0; z-index: 900; display: grid; place-items: center;
+    background: var(--inchiostro); cursor: pointer;
+    animation: caric-esci 340ms var(--ease-in-out) 820ms forwards;
+  }
+  .caricamento-iniziale.salta { animation: caric-esci 200ms var(--ease-in-out) forwards !important; }
+  .caricamento-iniziale__centro { display: grid; gap: 18px; justify-items: center; width: min(420px, 76vw); }
+  .caricamento-iniziale__centro :global(.logo) { width: min(300px, 70vw); animation: caric-logo 420ms var(--ease-out) both; }
+  .caricamento-iniziale__filo { width: 100%; overflow: visible; }
+  .caricamento-iniziale__filo path {
+    fill: none; stroke: var(--blu); stroke-width: 4; stroke-linecap: round;
+    stroke-dasharray: 1; stroke-dashoffset: 1;
+    animation: caric-filo 720ms var(--ease-out) 80ms forwards;
+  }
+  .caricamento-iniziale__salta {
+    position: absolute; right: 20px; bottom: 20px; min-height: 48px; padding: 0 20px; border-radius: 999px;
+    border: 2px solid rgb(255 255 255 / 0.55); background: transparent; color: #fff; font-weight: 700; cursor: pointer;
+  }
+  @keyframes caric-filo { to { stroke-dashoffset: 0; } }
+  @keyframes caric-logo { from { opacity: 0; transform: translateY(10px); } }
+  @keyframes caric-esci {
+    from { clip-path: inset(0 0 0 0 round 0); }
+    to { clip-path: inset(0 0 100% 0 round 0 0 50% 50%); visibility: hidden; pointer-events: none; }
+  }
+</style>

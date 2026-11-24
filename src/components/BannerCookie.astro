@@ -1,0 +1,113 @@
+---
+/**
+ * Consenso secondo le Linee guida del Garante (10/06/2021):
+ * Accetta, Rifiuta (anche con la X), Personalizza; nessun contenuto di terze parti prima del consenso;
+ * scelta ricordata 6 mesi; "Preferenze cookie" nel footer per cambiarla.
+ */
+import Icon from './Icon.astro';
+---
+<section class="banner-cookie no-stampa" role="region" aria-label="Preferenze sui cookie" data-banner-cookie hidden>
+  <button type="button" class="banner-cookie__x" data-cookie="rifiuta" aria-label="Chiudi e rifiuta i cookie non necessari">
+    <Icon name="x" />
+  </button>
+  <h2 class="banner-cookie__titolo">Cookie: decidi tu</h2>
+  <p>
+    Usiamo solo strumenti tecnici necessari. Con il tuo consenso carichiamo anche la <strong>mappa</strong> di OpenStreetMap,
+    che può raccogliere il tuo indirizzo IP. Niente statistiche, niente pubblicità.
+    <a href="/cookie">Leggi la cookie policy</a>.
+  </p>
+  <div class="banner-cookie__azioni">
+    <button type="button" class="btn btn--piccolo" data-cookie="accetta">Accetta</button>
+    <button type="button" class="btn btn--piccolo btn--secondario" data-cookie="rifiuta">Rifiuta</button>
+    <button type="button" class="btn btn--piccolo btn--secondario" data-cookie="personalizza">Personalizza</button>
+  </div>
+</section>
+
+<dialog class="preferenze-cookie" aria-labelledby="pref-cookie-titolo" data-preferenze-dialog>
+  <form method="dialog">
+    <h2 id="pref-cookie-titolo">Preferenze cookie</h2>
+    <div class="preferenze-cookie__voce">
+      <div>
+        <h3>Strumenti tecnici</h3>
+        <p>Necessari al funzionamento: ricordano le tue scelte e la sessione dell'area riservata dello studio.</p>
+      </div>
+      <span class="etichetta">Sempre attivi</span>
+    </div>
+    <div class="preferenze-cookie__voce">
+      <div>
+        <h3 id="pref-esterni-t">Contenuti esterni: mappa</h3>
+        <p id="pref-esterni-d">Mostra la mappa di OpenStreetMap nella sezione "Dove siamo".</p>
+      </div>
+      <label class="interruttore">
+        <input type="checkbox" role="switch" name="esterni" aria-labelledby="pref-esterni-t" aria-describedby="pref-esterni-d" />
+        <span aria-hidden="true"></span>
+      </label>
+    </div>
+    <div class="azioni">
+      <button class="btn" value="salva" data-cookie="salva">Salva le preferenze</button>
+      <button class="btn btn--secondario" value="annulla" formnovalidate>Annulla</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+  import { leggiConsenso, salvaConsenso } from '@/scripts/consenso';
+  const banner = document.querySelector<HTMLElement>('[data-banner-cookie]');
+  const dlg = document.querySelector<HTMLDialogElement>('[data-preferenze-dialog]');
+  const box = dlg?.querySelector<HTMLInputElement>('input[name="esterni"]');
+
+  if (!leggiConsenso() && banner) banner.hidden = false;
+
+  const chiudiBanner = () => { document.documentElement.classList.remove('senza-consenso'); if (banner) banner.hidden = true; };
+  const apriPreferenze = () => {
+    if (box) box.checked = !!leggiConsenso()?.esterni;
+    dlg?.showModal();
+  };
+
+  document.addEventListener('click', (e) => {
+    const t = (e.target as HTMLElement).closest<HTMLElement>('[data-cookie],[data-preferenze-cookie]');
+    if (!t) return;
+    if (t.hasAttribute('data-preferenze-cookie')) { apriPreferenze(); return; }
+    const azione = t.dataset.cookie;
+    if (azione === 'accetta') { salvaConsenso({ esterni: true }); chiudiBanner(); }
+    if (azione === 'rifiuta') { salvaConsenso({ esterni: false }); chiudiBanner(); }
+    if (azione === 'personalizza') apriPreferenze();
+    if (azione === 'salva') { salvaConsenso({ esterni: !!box?.checked }); chiudiBanner(); }
+  });
+</script>
+
+<style>
+  .banner-cookie {
+    position: fixed; z-index: 60; left: 16px; bottom: 16px;
+    width: min(560px, calc(100% - 32px));
+    padding: 26px 26px 22px; border-radius: var(--r-l);
+    background: var(--bianco); box-shadow: 0 24px 60px -20px rgb(14 26 43 / 0.45); border: 1px solid var(--linea);
+  }
+  .banner-cookie[hidden] { display: none; }
+  /* visibile già al primo disegno: la classe la mette lo script nell'head (Base.astro) */
+  :global(html.senza-consenso) .banner-cookie[hidden] { display: block; }
+  .banner-cookie__titolo { font-size: 1.5rem; margin-bottom: 8px; padding-right: 48px; }
+  .banner-cookie p { font-size: 1.125rem; }
+  .banner-cookie__azioni { display: flex; flex-wrap: wrap; gap: 10px; }
+  .banner-cookie__azioni .btn { flex: 1 1 auto; }
+  .banner-cookie__x {
+    position: absolute; top: 14px; right: 14px; width: 48px; height: 48px; border-radius: 50%;
+    border: 0; background: var(--cielo); display: grid; place-items: center; cursor: pointer;
+  }
+  .preferenze-cookie { border: 0; border-radius: var(--r-l); padding: 32px; width: min(620px, calc(100% - 32px)); }
+  .preferenze-cookie::backdrop { background: rgb(14 26 43 / 0.55); }
+  .preferenze-cookie__voce { display: flex; gap: 20px; justify-content: space-between; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--linea); }
+  .preferenze-cookie__voce h3 { font-size: 1.2rem; margin-bottom: 4px; }
+  .preferenze-cookie__voce p { margin: 0; font-size: 1.0625rem; color: var(--grigio); }
+  .preferenze-cookie .azioni { margin-top: 24px; }
+  .interruttore { position: relative; flex: none; width: 68px; height: 40px; }
+  .interruttore input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; z-index: 1; }
+  .interruttore span { position: absolute; inset: 0; border-radius: 999px; background: #8a94a3; transition: background var(--d-comp) var(--ease-out); }
+  .interruttore span::after {
+    content: ''; position: absolute; top: 5px; left: 5px; width: 30px; height: 30px; border-radius: 50%; background: #fff;
+    transition: transform var(--d-comp) var(--ease-molla);
+  }
+  .interruttore input:checked + span { background: var(--blu-scuro); }
+  .interruttore input:checked + span::after { transform: translateX(28px); }
+  .interruttore input:focus-visible + span { outline: 3px solid var(--blu-scuro); outline-offset: 3px; }
+</style>

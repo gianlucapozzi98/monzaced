@@ -1,0 +1,73 @@
+titolo: Maternità
+titoloPagina: Maternità e Assegno per il Nucleo Familiare
+riassunto: Assegno di maternità, congedo obbligatorio e parentale, assegno per il nucleo familiare.
+gruppo: famiglia
+situazioni:
+  - famiglia
+  - lavoro
+icona: nascita
+immagine: famiglia
+ordine: 9
+seo:
+  titolo: Maternità e assegno di maternità a Monza | Monza CED
+  descrizione: "Assegno di maternità, congedo di maternità e parentale, assegno per il nucleo familiare a Monza. Prenota una consulenza o carica i documenti."
+introduzione: |-
+  Per le neomamme e i neopapà gestiamo l'assegno di maternità e il congedo di maternità, obbligatorio e facoltativo, guidandoti in ogni fase.
+
+  Ti assistiamo anche nella richiesta dell'Assegno per il Nucleo Familiare (ANF).
+perChi:
+  - Mamme lavoratrici dipendenti
+  - Lavoratrici autonome
+  - Lavoratrici iscritte alla gestione separata INPS
+  - Disoccupate e casalinghe, alle condizioni previste dalla normativa
+perChiNota: ""
+cosaFacciamo:
+  - Consulenza personalizzata per capire i tuoi diritti e le prestazioni che ti spettano.
+  - Raccolta e presentazione dei documenti: ci occupiamo noi degli aspetti burocratici.
+  - Assistenza durante tutta la richiesta, dalla domanda iniziale all'erogazione dell'assegno e alla gestione del congedo.
+passaggi: []
+documenti:
+  - voce: Documento d'identità della madre
+    nota: ""
+  - voce: Codice fiscale della madre e del bambino
+    nota: ""
+  - voce: Certificato di gravidanza con la data presunta del parto
+    nota: ""
+  - voce: Certificato di nascita del bambino
+    nota: ""
+  - voce: Documentazione sulla situazione lavorativa della madre
+    nota: ""
+documentiNota: |-
+  Per l'Assegno per il Nucleo Familiare servono: documento d'identità e codice fiscale del richiedente, codici fiscali dei familiari a carico, attestazione ISEE in corso di validità con la relativa DSU, documentazione sulla composizione del nucleo familiare.
+approfondimenti:
+  - titolo: L'assegno di maternità
+    testo: |-
+      È una prestazione economica che sostiene le famiglie alla nascita o all'adozione di un bambino.
+  - titolo: Maternità obbligatoria (congedo di maternità)
+    testo: |-
+      Prevede un periodo di astensione dal lavoro per le mamme lavoratrici che copre gli ultimi due mesi di gravidanza e i primi tre mesi dopo il parto. È un periodo tutelato per legge, durante il quale la lavoratrice riceve un'indennità pari al 100% della retribuzione.
+  - titolo: Maternità facoltativa (congedo parentale)
+    testo: |-
+      Oltre al congedo obbligatorio, neomamme e neopapà hanno diritto al congedo parentale facoltativo, per un periodo massimo di sei mesi fino agli 8 anni di età del bambino, con un'indennità pari al 30% della retribuzione per i primi sei mesi.
+  - titolo: Assegno per il Nucleo Familiare (ANF)
+    testo: |-
+      È una prestazione economica dell'INPS per lavoratori dipendenti, pensionati e, in alcuni casi, lavoratori autonomi con familiari a carico, quando il reddito complessivo del nucleo non supera determinate soglie stabilite ogni anno.
+
+      L'importo dipende dal numero dei familiari a carico, dalla composizione del nucleo e dal reddito complessivo. Le tabelle con soglie e importi sono aggiornate ogni anno e pubblicate sul sito dell'INPS: ti aiutiamo a leggerle e a calcolare l'importo.
+
+      Ti seguiamo nella raccolta dei documenti, nella compilazione e nella presentazione della domanda all'INPS, e negli aggiornamenti successivi se cambia la tua situazione familiare o economica.
+faq: []
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=maternita
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: true
+aggiornatoIl: 2026-11-24
+daCompletare:
+  - "DA VERIFICARE: indennità del congedo parentale (il testo dice 30% per i primi sei mesi; la normativa è cambiata dal 2023)."
+  - "DA VERIFICARE: per i nuclei con figli l'ANF è stato sostituito dall'Assegno Unico dal 2022. Confermare per chi resta valido."
+fonte: Testi migrati da monzaced.it/servizi/maternita il 24/11/2026.

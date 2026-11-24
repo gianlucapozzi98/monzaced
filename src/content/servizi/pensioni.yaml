@@ -1,0 +1,49 @@
+titolo: Pensioni
+titoloPagina: Pensioni
+riassunto: Domanda di pensione, simulazioni dell'età e dell'importo, consulenza su contributi e benefici previdenziali.
+gruppo: pensioni
+situazioni:
+  - pensione
+  - lavoro
+icona: clessidra
+immagine: pensioni
+ordine: 13
+seo:
+  titolo: Pensioni, domanda e consulenza a Monza | Monza CED
+  descrizione: "Domanda di pensione, simulazione dell'età pensionabile e consulenza su contributi a Monza. Prenota una consulenza o carica i documenti online."
+introduzione: |-
+  Capire la propria posizione contributiva, calcolare l'età pensionabile, valutare i benefici previdenziali: ti offriamo assistenza e consulenza complete su contributi e pensioni.
+perChi:
+  - Chi sta per fare domanda di pensione
+  - Chi vuole conoscere la propria posizione contributiva e pianificare il futuro
+  - Pensionati che continuano a lavorare e a versare contributi
+perChiNota: ""
+cosaFacciamo:
+  - Ti assistiamo nella preparazione e nella presentazione della domanda di pensione e ci interfacciamo con gli enti previdenziali.
+  - Facciamo simulazioni dell'età pensionabile e dell'importo atteso, per pianificare con anticipo.
+  - Verifichiamo le opportunità previste dalla legge: recupero di contributi non versati, cumulo contributivo, agevolazioni fiscali.
+  - Per chi continua a lavorare dopo la pensione, consulenza sulle possibilità di aumentare l'assegno con ulteriori contributi.
+passaggi: []
+documenti: []
+documentiNota: ""
+approfondimenti:
+  - titolo: Simulazione della pensione
+    testo: |-
+      La simulazione dell'età pensionabile e dell'importo atteso ti dà una visione chiara delle prospettive e ti aiuta a prendere decisioni consapevoli sul percorso lavorativo.
+  - titolo: Supplemento per chi continua a lavorare
+    testo: |-
+      Se scegli di continuare a lavorare dopo la pensione, valutiamo con te come i nuovi contributi possono aumentare l'assegno.
+faq: []
+pulsanti:
+  prenota:
+    testo: Prenota una consulenza
+    link: /prenota?servizio=pensioni
+  carica:
+    testo: Carica i documenti
+    link: "#carica-documenti"
+caricamentoAttivo: true
+datiParticolari: false
+aggiornatoIl: 2026-11-24
+daCompletare:
+  - Elenco documenti per la domanda di pensione (il vecchio sito non lo riporta).
+fonte: Testi migrati da monzaced.it/servizi/pensioni il 24/11/2026 (attenuate le promesse "simulazioni precise", "massimo dei benefici").

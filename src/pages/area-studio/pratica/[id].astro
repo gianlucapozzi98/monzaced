@@ -1,0 +1,65 @@
+---
+import Studio from '@/layouts/Studio.astro';
+import { utenteSessione } from '@/lib/server/accesso';
+import { leggiPratica, registra } from '@/lib/server/pratiche';
+export const prerender = false;
+Astro.response.headers.set('cache-control', 'no-store');
+const u = utenteSessione(Astro.cookies);
+if (!u) return Astro.redirect('/area-studio/accesso');
+const p = await leggiPratica(Astro.params.id ?? '');
+if (!p) return Astro.redirect('/area-studio');
+await registra('vista-pratica', { utente: u, pratica: p.id });
+const data = (iso: string) => new Date(iso).toLocaleString('it-IT', { dateStyle: 'medium', timeStyle: 'short' });
+const mb = (n: number) => `${(n / 1024 / 1024).toFixed(2)} MB`;
+---
+<Studio titolo={p.codice} utente={u}>
+  <p><a href="/area-studio">← Tutte le pratiche</a></p>
+  <h1 class="studio-h1">Pratica {p.codice}</h1>
+  {p.prova && <div class="avviso"><p>Pratica creata in modalità di prova.</p></div>}
+  <div class="scheda-studio">
+    <dl class="studio-dl">
+      <dt><strong>Servizio</strong></dt><dd>{p.servizioTitolo}</dd>
+      <dt><strong>Arrivata</strong></dt><dd>{data(p.creata)}</dd>
+      <dt><strong>Cancellazione automatica</strong></dt><dd>{data(p.scadenza)}</dd>
+      <dt><strong>Nome</strong></dt><dd>{p.nome}</dd>
+      <dt><strong>Telefono</strong></dt><dd><a href={`tel:${p.telefono}`}>{p.telefono}</a></dd>
+      <dt><strong>Email</strong></dt><dd>{p.email || '—'}</dd>
+      <dt><strong>Note</strong></dt><dd class="pre">{p.note || '—'}</dd>
+      <dt><strong>Documenti spuntati</strong></dt><dd>{p.documentiSpuntati.length ? p.documentiSpuntati.join('; ') : '—'}</dd>
+      <dt><strong>Consensi</strong></dt><dd>Privacy {data(p.consensi.privacy)} · Dati sanitari {data(p.consensi.salute)}</dd>
+      <dt><strong>Stato</strong></dt><dd>{p.stato}</dd>
+    </dl>
+  </div>
+  <h2 class="studio-h2">File</h2>
+  <div class="scorri">
+    <table class="tabella">
+      <thead><tr><th>#</th><th>Nome originale</th><th>Tipo</th><th>Dimensione</th><th>Esito</th><th></th></tr></thead>
+      <tbody>
+        {p.file.map((f) => (
+          <tr>
+            <td>{f.indice + 1}</td><td>{f.nomeOriginale}</td><td>{f.tipo}</td><td>{mb(f.dimensione)}</td>
+            <td>{f.stato === 'accettato' ? <span class="badge badge--ok">accettato</span> : <span class="badge badge--ko">{f.stato}{f.motivo ? `: ${f.motivo}` : ''}</span>}</td>
+            <td>{f.stato === 'accettato' && <a class="btn btn--piccolo" href={`/api/studio/file?p=${p.id}&i=${f.indice}`}>Scarica</a>}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <div class="azioni mt-l">
+    {p.stato !== 'lavorata' && (
+      <form method="post" action="/api/studio/pratica"><input type="hidden" name="id" value={p.id} /><input type="hidden" name="azione" value="lavorata" /><button class="btn" type="submit">Segna come lavorata</button></form>
+    )}
+  </div>
+  <div class="scheda-studio mt-l">
+    <h2 class="studio-h3">Eliminare la pratica</h2>
+    <p>Cancella definitivamente i dati e i file dall'archivio online. Non si può annullare. Per confermare scrivi il codice <strong>{p.codice}</strong>.</p>
+    {Astro.url.searchParams.get('errore') === 'conferma' && <p class="errore" role="alert">Il codice scritto non corrisponde.</p>}
+    <form method="post" action="/api/studio/pratica" class="azioni">
+      <input type="hidden" name="id" value={p.id} /><input type="hidden" name="azione" value="elimina" />
+      <div class="campo m-0"><label for="conf" class="sr-only">Codice di conferma</label><input id="conf" name="conferma" type="text" autocomplete="off" placeholder={p.codice} /></div>
+      <button class="btn btn--secondario" type="submit">Elimina definitivamente</button>
+    </form>
+  </div>
+  <h2 class="studio-h3">Storico</h2>
+  <ul>{p.eventi.map((e) => <li>{data(e.ts)} — {e.tipo}{e.chi ? ` (${e.chi})` : ''}{e.dettaglio ? `: ${e.dettaglio}` : ''}</li>)}</ul>
+</Studio>

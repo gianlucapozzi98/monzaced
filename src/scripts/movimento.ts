@@ -25,7 +25,15 @@ function avvia() {
   document.documentElement.classList.add('movimento-pronto');
 
   // Scorrimento morbido (solo puntatore; sul touch resta quello nativo)
-  const lenis = new Lenis({ duration: 1.05, easing: (t) => 1 - Math.pow(1 - t, 4), anchors: { offset: -110 }, syncTouch: false });
+  const lenis = new Lenis({
+    duration: 1.05,
+    easing: (t) => 1 - Math.pow(1 - t, 4),
+    anchors: { offset: -110 },
+    syncTouch: false,
+    // I gesti dentro pannelli, menu e finestre (<dialog>) li gestisce il browser:
+    // con Lenis in pausa (dialog aperto) altrimenti verrebbero annullati e il dito non scorrerebbe.
+    prevent: (node: HTMLElement) => node.nodeName === 'DIALOG',
+  });
   window.__lenis = lenis;
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((t) => lenis.raf(t * 1000));

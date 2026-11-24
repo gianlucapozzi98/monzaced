@@ -135,6 +135,7 @@ const attiva = (href: string) => (path === href || path.startsWith(href + '/') ?
   }
 
   .menu-mobile {
+    pointer-events: auto; /* la testata ha pointer-events: none: il menu deve tornare cliccabile e scorrevole */
     width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; border: 0; padding: 22px var(--gutter) 40px;
     background: var(--inchiostro); color: var(--bianco); overflow-y: auto;
   }

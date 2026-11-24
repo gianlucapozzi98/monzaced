@@ -87,6 +87,7 @@ body {
   text-rendering: optimizeLegibility;
 }
 img, svg, video { display: block; max-width: 100%; }
+dialog { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
 img { height: auto; }
 a { color: var(--blu-scuro); text-underline-offset: 0.18em; text-decoration-thickness: 0.08em; }
 a:hover { text-decoration-thickness: 0.14em; }

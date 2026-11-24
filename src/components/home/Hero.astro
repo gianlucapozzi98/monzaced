@@ -10,7 +10,7 @@ let i = 0;
 const parole = segmenti.flatMap((seg) => seg.testo.split(/\s+/).filter(Boolean).map((p) => ({ p, em: seg.em, i: i++ })));
 
 // Foto dell'apertura, dal pannello: persone di età diverse, la prima si vede subito.
-const foto = (home.fotoApertura?.filter(Boolean).length ? home.fotoApertura.filter(Boolean) : ['hero-coppia-50', 'dichiarazioni', 'hero-documenti-casa']);
+const foto = (home.fotoApertura?.filter(Boolean).length ? home.fotoApertura.filter(Boolean) : ['hero-coppia-giovane', 'hero-coppia-50', 'hero-documenti-casa']);
 const [prima, ...altre] = foto;
 const pic = { widths: [480, 720, 1080, 1440, 1920, 2400], sizes: '(min-width: 1024px) 100vw, calc(100vw - 32px)', formats: ['avif', 'webp'] as ('avif' | 'webp')[] };
 ---

@@ -47,6 +47,7 @@ const ICONE = [
 ] as const;
 
 const IMMAGINI = [
+  { label: 'Giovane coppia con documenti in cucina', value: 'hero-coppia-giovane' },
   { label: 'Coppia sui cinquant\'anni al portatile', value: 'hero-coppia-50' },
   { label: 'Coppia con documenti a casa', value: 'hero-documenti-casa' },
   { label: 'Famiglia sul divano', value: 'famiglia' },
@@ -326,7 +327,7 @@ export default config({
         occhiello: fields.text({ label: 'Testo sopra il titolo' }),
         titolo: fields.text({ label: 'Titolo grande', description: 'Metti tra asterischi la parte in corsivo blu: Le tue pratiche, *in mani sicure.*' }),
         sottotitolo: fields.text({ label: 'Sottotitolo', multiline: true }),
-        fotoApertura: fields.array(fields.select({ label: 'Foto', options: [...IMMAGINI], defaultValue: 'hero-coppia-50' }), {
+        fotoApertura: fields.array(fields.select({ label: 'Foto', options: [...IMMAGINI], defaultValue: 'hero-coppia-giovane' }), {
           label: 'Foto dell\'apertura (si alternano in quest\'ordine)',
           description: 'La prima è quella che si vede subito. Scegliere persone di età diverse.',
           itemLabel: (p) => IMMAGINI.find((i) => i.value === p.value)?.label ?? p.value,

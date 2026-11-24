@@ -28,7 +28,7 @@ await sharp(Buffer.from(fav)).resize(512, 512).png().toFile('public/icon-512.png
 
 // Open Graph 1200×630: foto nell'arco + logo originale su fondo scuro + filo blu
 const W = 1200, H = 630;
-const foto = await sharp('src/assets/img/hero-coppia-50.jpg').resize(560, 600, { fit: 'cover', position: 'centre' }).toBuffer();
+const foto = await sharp('src/assets/img/hero-coppia-giovane.jpg').resize(560, 600, { fit: 'cover', position: 'centre' }).toBuffer();
 const arco = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="560" height="600"><path d="M0 600V280A280 280 0 0 1 560 280V600Z" fill="#fff"/></svg>`);
 const fotoArco = await sharp(foto).composite([{ input: arco, blend: 'dest-in' }]).png().toBuffer();
 const sfondo = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">

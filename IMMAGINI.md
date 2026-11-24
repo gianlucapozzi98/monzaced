@@ -1,6 +1,6 @@
 # Catalogo immagini
 
-Tutte le foto sono **di stock**: da Unsplash (filtro "licenza gratuita", non Unsplash+) e una da Pexels, scaricate il 24/11/2026. La [Licenza Unsplash](https://unsplash.com/license) e la [Licenza Pexels](https://www.pexels.com/it-it/license/) consentono l'uso commerciale senza autorizzazione; l'attribuzione non è obbligatoria ma la diamo comunque nella pagina **/crediti**, raggiungibile da un solo link nel footer.
+Tutte le foto sono **di stock**: da Unsplash (filtro "licenza gratuita", non Unsplash+) e una da Pexels, scaricate il 24-25/11/2026. La [Licenza Unsplash](https://unsplash.com/license) e la [Licenza Pexels](https://www.pexels.com/it-it/license/) consentono l'uso commerciale senza autorizzazione; l'attribuzione non è obbligatoria ma la diamo comunque nella pagina **/crediti**, raggiungibile da un solo link nel footer.
 
 Regole rispettate:
 - nessuna didascalia "Immagine illustrativa";
@@ -10,12 +10,13 @@ Regole rispettate:
 
 | File (`src/assets/img/`) | Cosa si vede | Dove è usata | Autore | Pagina della foto |
 |---|---|---|---|---|
-| `hero-coppia-50.jpg` | Coppia sui cinquant'anni, sorridente, al portatile sul divano (sullo sfondo un camino in TV con un festone) | **Prima foto** della sequenza dell'hero, immagine Open Graph | Anthony Shkraba (**Pexels**) | https://www.pexels.com/it-it/foto/5810702/ |
+| `hero-coppia-giovane.jpg` | Giovane coppia che legge dei documenti al tavolo della cucina (parete blu) | **Prima foto** della sequenza dell'hero, immagine Open Graph | Vitaly Gariev | https://unsplash.com/photos/mTtTJE6SU78 |
+| `hero-coppia-50.jpg` | Coppia sui cinquant'anni, sorridente, al portatile sul divano (sullo sfondo un camino in TV con un festone) | Seconda foto della sequenza dell'hero | Anthony Shkraba (**Pexels**) | https://www.pexels.com/it-it/foto/5810702/ |
 | `hero-documenti-casa.jpg` | Coppia di anziani sul divano che controlla documenti | Terza foto della sequenza dell'hero | Vitaly Gariev | https://unsplash.com/photos/DQdilc0v6u8 |
 | `dettaglio-firma.jpg` | Mani che firmano un documento | Cerchio nell'hero, "Esperienza e serietà", testata Successioni | Gabrielle Henderson | https://unsplash.com/photos/HJckKnwCXxQ |
 | `famiglia.jpg` | Famiglia sorridente sul divano | Testata dei servizi Famiglia e ISEE | Vitaly Gariev | https://unsplash.com/photos/SwaEMQAzP_8 |
 | `casa-chiavi.jpg` | Mano con le chiavi di casa davanti a una porta | Testata IMU e Locazioni | Jakub Żerdzicki | https://unsplash.com/photos/bqUZEAeWuok |
-| `dichiarazioni.jpg` | Donna che legge un documento in cucina | Seconda foto della sequenza dell'hero, testata 730, /servizi, /carica-documenti, "Aggiornati alle normative" | Vitaly Gariev | https://unsplash.com/photos/RNUNbvIXUbg |
+| `dichiarazioni.jpg` | Donna che legge un documento in cucina (stessa modella della prima foto dell'hero) | Testata 730, /servizi, /carica-documenti, "Aggiornati alle normative" | Vitaly Gariev | https://unsplash.com/photos/RNUNbvIXUbg |
 | `lavoro.jpg` | Giovane donna al portatile alla scrivania | Testata servizi Lavoro | Vitaly Gariev | https://unsplash.com/photos/x1YcazlZ7N8 |
 | `pensioni.jpg` | Coppia di pensionati sorridente | Testata servizi Pensioni, "La tua tranquillità" | Vitaly Gariev | https://unsplash.com/photos/iV9F0sHl7OU |
 | `imprese.jpg` | Giovane titolare nel suo locale | Testata servizi Imprese | Vitaly Gariev | https://unsplash.com/photos/QGg-vsPYbu8 |
@@ -35,4 +36,4 @@ Il catalogo modificabile (testi alternativi, autori, licenze) è nel pannello, s
 - `public/og/monza-ced.jpg` (1200×630): generata dallo stesso script con il logo originale e la prima foto dell'hero.
 - Icone: disegnate per il sito (tratto semplice), in `src/components/Icon.astro`.
 
-**Sequenza dell'hero**: le foto si scelgono e si ordinano dal pannello (Home → "Foto dell'apertura"). Oggi: coppia sui cinquant'anni → donna sui trent'anni → coppia di anziani, per parlare a età diverse.
+**Sequenza dell'hero**: le foto si scelgono e si ordinano dal pannello (Home → "Foto dell'apertura"). Oggi: giovane coppia → coppia sui cinquant'anni → coppia di anziani, per parlare a età diverse.
